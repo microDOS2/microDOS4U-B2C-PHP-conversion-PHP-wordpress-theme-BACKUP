@@ -283,32 +283,7 @@ input::placeholder, textarea::placeholder {
   overflow: hidden;
 }
 
-.hero-bg {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-}
-
-.hero-bg::before {
-  content: '';
-  position: absolute;
-  top: -20%;
-  right: -10%;
-  width: 600px;
-  height: 600px;
-  background: radial-gradient(circle, rgba(68, 248, 12, 0.08) 0%, transparent 70%);
-}
-
-.hero-bg::after {
-  content: '';
-  position: absolute;
-  bottom: -30%;
-  left: -15%;
-  width: 800px;
-  height: 800px;
-  background: radial-gradient(circle, rgba(154, 2, 208, 0.06) 0%, transparent 70%);
-}
+/* Hero bg placeholder - correct definition in Original Site Classes section below */
 
 .hero-content {
   position: relative;
@@ -611,9 +586,9 @@ input::placeholder, textarea::placeholder {
    ORIGINAL SITE CLASSES
    ============================================ */
 .hero-bg {
-  background: linear-gradient(to bottom, #0a0514 0%, #150f24 100%);
-  position: relative;
-  overflow: hidden;
+  background: radial-gradient(circle at 20% 30%, rgba(107, 33, 168, 0.4) 0%, transparent 40%),
+              radial-gradient(circle at 80% 70%, rgba(68, 248, 12, 0.2) 0%, transparent 40%),
+              #0a0514 !important;
 }
 
 .card-bg {
