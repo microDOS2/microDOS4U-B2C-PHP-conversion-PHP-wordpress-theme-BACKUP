@@ -8,177 +8,217 @@
 get_header();
 ?>
 
-<section class="hero py-5">
-    <div class="hero-bg"></div>
-    <div class="container">
-        <div class="hero-content animate-fade-in">
-            <h1 class="hero-title">
-                <span class="brand-micro">micro</span><span class="brand-dos">DOS</span><span class="brand-two">(2)</span><br>
-                <span style="font-size:0.6em; font-weight:600; color:var(--text-muted);">Precision Psychedelics, Simplified.</span>
-            </h1>
-            <p class="hero-subtitle">
-                Research-grade compounds for the curious mind. 
-                Consistent dosing, third-party tested, delivered discreetly.
-            </p>
-            <div class="hero-actions flex justify-center gap-2 mt-3">
-                <a href="<?php echo esc_url(function_exists('wc_get_page_permalink') ? wc_get_page_permalink('shop') : home_url('/')); ?>" class="btn btn-primary">
-                    Explore Products
-                </a>
-                <a href="#how-it-works" class="btn btn-secondary">How It Works</a>
-            </div>
+<!-- Hero Section -->
+<section class="hero-bg py-20 md:py-28">
+    <div class="container mx-auto px-6 text-center">
+        <h1 id="hero-title" class="text-4xl md:text-6xl font-extrabold tracking-tighter text-white mb-4 transition-opacity duration-500 min-h-[4rem]">Precision Psychedelics, Simplified.</h1>
+        <p id="hero-subtitle" class="text-lg md:text-xl text-slate-300 max-w-3xl mx-auto mb-8 transition-opacity duration-500 min-h-[3rem]"></p>
+        <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
+            <a href="#pricing" class="w-full sm:w-auto px-8 py-4 text-lg text-white font-bold rounded-lg shadow-lg btn-primary transform hover:scale-105">
+                Start Your $12.95 Trial
+            </a>
+            <a href="#how-it-works" class="w-full sm:w-auto px-8 py-4 text-lg font-semibold text-white border border-slate-600 rounded-lg shadow-md hover:bg-slate-600 transition-colors" style="background-color: #1f1a2e !important;">
+                Learn More
+            </a>
         </div>
+        <div class="mt-16 max-w-sm mx-auto aspect-square relative">
+            <div id="video-container" class="w-full h-full bg-slate-800 rounded-xl overflow-hidden shadow-2xl ring-1 ring-slate-700" style="background-color: #150f24 !important;"></div>
+        </div>
+        <div id="video-dots" class="text-center mt-6"></div>
     </div>
 </section>
 
-<section id="how-it-works" class="py-5">
-    <div class="container">
-        <div class="text-center mb-4">
-            <h2 class="gradient-text">How It Works</h2>
-            <p class="max-w-xl mx-auto text-muted">
-                We handle the science so you can focus on the experience
-            </p>
+<!-- Benefits Section -->
+<section id="benefits" class="py-20" style="background-color: rgba(10, 5, 20, 0.7) !important;">
+    <div class="container mx-auto px-6">
+        <div class="text-center mb-16">
+            <span class="text-sky-400 font-semibold">THE MICRODOS ADVANTAGE</span>
+            <h2 class="text-3xl md:text-4xl font-bold text-white mt-2">A Cleaner, Clearer Experience</h2>
         </div>
-        <div class="features-grid">
-            <div class="card text-center">
-                <div class="feature-icon mb-2">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div class="text-center p-6 card-bg rounded-xl border border-slate-800">
+                <div class="inline-flex feature-icon mb-4">
+                    <svg class="w-8 h-8 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
                 </div>
-                <h3>Precise Dosing</h3>
-                <p>Every compound is pre-measured to exact specifications, removing all guesswork.</p>
+                <h3 class="text-xl font-semibold text-white mb-2">Rapid Onset</h3>
+                <p class="text-slate-400">Effects begin in ~10 minutes for a predictable, manageable session.</p>
             </div>
-            <div class="card text-center">
-                <div class="feature-icon mb-2">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="9" y1="9" x2="15" y2="15"/><line x1="15" y1="9" x2="9" y2="15"/></svg>
+            <div class="text-center p-6 card-bg rounded-xl border border-slate-800">
+                <div class="inline-flex feature-icon mb-4">
+                    <svg class="w-8 h-8 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.085a2 2 0 00-1.736.97l-2.714 4.224a2 2 0 00.174 2.573V10h4z"></path></svg>
                 </div>
-                <h3>Verified Quality</h3>
-                <p>Independent, third-party lab testing for purity and potency on every batch.</p>
+                <h3 class="text-xl font-semibold text-white mb-2">No Nausea</h3>
+                <p class="text-slate-400">A clean formula designed to avoid the discomfort of traditional mushrooms.</p>
             </div>
-            <div class="card text-center">
-                <div class="feature-icon mb-2">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            <div class="text-center p-6 card-bg rounded-xl border border-slate-800">
+                <div class="inline-flex feature-icon mb-4">
+                    <svg class="w-8 h-8 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                 </div>
-                <h3>Discreet Delivery</h3>
-                <p>Secure, unmarked packaging shipped via USPS to your door.</p>
+                <h3 class="text-xl font-semibold text-white mb-2">Precision Dose</h3>
+                <p class="text-slate-400">Each 2mg scored pill ensures a consistent, reliable microdose every time.</p>
+            </div>
+            <div class="text-center p-6 card-bg rounded-xl border border-slate-800">
+                <div class="inline-flex feature-icon mb-4">
+                    <svg class="w-8 h-8 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                </div>
+                <h3 class="text-xl font-semibold text-white mb-2">Legal &amp; Safe</h3>
+                <p class="text-slate-400">Not federally scheduled. Shipped discreetly and reliably to your door.</p>
             </div>
         </div>
     </div>
 </section>
 
-<section class="py-5">
-    <div class="container">
-        <div class="text-center mb-4">
-            <h2 class="gradient-text">Choose Your Path</h2>
-            <p class="max-w-xl mx-auto text-muted">
-                A regimen designed for your specific goals, delivered to you monthly.
-            </p>
-        </div>
-        <div class="pricing-grid">
-            <div class="pricing-card text-center">
-                <h3>The Trial Pack</h3>
-                <div class="price">$12.95</div>
-                <p class="price-period">One-time purchase</p>
-                <p>2 doses. The perfect introduction for the curious mind.</p>
-                <a href="<?php echo esc_url(function_exists('wc_get_page_permalink') ? wc_get_page_permalink('shop') : home_url('/')); ?>" class="btn btn-primary w-full">Start Here</a>
+<!-- Product Specs -->
+<section class="py-10" style="background-color: rgba(21, 15, 36, 0.5) !important;">
+    <div class="container mx-auto px-6 text-center">
+        <h2 class="text-2xl font-bold text-white mb-8">Product Specifications</h2>
+        <div class="flex flex-col md:flex-row justify-center gap-8 md:gap-16">
+            <div>
+                <p class="text-slate-400 font-semibold uppercase tracking-wider text-sm">Active Compound</p>
+                <p class="text-lg font-bold text-white">2mg Metocin (4-HO-MET)</p>
             </div>
-            <div class="pricing-card text-center">
-                <h3>Explorer Box</h3>
-                <div class="price">$47.56</div>
-                <p class="price-period">/ month</p>
-                <p>10 doses. The standard for the modern microdoser.</p>
-                <a href="<?php echo esc_url(function_exists('wc_get_page_permalink') ? wc_get_page_permalink('shop') : home_url('/')); ?>" class="btn btn-primary w-full">Subscribe</a>
+            <div>
+                <p class="text-slate-400 font-semibold uppercase tracking-wider text-sm">Form</p>
+                <p class="text-lg font-bold text-white">Scored, Non-Chewable Pill</p>
             </div>
-            <div class="pricing-card text-center">
-                <h3>Optimizer Box</h3>
-                <div class="price">$128.31</div>
-                <p class="price-period">/ month</p>
-                <p>30 doses. For the dedicated practitioner.</p>
-                <a href="<?php echo esc_url(function_exists('wc_get_page_permalink') ? wc_get_page_permalink('shop') : home_url('/')); ?>" class="btn btn-primary w-full">Subscribe</a>
-            </div>
-            <div class="pricing-card text-center">
-                <h3>Master Box</h3>
-                <div class="price">$217.56</div>
-                <p class="price-period">/ month</p>
-                <p>60 doses. Maximum value for the experienced user.</p>
-                <a href="<?php echo esc_url(function_exists('wc_get_page_permalink') ? wc_get_page_permalink('shop') : home_url('/')); ?>" class="btn btn-primary w-full">Subscribe</a>
+            <div>
+                <p class="text-slate-400 font-semibold uppercase tracking-wider text-sm">Shipping</p>
+                <p class="text-lg font-bold text-white">Discreet, within 48 hours</p>
             </div>
         </div>
     </div>
 </section>
 
-<section class="py-5">
-    <div class="container">
-        <div class="text-center mb-4">
-            <h2 class="gradient-text">What You're Getting</h2>
+<!-- Reviews Section -->
+<section id="reviews" class="py-20 overflow-hidden" style="background-color: rgba(10, 5, 20, 0.7) !important;">
+    <div class="container mx-auto px-6">
+        <h2 class="text-3xl font-bold text-white text-center mb-12">Trusted by thousands for focus and clarity</h2>
+        <div class="text-center text-slate-400">
+            <p>User testimonials coming soon.</p>
         </div>
-        <div class="features-grid">
-            <div class="card">
-                <h4>Metocin (4-HO-MET)</h4>
-                <p>A research compound known for its vivid, manageable visual and cognitive effects.</p>
-            </div>
-            <div class="card">
-                <h4>Consistent 2mg Tablets</h4>
-                <p>No guesswork, no scale needed. Every single tablet contains exactly 2mg.</p>
-            </div>
-            <div class="card">
-                <h4>90-Day Shelf Life</h4>
-                <p>Lab-verified stability for 3 months in cool, dark storage.</p>
-            </div>
-            <div class="card">
-                <h4>Tested & Verified</h4>
-                <p>Each batch is verified by third-party laboratories for purity.</p>
-            </div>
-            <div class="card">
-                <h4>Discreet Shipping</h4>
-                <p>Secure, unmarked packaging via USPS.</p>
-            </div>
-            <div class="card">
-                <h4>Guided Protocol</h4>
-                <p>Receive a clear, easy-to-follow guide for safe and effective use.</p>
+    </div>
+</section>
+
+<!-- How It Works Section -->
+<section id="how-it-works" class="py-20" style="background-color: rgba(10, 5, 20, 0.5) !important;">
+    <div class="container mx-auto px-6 max-w-5xl">
+        <h2 class="text-3xl md:text-4xl font-bold text-white text-center mb-16">Get Started in 3 Simple Steps</h2>
+        <div class="relative">
+            <div class="hidden md:block absolute top-10 left-[16.66%] right-[16.66%] h-0.5 bg-slate-700 z-0" style="background-color: #1a1329 !important;"></div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 text-center relative z-10">
+                <div>
+                    <div class="w-20 h-20 mx-auto bg-slate-800 border-4 border-slate-700 rounded-full flex items-center justify-center text-3xl font-bold text-sky-400 mb-6 shadow-inner" style="background-color: #150f24 !important;">1</div>
+                    <h3 class="text-xl font-bold text-white mb-3">Choose Your Plan</h3>
+                    <p class="text-slate-400 leading-relaxed">Start with our risk-free trial or choose your favorite quantity.</p>
+                </div>
+                <div>
+                    <div class="w-20 h-20 mx-auto bg-slate-800 border-4 border-slate-700 rounded-full flex items-center justify-center text-3xl font-bold text-sky-400 mb-6 shadow-inner" style="background-color: #150f24 !important;">2</div>
+                    <h3 class="text-xl font-bold text-white mb-3">Fast, Discreet Shipping</h3>
+                    <p class="text-slate-400 leading-relaxed">We ship your order in plain packaging within 48 hours. Your privacy is guaranteed.</p>
+                </div>
+                <div>
+                    <div class="w-20 h-20 mx-auto bg-slate-800 border-4 border-slate-700 rounded-full flex items-center justify-center text-3xl font-bold text-sky-400 mb-6 shadow-inner" style="background-color: #150f24 !important;">3</div>
+                    <h3 class="text-xl font-bold text-white mb-3">Experience Clarity</h3>
+                    <p class="text-slate-400 leading-relaxed">Take one pill for one consistent microdose.</p>
+                </div>
             </div>
         </div>
     </div>
 </section>
 
-<section class="py-5">
-    <div class="container">
-        <div class="text-center mb-4">
-            <h2 class="gradient-text">Frequently Asked Questions</h2>
+<!-- Pricing Section -->
+<section id="pricing" class="py-20 bg-slate-900" style="background-color: #0a0514 !important;">
+    <div class="container mx-auto px-6">
+        <h2 class="text-3xl md:text-4xl font-bold text-white text-center mb-12">Find Your Flow State</h2>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-5xl mx-auto items-stretch">
+            
+            <!-- Trial Pack -->
+            <div class="pricing-card card-bg rounded-xl p-8 border border-slate-800 flex flex-col shadow-lg relative overflow-hidden">
+                <div class="absolute top-0 right-0 py-1.5 px-4 bg-sky-400 text-white text-xs font-bold rounded-bl-lg">GREAT VALUE</div>
+                <h3 class="text-2xl font-bold text-white mb-2">Trial Pack</h3>
+                <p class="text-slate-400 mb-2">A low-risk introduction.</p>
+                <img src="<?php echo get_template_directory_uri(); ?>/assets/microDOS2.jpg" alt="microDOS(2) logo" class="w-40 mx-auto mb-4 rounded-lg" onerror="this.style.display='none'">
+                <div class="my-4 text-center">
+                    <span class="text-5xl font-extrabold text-white">$12.95</span>
+                    <span class="text-slate-400">/ one-time</span>
+                </div>
+                <ul class="space-y-3 text-slate-300 text-left mb-8">
+                    <li class="flex items-center"><svg class="w-5 h-5 mr-2 text-green-400" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"></path></svg>2 Pills</li>
+                    <li class="flex items-center"><svg class="w-5 h-5 mr-2 text-green-400" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"></path></svg>Free Shipping</li>
+                </ul>
+                <button class="w-full mt-auto btn-primary text-white font-semibold py-4 rounded-lg">Add to Cart</button>
+            </div>
+
+            <!-- Dynamic Purchase Card (Protocol & One-Time) -->
+            <div class="pricing-card card-bg rounded-xl p-8 border border-slate-800 flex flex-col shadow-lg">
+                
+                <!-- Toggle Switch -->
+                <div class="flex justify-center mb-8">
+                    <div class="bg-slate-900 p-1 rounded-full inline-flex relative w-64 border border-slate-700" style="background-color: #0a0514 !important;">
+                        <button class="relative z-10 w-1/2 py-2 text-sm font-bold text-white transition-colors" style="background-color: #1a1329; border-radius: 9999px;">The Protocol</button>
+                        <button class="relative z-10 w-1/2 py-2 text-sm font-bold text-slate-400 hover:text-white transition-colors">One-Time</button>
+                    </div>
+                </div>
+
+                <!-- Protocol Container -->
+                <div class="flex flex-col flex-grow">
+                    <h3 class="text-2xl font-bold text-white mb-2">The Protocol <span class="text-xs font-bold text-sky-400 bg-sky-400/10 px-2 py-1 rounded ml-2 align-middle">SAVE 15%</span></h3>
+                    <p class="text-slate-400 mb-6">A guided Monthly Wellness Protocol.</p>
+                    <div class="space-y-4 mt-auto">
+                        <!-- Protocol 10 -->
+                        <div class="p-4 rounded-lg border border-sky-500/20" style="background-color: #1a1329 !important;">
+                            <p class="font-bold text-white">Explorer Box <span class="text-xs text-slate-400 font-normal ml-1">(10 Pills)</span></p>
+                            <p class="mb-3"><span class="text-2xl font-bold text-white">$47.56</span> <span class="text-slate-400 text-sm">/ mo ($4.76/pill)</span></p>
+                            <button class="w-full btn-primary text-white text-sm font-semibold rounded-lg py-2">Add</button>
+                        </div>
+                        <!-- Protocol 30 -->
+                        <div class="p-4 rounded-lg border border-sky-500/20 relative overflow-hidden" style="background-color: #1a1329 !important;">
+                            <div class="absolute top-0 right-0 bg-sky-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-bl">RECOMMENDED</div>
+                            <p class="font-bold text-white">Optimizer Box <span class="text-xs text-slate-400 font-normal ml-1">(30 Pills)</span></p>
+                            <p class="mb-3"><span class="text-2xl font-bold text-white">$128.31</span> <span class="text-slate-400 text-sm">/ mo ($4.28/pill)</span></p>
+                            <button class="w-full btn-primary text-white text-sm font-semibold rounded-lg py-2">Add</button>
+                        </div>
+                        <!-- Protocol 60 -->
+                        <div class="p-4 rounded-lg border border-sky-500/20" style="background-color: #1a1329 !important;">
+                            <p class="font-bold text-white">Master Box <span class="text-xs text-slate-400 font-normal ml-1">(60 Pills)</span></p>
+                            <p class="mb-3"><span class="text-2xl font-bold text-white">$217.56</span> <span class="text-slate-400 text-sm">/ mo ($3.63/pill)</span></p>
+                            <button class="w-full btn-primary text-white text-sm font-semibold rounded-lg py-2">Add</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="max-w-2xl mx-auto">
-            <div class="faq-item">
-                <div class="faq-question">
+    </div>
+</section>
+
+<!-- FAQ Section -->
+<section id="faq" class="py-20 bg-slate-900" style="background-color: #0a0514 !important;">
+    <div class="container mx-auto px-6 max-w-3xl">
+        <h2 class="text-3xl font-bold text-white text-center mb-12">Frequently Asked Questions</h2>
+        <div class="space-y-4" id="faq-container">
+            <div class="card-bg rounded-lg border border-slate-800">
+                <button class="faq-question flex justify-between items-center w-full p-6 text-left font-semibold text-white" aria-expanded="false" aria-controls="faq1-answer">
                     <span>Is this legal?</span>
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-                </div>
-                <div class="faq-answer">
-                    <p>Our products are sold strictly for research purposes. Please review our Legal Disclaimer for full details.</p>
+                    <svg class="faq-arrow w-5 h-5 shrink-0 transition-transform duration-200 text-slate-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                </button>
+                <div id="faq1-answer" class="faq-answer hidden p-6 pt-0 text-slate-300 leading-relaxed">Yes. Our active ingredient, 4-HO-MET, is not federally scheduled in the United States. We recommend checking your local regulations, but we ship to all 50 states.</div>
+            </div>
+            <div class="card-bg rounded-lg border border-slate-800">
+                <button class="faq-question flex justify-between items-center w-full p-6 text-left font-semibold text-white" aria-expanded="false" aria-controls="faq2-answer">
+                    <span>What does a microdose feel like?</span>
+                    <svg class="faq-arrow w-5 h-5 shrink-0 transition-transform duration-200 text-slate-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                </button>
+                <div id="faq2-answer" class="faq-answer hidden p-6 pt-0 text-slate-300 leading-relaxed">
+                    <p>Effects are subtle and non-intrusive. Users commonly report enhanced focus, increased creativity, a more positive mood, and a feeling of being more present and engaged. It is not a "trip" but a gentle cognitive and emotional lift.</p>
                 </div>
             </div>
-            <div class="faq-item">
-                <div class="faq-question">
-                    <span>Is shipping discreet?</span>
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-                </div>
-                <div class="faq-answer">
-                    <p>Yes. All orders are shipped in secure, unmarked packaging via USPS.</p>
-                </div>
-            </div>
-            <div class="faq-item">
-                <div class="faq-question">
-                    <span>Do I need to measure the doses?</span>
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-                </div>
-                <div class="faq-answer">
-                    <p>No. Our compounds are pre-dosed into consistent 2mg tablets.</p>
-                </div>
-            </div>
-            <div class="faq-item">
-                <div class="faq-question">
-                    <span>How long does shipping take?</span>
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-                </div>
-                <div class="faq-answer">
-                    <p>All orders are processed within 24-48 hours. Standard USPS shipping times apply.</p>
+            <div class="card-bg rounded-lg border border-slate-800">
+                <button class="faq-question flex justify-between items-center w-full p-6 text-left font-semibold text-white" aria-expanded="false" aria-controls="faq3-answer">
+                    <span>Is it safe?</span>
+                    <svg class="faq-arrow w-5 h-5 shrink-0 transition-transform duration-200 text-slate-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                </button>
+                <div id="faq3-answer" class="faq-answer hidden p-6 pt-0 text-slate-300 leading-relaxed">
+                    <p>Yes. Our product is formulated for safety and consistency. We always recommend responsible consumption. Please consult a healthcare professional if you have pre-existing conditions.</p>
                 </div>
             </div>
         </div>
