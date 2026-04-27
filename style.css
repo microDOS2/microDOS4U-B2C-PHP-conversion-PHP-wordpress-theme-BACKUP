@@ -700,6 +700,64 @@ input::placeholder, textarea::placeholder {
 .section-card { background-color: rgba(21, 15, 36, 0.5) !important; }
 
 /* ============================================
+   MISSING UTILITY CLASSES (from original Tailwind)
+   ============================================ */
+.cart-badge {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: linear-gradient(to right, #38bdf8, #8b5cf6);
+    color: white;
+    font-size: 10px;
+    font-weight: bold;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.opacity-0 { opacity: 0; }
+.opacity-1 { opacity: 1; }
+.transition-opacity { transition-property: opacity; }
+.duration-500 { transition-duration: 500ms; }
+.min-h-\[3rem\] { min-height: 3rem; }
+.min-h-\[4rem\] { min-height: 4rem; }
+.tracking-tighter { letter-spacing: -0.05em; }
+.aspect-square { aspect-ratio: 1 / 1; }
+.ring-1 { box-shadow: 0 0 0 1px; }
+.ring-slate-700 { --tw-ring-color: #334155; }
+.transform { transform: translateZ(0); }
+.hover\:scale-105:hover { transform: scale(1.05); }
+.pointer-events-none { pointer-events: none; }
+.text-slate-300 { color: #cbd5e1; }
+.text-slate-500 { color: #64748b; }
+.border-slate-700 { border-color: #334155; }
+.border-slate-800 { border-color: #1e293b; }
+.border-green-500 { border-color: #22c55e; }
+.border-red-500 { border-color: #ef4444 !important; }
+.bg-green-500\/20 { background-color: rgba(34, 197, 94, 0.2); }
+.text-green-500 { color: #22c55e; }
+.bg-slate-800\/50 { background-color: rgba(30, 41, 59, 0.5); }
+.bg-slate-700 { background-color: #334155; }
+.hover\:bg-slate-600:hover { background-color: #475569; }
+.hover\:text-red-400:hover { color: #f87171; }
+.from-slate-900 { --tw-gradient-from: #0f172a; }
+.to-transparent { --tw-gradient-to: transparent; }
+.bg-gradient-to-r { background-image: linear-gradient(to right, var(--tw-gradient-from), var(--tw-gradient-to)); }
+.bg-gradient-to-l { background-image: linear-gradient(to left, var(--tw-gradient-from), var(--tw-gradient-to)); }
+.inset-y-0 { top: 0; bottom: 0; }
+.inset-0 { inset: 0; }
+.w-20 { width: 5rem; }
+.w-7 { width: 1.75rem; }
+.h-7 { height: 1.75rem; }
+.w-9 { width: 2.25rem; }
+.h-9 { height: 2.25rem; }
+.shrink-0 { flex-shrink: 0; }
+.col-span-1 { grid-column: span 1 / span 1; }
+.max-w-sm { max-width: 24rem; }
+
+/* ============================================
    CART DRAWER
    ============================================ */
 .cart-drawer {
