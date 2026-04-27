@@ -539,24 +539,24 @@ input::placeholder, textarea::placeholder {
    QUANTITY SELECTORS
    ============================================ */
 .quantity-btn {
-    background: #0a0514;
-    border: 1px solid #1a1329;
-    color: #d1d5db;
     width: 32px;
     height: 32px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    background: linear-gradient(135deg, #1a1329 0%, #150f24 100%);
+    border: 1px solid rgba(125, 211, 252, 0.2);
+    color: white;
+    border-radius: 8px;
     cursor: pointer;
-    border-radius: 4px;
-    font-weight: bold;
+    font-weight: 500;
     font-size: 1rem;
     transition: all 0.2s ease;
 }
 
 .quantity-btn:hover {
-    background: #1a1329;
-    color: #fff;
+    background: linear-gradient(135deg, #2a2340 0%, #1a1329 100%);
+    border-color: rgba(125, 211, 252, 0.4);
 }
 
 .quantity-input {
