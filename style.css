@@ -698,3 +698,192 @@ input::placeholder, textarea::placeholder {
 .section-dark { background-color: rgba(10, 5, 20, 0.7) !important; }
 .section-darker { background-color: rgba(10, 5, 20, 0.5) !important; }
 .section-card { background-color: rgba(21, 15, 36, 0.5) !important; }
+
+/* ============================================
+   CART DRAWER
+   ============================================ */
+.cart-drawer {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 100%;
+    max-width: 420px;
+    height: 100%;
+    height: 100dvh;
+    background: linear-gradient(180deg, #0a0514 0%, #150f24 100%);
+    border-left: 1px solid rgba(125, 211, 252, 0.2);
+    z-index: 100;
+    transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+    box-shadow: -10px 0 40px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+}
+.cart-drawer.open {
+    right: 0;
+}
+.cart-drawer:not(.open) {
+    pointer-events: none;
+}
+.cart-drawer:not(.open) * {
+    pointer-events: none;
+}
+@media (max-width: 480px) {
+    .cart-drawer {
+        right: -100%;
+        width: 100%;
+        max-width: 100%;
+        border-left: none;
+    }
+}
+.cart-items-container {
+    flex: 1;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    min-height: 0;
+}
+.cart-footer {
+    flex-shrink: 0;
+    padding-bottom: max(20px, env(safe-area-inset-bottom));
+}
+.cart-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 99;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+.cart-overlay.open {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* ============================================
+   TESTIMONIAL CAROUSEL
+   ============================================ */
+.testimonial-carousel {
+    display: flex;
+    width: max-content;
+    animation: marquee 30s linear infinite;
+}
+.testimonial-carousel:hover {
+    animation-play-state: paused;
+}
+.testimonial-card {
+    width: 320px;
+    padding: 0 1rem;
+    box-sizing: border-box;
+    flex-shrink: 0;
+}
+@keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+@media (min-width: 768px) {
+    .testimonial-card {
+        width: 400px;
+    }
+}
+
+/* ============================================
+   VIDEO IFRAME (Hero)
+   ============================================ */
+.video-iframe {
+    width: 100%;
+    height: 100%;
+    border-radius: 0.75rem;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: opacity 1s ease;
+}
+.video-dot {
+    cursor: pointer;
+    height: 12px;
+    width: 12px;
+    margin: 0 4px;
+    background-color: #475569;
+    border-radius: 50%;
+    display: inline-block;
+    transition: background-color 0.6s ease;
+    border: 2px solid transparent;
+}
+.video-dot:focus {
+    outline: none;
+    border-color: #7dd3fc;
+}
+.video-dot.active, .video-dot:hover {
+    background-color: #7dd3fc;
+}
+
+/* ============================================
+   CHECKOUT STEP INDICATOR
+   ============================================ */
+.step-active {
+    color: #7dd3fc;
+    border-bottom-color: #7dd3fc;
+}
+.step-inactive {
+    color: #64748b;
+    border-bottom-color: transparent;
+}
+
+/* ============================================
+   SPINNER
+   ============================================ */
+.spinner {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: #fff;
+    animation: spin 1s ease-in-out infinite;
+}
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* ============================================
+   INPUT FIELD (Checkout)
+   ============================================ */
+.input-field {
+    background-color: #150f24;
+    border: 1px solid #1a1329;
+    color: #cbd5e1;
+    border-radius: 0.5rem;
+    padding: 0.75rem 1rem;
+    transition: border-color 0.3s ease;
+    width: 100%;
+    font-family: inherit;
+    font-size: 1rem;
+}
+.input-field:focus {
+    outline: none;
+    border-color: #38bdf8;
+}
+.input-field.border-red-500 {
+    border-color: #ef4444;
+}
+
+/* ============================================
+   YOUTUBE PLAYER OVERRIDES
+   ============================================ */
+.plyr__video-embed iframe {
+    pointer-events: none;
+}
+.plyr--youtube .plyr__control--overlaid {
+    display: none !important;
+}
+.plyr iframe[src*="youtube"] {
+    pointer-events: none;
+}
+.plyr--video .plyr__controls {
+    opacity: 0 !important;
+}

@@ -1,5 +1,52 @@
 </main><!-- #main -->
 
+<!-- Cart Overlay -->
+<div id="cart-overlay" class="cart-overlay" onclick="closeCart()"></div>
+
+<!-- Cart Drawer -->
+<div id="cart-drawer" class="cart-drawer">
+    <div class="p-4 border-b border-slate-800/50 flex justify-between items-center bg-gradient-to-r from-[#150f24] to-[#0a0514]">
+        <div class="flex items-center gap-3">
+            <div class="w-9 h-9 rounded-full bg-gradient-to-r from-sky-400 to-violet-500 flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+            </div>
+            <h2 class="text-lg font-bold text-white">Your Cart</h2>
+        </div>
+        <button onclick="closeCart()" class="w-8 h-8 rounded-full bg-slate-800/50 hover:bg-slate-700 flex items-center justify-center text-slate-400 hover:text-white transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" x2="6" y1="6" y2="18"/><line x1="6" x2="18" y1="6" y2="18"/></svg>
+        </button>
+    </div>
+    <div id="cart-items" class="cart-items-container p-4">
+        <!-- Cart items injected here -->
+    </div>
+    <div class="cart-footer p-4 border-t border-slate-800/50 bg-gradient-to-t from-[#0a0514] via-[#0a0514] to-[#150f24]">
+        <div class="space-y-2 mb-4">
+            <div class="flex justify-between text-slate-400 text-sm">
+                <span>Subtotal</span>
+                <span id="cart-subtotal" class="text-slate-300">$0.00</span>
+            </div>
+            <div class="flex justify-between text-slate-400 text-sm">
+                <span>Tax</span>
+                <span id="cart-tax" class="text-slate-300">$0.00</span>
+            </div>
+            <div class="flex justify-between text-slate-400 text-sm">
+                <span>Shipping</span>
+                <span class="text-green-400 font-medium">FREE</span>
+            </div>
+            <div class="flex justify-between text-white font-bold pt-2 border-t border-slate-700/50">
+                <span>Total</span>
+                <span id="cart-total" class="text-sky-400">$0.00</span>
+            </div>
+        </div>
+        <button id="checkout-btn" onclick="proceedToCheckout()" class="w-full btn-primary text-white font-semibold py-3 rounded-xl shadow-lg shadow-sky-500/20 hover:shadow-sky-500/40 transition-all">
+            Proceed to Checkout
+        </button>
+        <button onclick="closeCart()" class="w-full mt-2 text-slate-400 hover:text-white py-2 text-sm font-medium transition-colors">
+            Continue Shopping
+        </button>
+    </div>
+</div>
+
 <footer class="bg-slate-900 border-t border-slate-800" style="background-color: #0a0514 !important;">
     <div class="container mx-auto px-6 py-12">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
