@@ -79,6 +79,51 @@ document.addEventListener('DOMContentLoaded', function() {
         observer.observe(el);
     });
 
+    // Hero Typewriter Effect
+    const phrases = [
+        "Your Mind, Enhanced.",
+        "Clarity in Every Dose.",
+        "Your Journey, Optimized.",
+        "Unlock Your Potential.",
+        "Focus Without Compromise.",
+        "Precision Psychedelics, Simplified."
+    ];
+
+    const heroTitle = document.getElementById('hero-title');
+    if (heroTitle) {
+        let phraseIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        let typeSpeed = 100;
+
+        function typeEffect() {
+            const currentPhrase = phrases[phraseIndex];
+
+            if (isDeleting) {
+                heroTitle.textContent = currentPhrase.substring(0, charIndex - 1);
+                charIndex--;
+                typeSpeed = 50;
+            } else {
+                heroTitle.textContent = currentPhrase.substring(0, charIndex + 1);
+                charIndex++;
+                typeSpeed = 100;
+            }
+
+            if (!isDeleting && charIndex === currentPhrase.length) {
+                isDeleting = true;
+                typeSpeed = 2000; // Pause at end
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                phraseIndex = (phraseIndex + 1) % phrases.length;
+                typeSpeed = 500; // Pause before typing next
+            }
+
+            setTimeout(typeEffect, typeSpeed);
+        }
+
+        typeEffect();
+    }
+
     // Purchase tab toggle (Protocol vs One-Time)
     window.switchPurchaseTab = function(tab) {
         const protocolContainer = document.getElementById('protocol-container');
