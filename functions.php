@@ -321,7 +321,9 @@ add_action('widgets_init', 'microdos4u_widgets_init');
 
 // Update cart fragments
 function microdos4u_cart_fragments($fragments) {
-    $fragments['span.cart-count'] = '<span class="cart-count">' . WC()->cart->get_cart_contents_count() . '</span>';
+    if (function_exists('WC') && WC()->cart) {
+        $fragments['span.cart-count'] = '<span class="cart-count">' . WC()->cart->get_cart_contents_count() . '</span>';
+    }
     return $fragments;
 }
 add_filter('woocommerce_add_to_cart_fragments', 'microdos4u_cart_fragments');

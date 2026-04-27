@@ -20,7 +20,7 @@ get_header();
                 Consistent dosing, third-party tested, delivered discreetly.
             </p>
             <div class="hero-actions">
-                <a href="<?php echo esc_url(wc_get_page_permalink('shop')); ?>" class="btn btn-primary">
+                <a href="<?php echo esc_url(function_exists('wc_get_page_permalink') ? wc_get_page_permalink('shop') : home_url('/')); ?>" class="btn btn-primary">
                     Explore Products
                 </a>
                 <a href="#how-it-works" class="btn btn-secondary">How It Works</a>
@@ -88,7 +88,7 @@ get_header();
                 <div class="price">$12.95</div>
                 <p class="price-period">One-time purchase</p>
                 <p>2 doses. The perfect introduction for the curious mind.</p>
-                <a href="<?php echo esc_url(wc_get_page_permalink('shop')); ?>?add-to-cart=TRIAL" class="btn btn-primary w-full">Start Here</a>
+                <a href="<?php echo esc_url(function_exists('wc_get_page_permalink') ? wc_get_page_permalink('shop') : home_url('/')); ?>?add-to-cart=TRIAL" class="btn btn-primary w-full">Start Here</a>
             </div>
             <div class="pricing-card text-center">
                 <img src="<?php echo get_template_directory_uri(); ?>/assets/explorer.png" alt="Explorer Box" class="mx-auto mb-2 rounded" style="width:120px;" onerror="this.style.display='none'">
@@ -96,7 +96,7 @@ get_header();
                 <div class="price">$47.56</div>
                 <p class="price-period">/ month</p>
                 <p>10 doses. The standard for the modern microdoser.</p>
-                <a href="<?php echo esc_url(wc_get_page_permalink('shop')); ?>?add-to-cart=EXPLORER" class="btn btn-primary w-full">Subscribe</a>
+                <a href="<?php echo esc_url(function_exists('wc_get_page_permalink') ? wc_get_page_permalink('shop') : home_url('/')); ?>?add-to-cart=EXPLORER" class="btn btn-primary w-full">Subscribe</a>
             </div>
             <div class="pricing-card text-center">
                 <img src="<?php echo get_template_directory_uri(); ?>/assets/optimizer.png" alt="Optimizer Box" class="mx-auto mb-2 rounded" style="width:120px;" onerror="this.style.display='none'">
@@ -104,7 +104,7 @@ get_header();
                 <div class="price">$128.31</div>
                 <p class="price-period">/ month</p>
                 <p>30 doses. For the dedicated practitioner.</p>
-                <a href="<?php echo esc_url(wc_get_page_permalink('shop')); ?>?add-to-cart=OPTIMIZER" class="btn btn-primary w-full">Subscribe</a>
+                <a href="<?php echo esc_url(function_exists('wc_get_page_permalink') ? wc_get_page_permalink('shop') : home_url('/')); ?>?add-to-cart=OPTIMIZER" class="btn btn-primary w-full">Subscribe</a>
             </div>
             <div class="pricing-card text-center">
                 <img src="<?php echo get_template_directory_uri(); ?>/assets/master.png" alt="Master Box" class="mx-auto mb-2 rounded" style="width:120px;" onerror="this.style.display='none'">
@@ -112,7 +112,7 @@ get_header();
                 <div class="price">$217.56</div>
                 <p class="price-period">/ month</p>
                 <p>60 doses. Maximum value for the experienced user.</p>
-                <a href="<?php echo esc_url(wc_get_page_permalink('shop')); ?>?add-to-cart=MASTER" class="btn btn-primary w-full">Subscribe</a>
+                <a href="<?php echo esc_url(function_exists('wc_get_page_permalink') ? wc_get_page_permalink('shop') : home_url('/')); ?>?add-to-cart=MASTER" class="btn btn-primary w-full">Subscribe</a>
             </div>
         </div>
     </div>
