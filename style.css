@@ -561,6 +561,41 @@ input::placeholder, textarea::placeholder {
 }
 
 /* ============================================
+   QUANTITY SELECTORS
+   ============================================ */
+.quantity-btn {
+    background: #0a0514;
+    border: 1px solid #1a1329;
+    color: #d1d5db;
+    width: 32px;
+    height: 32px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+}
+
+.quantity-btn:hover {
+    background: #1a1329;
+    color: #fff;
+}
+
+.quantity-input {
+    background: #0a0514;
+    border: 1px solid #1a1329;
+    color: #fff;
+    width: 50px;
+    text-align: center;
+    height: 32px;
+    border-radius: 4px;
+    font-weight: 600;
+}
+
+/* ============================================
    ANIMATIONS
    ============================================ */
 @keyframes fadeIn {

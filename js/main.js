@@ -124,6 +124,27 @@ document.addEventListener('DOMContentLoaded', function() {
         typeEffect();
     }
 
+    // Quantity Management
+    window.updateQty = function(id, change) {
+        const input = document.getElementById('qty-' + id);
+        if (!input) return;
+        let val = parseInt(input.value) + change;
+        if (val < 1) val = 1;
+        if (val > 99) val = 99;
+        input.value = val;
+    };
+
+    // Cart
+    window.cart = [];
+    window.addToCart = function(id, name, price) {
+        const qtyInput = document.getElementById('qty-' + id);
+        const qty = qtyInput ? parseInt(qtyInput.value) : 1;
+        window.cart.push({id, name, price, qty});
+        const cartCount = document.getElementById('cart-count');
+        if (cartCount) cartCount.textContent = window.cart.length;
+        alert(name + ' (x' + qty + ') added to cart!');
+    };
+
     // Purchase tab toggle (Protocol vs One-Time)
     window.switchPurchaseTab = function(tab) {
         const protocolContainer = document.getElementById('protocol-container');

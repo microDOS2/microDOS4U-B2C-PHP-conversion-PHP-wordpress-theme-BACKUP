@@ -11,20 +11,28 @@ get_header();
 <!-- Hero Section -->
 <section class="hero-bg py-20 md:py-28">
     <div class="container mx-auto px-6 text-center">
-        <h1 id="hero-title" class="text-4xl md:text-6xl font-extrabold tracking-tighter text-white mb-4 transition-opacity duration-500 min-h-[4rem]">Precision Psychedelics, Simplified.</h1>
-        <p id="hero-subtitle" class="text-lg md:text-xl text-slate-300 max-w-3xl mx-auto mb-8 transition-opacity duration-500 min-h-[3rem]"></p>
-        <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
-            <a href="#pricing" class="w-full sm:w-auto px-8 py-4 text-lg text-white font-bold rounded-lg shadow-lg btn-primary transform hover:scale-105">
+        <h1 class="text-4xl md:text-6xl lg:text-7xl font-extrabold text-white mb-6 tracking-tight leading-tight">
+            One Pill. One Dose.<br><span class="gradient-text">Pure Clarity.</span>
+        </h1>
+        <p class="text-lg md:text-xl max-w-2xl mx-auto mb-10" style="color: #94a3b8;">
+            Legal, fast-acting psychedelic exploration.
+        </p>
+        <div class="flex flex-col sm:flex-row justify-center items-center gap-4 mb-12">
+            <a href="#pricing" class="w-full sm:w-auto px-8 py-4 text-lg text-white font-bold rounded-lg shadow-lg btn-primary" style="text-decoration: none;">
                 Start Your $12.95 Trial
             </a>
-            <a href="#how-it-works" class="w-full sm:w-auto px-8 py-4 text-lg font-semibold text-white border border-slate-600 rounded-lg shadow-md hover:bg-slate-600 transition-colors" style="background-color: #1f1a2e !important;">
+            <a href="#benefits" class="w-full sm:w-auto px-8 py-4 text-lg font-semibold text-white border rounded-lg transition-colors" style="background-color: #1f1a2e; border-color: #475569; text-decoration: none;">
                 Learn More
             </a>
         </div>
-        <div class="mt-16 max-w-sm mx-auto aspect-square relative">
-            <div id="video-container" class="w-full h-full bg-slate-800 rounded-xl overflow-hidden shadow-2xl ring-1 ring-slate-700" style="background-color: #150f24 !important;"></div>
+        <div class="flex justify-center gap-2 mt-8" id="slide-dots">
+            <button class="slide-dot active"></button>
+            <button class="slide-dot"></button>
+            <button class="slide-dot"></button>
+            <button class="slide-dot"></button>
+            <button class="slide-dot"></button>
+            <button class="slide-dot"></button>
         </div>
-        <div id="video-dots" class="text-center mt-6"></div>
     </div>
 </section>
 
@@ -146,7 +154,15 @@ get_header();
                     <li class="flex items-center"><svg class="w-5 h-5 mr-2 text-green-400" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"></path></svg>2 Pills</li>
                     <li class="flex items-center"><svg class="w-5 h-5 mr-2 text-green-400" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"></path></svg>Free Shipping</li>
                 </ul>
-                <button class="w-full mt-auto btn-primary text-white font-semibold py-4 rounded-lg">Add to Cart</button>
+                <div class="mt-auto">
+                    <div class="flex items-center justify-center gap-2 mb-4">
+                        <span class="text-slate-400 text-sm mr-2">Quantity:</span>
+                        <button class="quantity-btn" onclick="updateQty('trial', -1)">-</button>
+                        <input type="text" id="qty-trial" class="quantity-input" value="1" readonly>
+                        <button class="quantity-btn" onclick="updateQty('trial', 1)">+</button>
+                    </div>
+                    <button onclick="addToCart('trial', 'Trial Pack', 12.95)" class="w-full btn-primary text-white font-semibold py-4 rounded-lg text-center block">Add to Cart</button>
+                </div>
             </div>
 
             <!-- Dynamic Purchase Card (Protocol & One-Time) -->
@@ -169,20 +185,35 @@ get_header();
                         <div class="p-4 rounded-lg border border-sky-500/20" style="background-color: #1a1329 !important;">
                             <p class="font-bold text-white">Explorer Box <span class="text-xs text-slate-400 font-normal ml-1">(10 Pills)</span></p>
                             <p class="mb-3"><span class="text-2xl font-bold text-white">$47.56</span> <span class="text-slate-400 text-sm">/ mo ($4.76/pill)</span></p>
-                            <button class="w-full btn-primary text-white text-sm font-semibold rounded-lg py-2">Add</button>
+                            <div class="flex items-center gap-2">
+                                <button class="quantity-btn" onclick="updateQty('exp', -1)">-</button>
+                                <input type="text" id="qty-exp" class="quantity-input" value="1" readonly>
+                                <button class="quantity-btn" onclick="updateQty('exp', 1)">+</button>
+                                <button onclick="addToCart('exp', 'Explorer Box', 47.56)" class="flex-1 btn-primary text-white text-sm font-semibold rounded-lg py-2">Add</button>
+                            </div>
                         </div>
                         <!-- Protocol 30 -->
                         <div class="p-4 rounded-lg border border-sky-500/20 relative overflow-hidden" style="background-color: #1a1329 !important;">
                             <div class="absolute top-0 right-0 bg-sky-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-bl">RECOMMENDED</div>
                             <p class="font-bold text-white">Optimizer Box <span class="text-xs text-slate-400 font-normal ml-1">(30 Pills)</span></p>
                             <p class="mb-3"><span class="text-2xl font-bold text-white">$128.31</span> <span class="text-slate-400 text-sm">/ mo ($4.28/pill)</span></p>
-                            <button class="w-full btn-primary text-white text-sm font-semibold rounded-lg py-2">Add</button>
+                            <div class="flex items-center gap-2">
+                                <button class="quantity-btn" onclick="updateQty('opt', -1)">-</button>
+                                <input type="text" id="qty-opt" class="quantity-input" value="1" readonly>
+                                <button class="quantity-btn" onclick="updateQty('opt', 1)">+</button>
+                                <button onclick="addToCart('opt', 'Optimizer Box', 128.31)" class="flex-1 btn-primary text-white text-sm font-semibold rounded-lg py-2">Add</button>
+                            </div>
                         </div>
                         <!-- Protocol 60 -->
                         <div class="p-4 rounded-lg border border-sky-500/20" style="background-color: #1a1329 !important;">
                             <p class="font-bold text-white">Master Box <span class="text-xs text-slate-400 font-normal ml-1">(60 Pills)</span></p>
                             <p class="mb-3"><span class="text-2xl font-bold text-white">$217.56</span> <span class="text-slate-400 text-sm">/ mo ($3.63/pill)</span></p>
-                            <button class="w-full btn-primary text-white text-sm font-semibold rounded-lg py-2">Add</button>
+                            <div class="flex items-center gap-2">
+                                <button class="quantity-btn" onclick="updateQty('master', -1)">-</button>
+                                <input type="text" id="qty-master" class="quantity-input" value="1" readonly>
+                                <button class="quantity-btn" onclick="updateQty('master', 1)">+</button>
+                                <button onclick="addToCart('master', 'Master Box', 217.56)" class="flex-1 btn-primary text-white text-sm font-semibold rounded-lg py-2">Add</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -196,20 +227,35 @@ get_header();
                         <div class="p-4 rounded-lg border border-sky-500/20" style="background-color: #1a1329 !important;">
                             <p class="font-bold text-white">10 Pills <span class="text-xs text-slate-400 font-normal ml-1">(One-Time)</span></p>
                             <p class="mb-3"><span class="text-2xl font-bold text-white">$55.95</span> <span class="text-slate-400 text-sm">($5.60/pill)</span></p>
-                            <button class="w-full btn-primary text-white text-sm font-semibold rounded-lg py-2">Add</button>
+                            <div class="flex items-center gap-2">
+                                <button class="quantity-btn" onclick="updateQty('ot10', -1)">-</button>
+                                <input type="text" id="qty-ot10" class="quantity-input" value="1" readonly>
+                                <button class="quantity-btn" onclick="updateQty('ot10', 1)">+</button>
+                                <button onclick="addToCart('ot10', '10 Pills (One-Time)', 55.95)" class="flex-1 btn-primary text-white text-sm font-semibold rounded-lg py-2">Add</button>
+                            </div>
                         </div>
                         <!-- One-Time 30 -->
                         <div class="p-4 rounded-lg border border-sky-500/20 relative overflow-hidden" style="background-color: #1a1329 !important;">
                             <div class="absolute top-0 right-0 bg-sky-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-bl">POPULAR</div>
                             <p class="font-bold text-white">30 Pills <span class="text-xs text-slate-400 font-normal ml-1">(One-Time)</span></p>
                             <p class="mb-3"><span class="text-2xl font-bold text-white">$150.95</span> <span class="text-slate-400 text-sm">($5.03/pill)</span></p>
-                            <button class="w-full btn-primary text-white text-sm font-semibold rounded-lg py-2">Add</button>
+                            <div class="flex items-center gap-2">
+                                <button class="quantity-btn" onclick="updateQty('ot30', -1)">-</button>
+                                <input type="text" id="qty-ot30" class="quantity-input" value="1" readonly>
+                                <button class="quantity-btn" onclick="updateQty('ot30', 1)">+</button>
+                                <button onclick="addToCart('ot30', '30 Pills (One-Time)', 150.95)" class="flex-1 btn-primary text-white text-sm font-semibold rounded-lg py-2">Add</button>
+                            </div>
                         </div>
                         <!-- One-Time 60 -->
                         <div class="p-4 rounded-lg border border-sky-500/20" style="background-color: #1a1329 !important;">
                             <p class="font-bold text-white">60 Pills <span class="text-xs text-slate-400 font-normal ml-1">(One-Time)</span></p>
                             <p class="mb-3"><span class="text-2xl font-bold text-white">$255.95</span> <span class="text-slate-400 text-sm">($4.27/pill)</span></p>
-                            <button class="w-full btn-primary text-white text-sm font-semibold rounded-lg py-2">Add</button>
+                            <div class="flex items-center gap-2">
+                                <button class="quantity-btn" onclick="updateQty('ot60', -1)">-</button>
+                                <input type="text" id="qty-ot60" class="quantity-input" value="1" readonly>
+                                <button class="quantity-btn" onclick="updateQty('ot60', 1)">+</button>
+                                <button onclick="addToCart('ot60', '60 Pills (One-Time)', 255.95)" class="flex-1 btn-primary text-white text-sm font-semibold rounded-lg py-2">Add</button>
+                            </div>
                         </div>
                     </div>
                 </div>
