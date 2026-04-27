@@ -155,13 +155,13 @@ get_header();
                 <!-- Toggle Switch -->
                 <div class="flex justify-center mb-8">
                     <div class="bg-slate-900 p-1 rounded-full inline-flex relative w-64 border border-slate-700" style="background-color: #0a0514 !important;">
-                        <button class="relative z-10 w-1/2 py-2 text-sm font-bold text-white transition-colors" style="background-color: #1a1329; border-radius: 9999px;">The Protocol</button>
-                        <button class="relative z-10 w-1/2 py-2 text-sm font-bold text-slate-400 hover:text-white transition-colors">One-Time</button>
+                        <button id="btn-protocol" onclick="switchPurchaseTab('protocol')" class="relative z-10 w-1/2 py-2 text-sm font-bold text-white transition-colors" style="background-color: #1a1329; border-radius: 9999px;">The Protocol</button>
+                        <button id="btn-onetime" onclick="switchPurchaseTab('onetime')" class="relative z-10 w-1/2 py-2 text-sm font-bold text-slate-400 hover:text-white transition-colors">One-Time</button>
                     </div>
                 </div>
 
                 <!-- Protocol Container -->
-                <div class="flex flex-col flex-grow">
+                <div id="protocol-container" class="flex flex-col flex-grow">
                     <h3 class="text-2xl font-bold text-white mb-2">The Protocol <span class="text-xs font-bold text-sky-400 bg-sky-400/10 px-2 py-1 rounded ml-2 align-middle">SAVE 15%</span></h3>
                     <p class="text-slate-400 mb-6">A guided Monthly Wellness Protocol.</p>
                     <div class="space-y-4 mt-auto">
@@ -182,6 +182,33 @@ get_header();
                         <div class="p-4 rounded-lg border border-sky-500/20" style="background-color: #1a1329 !important;">
                             <p class="font-bold text-white">Master Box <span class="text-xs text-slate-400 font-normal ml-1">(60 Pills)</span></p>
                             <p class="mb-3"><span class="text-2xl font-bold text-white">$217.56</span> <span class="text-slate-400 text-sm">/ mo ($3.63/pill)</span></p>
+                            <button class="w-full btn-primary text-white text-sm font-semibold rounded-lg py-2">Add</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- One-Time Container -->
+                <div id="onetime-container" class="flex flex-col flex-grow hidden">
+                    <h3 class="text-2xl font-bold text-white mb-2">One-Time Purchase</h3>
+                    <p class="text-slate-400 mb-6">Buy once, no subscription.</p>
+                    <div class="space-y-4 mt-auto">
+                        <!-- One-Time 10 -->
+                        <div class="p-4 rounded-lg border border-sky-500/20" style="background-color: #1a1329 !important;">
+                            <p class="font-bold text-white">10 Pills <span class="text-xs text-slate-400 font-normal ml-1">(One-Time)</span></p>
+                            <p class="mb-3"><span class="text-2xl font-bold text-white">$55.95</span> <span class="text-slate-400 text-sm">($5.60/pill)</span></p>
+                            <button class="w-full btn-primary text-white text-sm font-semibold rounded-lg py-2">Add</button>
+                        </div>
+                        <!-- One-Time 30 -->
+                        <div class="p-4 rounded-lg border border-sky-500/20 relative overflow-hidden" style="background-color: #1a1329 !important;">
+                            <div class="absolute top-0 right-0 bg-sky-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-bl">POPULAR</div>
+                            <p class="font-bold text-white">30 Pills <span class="text-xs text-slate-400 font-normal ml-1">(One-Time)</span></p>
+                            <p class="mb-3"><span class="text-2xl font-bold text-white">$150.95</span> <span class="text-slate-400 text-sm">($5.03/pill)</span></p>
+                            <button class="w-full btn-primary text-white text-sm font-semibold rounded-lg py-2">Add</button>
+                        </div>
+                        <!-- One-Time 60 -->
+                        <div class="p-4 rounded-lg border border-sky-500/20" style="background-color: #1a1329 !important;">
+                            <p class="font-bold text-white">60 Pills <span class="text-xs text-slate-400 font-normal ml-1">(One-Time)</span></p>
+                            <p class="mb-3"><span class="text-2xl font-bold text-white">$255.95</span> <span class="text-slate-400 text-sm">($4.27/pill)</span></p>
                             <button class="w-full btn-primary text-white text-sm font-semibold rounded-lg py-2">Add</button>
                         </div>
                     </div>

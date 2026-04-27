@@ -79,4 +79,30 @@ document.addEventListener('DOMContentLoaded', function() {
         observer.observe(el);
     });
 
+    // Purchase tab toggle (Protocol vs One-Time)
+    window.switchPurchaseTab = function(tab) {
+        const protocolContainer = document.getElementById('protocol-container');
+        const onetimeContainer = document.getElementById('onetime-container');
+        const btnProtocol = document.getElementById('btn-protocol');
+        const btnOnetime = document.getElementById('btn-onetime');
+        
+        if (!protocolContainer || !onetimeContainer) return;
+        
+        if (tab === 'protocol') {
+            protocolContainer.classList.remove('hidden');
+            onetimeContainer.classList.add('hidden');
+            btnProtocol.style.backgroundColor = '#1a1329';
+            btnProtocol.style.color = '#ffffff';
+            btnOnetime.style.backgroundColor = 'transparent';
+            btnOnetime.style.color = '#94a3b8';
+        } else {
+            protocolContainer.classList.add('hidden');
+            onetimeContainer.classList.remove('hidden');
+            btnOnetime.style.backgroundColor = '#1a1329';
+            btnOnetime.style.color = '#ffffff';
+            btnProtocol.style.backgroundColor = 'transparent';
+            btnProtocol.style.color = '#94a3b8';
+        }
+    };
+
 });
