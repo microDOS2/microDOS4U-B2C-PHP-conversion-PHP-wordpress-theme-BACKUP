@@ -25,27 +25,27 @@ get_header();
         <div class="features-grid">
             <div class="card">
                 <h3>Banyu's Breakthrough</h3>
-                <p>"A friend mentioned something new: <span style="color:#000000">microDOS(2)</span>. Not a wild escape..."</p>
+                <p>"A friend mentioned something new: <span style="color:#44f80c">microDOS(2)</span>. Not a wild escape..."</p>
                 <a href="#" class="btn btn-secondary mt-2">Read Banyu's Story</a>
             </div>
             <div class="card">
                 <h3>Lena's Discovery</h3>
-                <p>"a company called <span style="color:#000000">microDOS(2)</span>, which seemed to be commercializing..."</p>
+                <p>"A company called <span style="color:#44f80c">microDOS(2)</span>, which seemed to be commercializing..."</p>
                 <a href="#" class="btn btn-secondary mt-2">Read Lena's Story</a>
             </div>
             <div class="card">
                 <h3>Jalen's Journey</h3>
-                <p>"He pointed Jalen to a website: <span style="color:#000000">microDOS4U</span>. That night, Jalen found himself scrolling through the <span style="color:#000000">microDOS4U</span> site..."</p>
+                <p>"He pointed Jalen to a website: <span style="color:#9a02d0">microDOS4U</span>. That night, Jalen found himself scrolling through the <span style="color:#9a02d0">microDOS4U</span> site..."</p>
                 <a href="#" class="btn btn-secondary mt-2">Read Jalen's Story</a>
             </div>
             <div class="card">
                 <h3>Joe's Path</h3>
-                <p>"'ad: <span style="color:#000000">microDOS(2)</span> | Precision Psychedelics, Simplified.' <span style="color:#000000">microDOS(2)</span> hadn't given him the answers..."</p>
+                <p>"Ad: <span style="color:#44f80c">microDOS(2)</span> | Precision Psychedelics, Simplified. <span style="color:#44f80c">microDOS(2)</span> hadn't given him the answers..."</p>
                 <a href="#" class="btn btn-secondary mt-2">Read Joe's Story</a>
             </div>
             <div class="card">
                 <h3>Eleanor's Exploration</h3>
-                <p>"Eleanor found the website: <span style="color:#000000">microDOS4U</span>. She read about..."</p>
+                <p>"Eleanor found the website: <span style="color:#9a02d0">microDOS4U</span>. She read about..."</p>
                 <a href="#" class="btn btn-secondary mt-2">Read Eleanor's Story</a>
             </div>
             <div class="card">
