@@ -151,11 +151,11 @@ get_header();
                 <div class="mt-auto">
                     <div class="flex items-center justify-center gap-2 mb-4">
                         <span class="text-slate-400 text-sm mr-2">Quantity:</span>
-                        <button class="quantity-btn" onclick="updateQty('trial', -1)">-</button>
+                        <button class="quantity-btn" onclick="adjustQuantity('trial', -1)">-</button>
                         <input type="text" id="qty-trial" class="quantity-input" value="1" readonly>
-                        <button class="quantity-btn" onclick="updateQty('trial', 1)">+</button>
+                        <button class="quantity-btn" onclick="adjustQuantity('trial', 1)">+</button>
                     </div>
-                    <button onclick="addToCart('trial', 'Trial Pack', 12.95)" class="w-full btn-primary text-white font-semibold py-4 rounded-lg text-center block">Add to Cart</button>
+                    <button onclick="addToCart('trial')" class="w-full btn-primary text-white font-semibold py-4 rounded-lg text-center block">Add to Cart</button>
                 </div>
             </div>
 
@@ -181,10 +181,10 @@ get_header();
                             <p class="font-bold text-white">Explorer Box <span class="text-xs text-slate-400 font-normal ml-1">(10 Pills)</span></p>
                             <p class="mb-3"><span class="text-2xl font-bold text-white">$47.56</span> <span class="text-slate-400 text-sm">/ mo ($4.76/pill)</span></p>
                             <div class="flex items-center gap-2">
-                                <button class="quantity-btn" onclick="updateQty('protocol_10', -1)">-</button>
+                                <button class="quantity-btn" onclick="adjustQuantity('protocol_10', -1)">-</button>
                                 <input type="text" id="qty-protocol_10" class="quantity-input" value="1" readonly>
-                                <button class="quantity-btn" onclick="updateQty('protocol_10', 1)">+</button>
-                                <button onclick="addToCart('protocol_10', 'Explorer Box', 47.56)" class="flex-1 btn-primary text-white text-sm font-semibold rounded-lg py-2">Add</button>
+                                <button class="quantity-btn" onclick="adjustQuantity('protocol_10', 1)">+</button>
+                                <button onclick="addToCart('protocol_10')" class="flex-1 btn-primary text-white text-sm font-semibold rounded-lg py-2">Add</button>
                             </div>
                         </div>
                         <!-- Protocol 30 -->
@@ -193,10 +193,10 @@ get_header();
                             <p class="font-bold text-white">Optimizer Box <span class="text-xs text-slate-400 font-normal ml-1">(30 Pills)</span></p>
                             <p class="mb-3"><span class="text-2xl font-bold text-white">$128.31</span> <span class="text-slate-400 text-sm">/ mo ($4.28/pill)</span></p>
                             <div class="flex items-center gap-2">
-                                <button class="quantity-btn" onclick="updateQty('protocol_30', -1)">-</button>
+                                <button class="quantity-btn" onclick="adjustQuantity('protocol_30', -1)">-</button>
                                 <input type="text" id="qty-protocol_30" class="quantity-input" value="1" readonly>
-                                <button class="quantity-btn" onclick="updateQty('protocol_30', 1)">+</button>
-                                <button onclick="addToCart('protocol_30', 'Optimizer Box', 128.31)" class="flex-1 btn-primary text-white text-sm font-semibold rounded-lg py-2">Add</button>
+                                <button class="quantity-btn" onclick="adjustQuantity('protocol_30', 1)">+</button>
+                                <button onclick="addToCart('protocol_30')" class="flex-1 btn-primary text-white text-sm font-semibold rounded-lg py-2">Add</button>
                             </div>
                         </div>
                         <!-- Protocol 60 -->
@@ -204,10 +204,10 @@ get_header();
                             <p class="font-bold text-white">Master Box <span class="text-xs text-slate-400 font-normal ml-1">(60 Pills)</span></p>
                             <p class="mb-3"><span class="text-2xl font-bold text-white">$217.56</span> <span class="text-slate-400 text-sm">/ mo ($3.63/pill)</span></p>
                             <div class="flex items-center gap-2">
-                                <button class="quantity-btn" onclick="updateQty('protocol_60', -1)">-</button>
+                                <button class="quantity-btn" onclick="adjustQuantity('protocol_60', -1)">-</button>
                                 <input type="text" id="qty-protocol_60" class="quantity-input" value="1" readonly>
-                                <button class="quantity-btn" onclick="updateQty('protocol_60', 1)">+</button>
-                                <button onclick="addToCart('protocol_60', 'Master Box', 217.56)" class="flex-1 btn-primary text-white text-sm font-semibold rounded-lg py-2">Add</button>
+                                <button class="quantity-btn" onclick="adjustQuantity('protocol_60', 1)">+</button>
+                                <button onclick="addToCart('protocol_60')" class="flex-1 btn-primary text-white text-sm font-semibold rounded-lg py-2">Add</button>
                             </div>
                         </div>
                     </div>
@@ -223,10 +223,10 @@ get_header();
                             <p class="font-bold text-white">10 Pills <span class="text-xs text-slate-400 font-normal ml-1">(One-Time)</span></p>
                             <p class="mb-3"><span class="text-2xl font-bold text-white">$55.95</span> <span class="text-slate-400 text-sm">($5.60/pill)</span></p>
                             <div class="flex items-center gap-2">
-                                <button class="quantity-btn" onclick="updateQty('onetime_10', -1)">-</button>
+                                <button class="quantity-btn" onclick="adjustQuantity('onetime_10', -1)">-</button>
                                 <input type="text" id="qty-onetime_10" class="quantity-input" value="1" readonly>
-                                <button class="quantity-btn" onclick="updateQty('onetime_10', 1)">+</button>
-                                <button onclick="addToCart('onetime_10', '10 Pills (One-Time)', 55.95)" class="flex-1 btn-primary text-white text-sm font-semibold rounded-lg py-2">Add</button>
+                                <button class="quantity-btn" onclick="adjustQuantity('onetime_10', 1)">+</button>
+                                <button onclick="addToCart('onetime_10')" class="flex-1 btn-primary text-white text-sm font-semibold rounded-lg py-2">Add</button>
                             </div>
                         </div>
                         <!-- One-Time 30 -->
@@ -235,10 +235,10 @@ get_header();
                             <p class="font-bold text-white">30 Pills <span class="text-xs text-slate-400 font-normal ml-1">(One-Time)</span></p>
                             <p class="mb-3"><span class="text-2xl font-bold text-white">$150.95</span> <span class="text-slate-400 text-sm">($5.03/pill)</span></p>
                             <div class="flex items-center gap-2">
-                                <button class="quantity-btn" onclick="updateQty('onetime_30', -1)">-</button>
+                                <button class="quantity-btn" onclick="adjustQuantity('onetime_30', -1)">-</button>
                                 <input type="text" id="qty-onetime_30" class="quantity-input" value="1" readonly>
-                                <button class="quantity-btn" onclick="updateQty('onetime_30', 1)">+</button>
-                                <button onclick="addToCart('onetime_30', '30 Pills (One-Time)', 150.95)" class="flex-1 btn-primary text-white text-sm font-semibold rounded-lg py-2">Add</button>
+                                <button class="quantity-btn" onclick="adjustQuantity('onetime_30', 1)">+</button>
+                                <button onclick="addToCart('onetime_30')" class="flex-1 btn-primary text-white text-sm font-semibold rounded-lg py-2">Add</button>
                             </div>
                         </div>
                         <!-- One-Time 60 -->
@@ -246,10 +246,10 @@ get_header();
                             <p class="font-bold text-white">60 Pills <span class="text-xs text-slate-400 font-normal ml-1">(One-Time)</span></p>
                             <p class="mb-3"><span class="text-2xl font-bold text-white">$255.95</span> <span class="text-slate-400 text-sm">($4.27/pill)</span></p>
                             <div class="flex items-center gap-2">
-                                <button class="quantity-btn" onclick="updateQty('onetime_60', -1)">-</button>
+                                <button class="quantity-btn" onclick="adjustQuantity('onetime_60', -1)">-</button>
                                 <input type="text" id="qty-onetime_60" class="quantity-input" value="1" readonly>
-                                <button class="quantity-btn" onclick="updateQty('onetime_60', 1)">+</button>
-                                <button onclick="addToCart('onetime_60', '60 Pills (One-Time)', 255.95)" class="flex-1 btn-primary text-white text-sm font-semibold rounded-lg py-2">Add</button>
+                                <button class="quantity-btn" onclick="adjustQuantity('onetime_60', 1)">+</button>
+                                <button onclick="addToCart('onetime_60')" class="flex-1 btn-primary text-white text-sm font-semibold rounded-lg py-2">Add</button>
                             </div>
                         </div>
                     </div>

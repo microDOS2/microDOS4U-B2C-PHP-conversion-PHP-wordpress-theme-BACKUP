@@ -5,14 +5,30 @@
 
 // State tax rates for checkout
 const stateTaxRates = {
-    'AL': 0.04, 'AK': 0, 'AZ': 0.056, 'AR': 0.065, 'CA': 0.0725, 'CO': 0.029,
-    'CT': 0.0635, 'DE': 0, 'FL': 0.06, 'GA': 0.04, 'HI': 0.04, 'ID': 0.06,
-    'IL': 0.0625, 'IN': 0.07, 'IA': 0.06, 'KS': 0.065, 'KY': 0.06, 'LA': 0.0445,
-    'ME': 0.055, 'MD': 0.06, 'MA': 0.0625, 'MI': 0.06, 'MN': 0.06875, 'MS': 0.07,
-    'MO': 0.04225, 'MT': 0, 'NE': 0.055, 'NV': 0.0685, 'NH': 0, 'NJ': 0.06625,
-    'NM': 0.05125, 'NY': 0.04, 'NC': 0.0475, 'ND': 0.05, 'OH': 0.0575, 'OK': 0.045,
-    'OR': 0, 'PA': 0.06, 'RI': 0.07, 'SC': 0.06, 'SD': 0.045, 'TN': 0.07, 'TX': 0.0625,
-    'UT': 0.0485, 'VT': 0.06, 'VA': 0.043, 'WA': 0.065, 'WV': 0.06, 'WI': 0.05, 'WY': 0.04, 'DC': 0.06
+    'AL': 0.09, 'AK': 0.00, 'AZ': 0.084, 'AR': 0.095,
+    'CA': 0.083, 'CO': 0.079, 'CT': 0.064, 'DE': 0.00,
+    'FL': 0.07, 'GA': 0.074, 'HI': 0.044, 'ID': 0.06,
+    'IL': 0.088, 'IN': 0.07, 'IA': 0.068, 'KS': 0.086,
+    'KY': 0.06, 'LA': 0.10, 'ME': 0.055, 'MD': 0.06,
+    'MA': 0.0625, 'MI': 0.06, 'MN': 0.074, 'MS': 0.07,
+    'MO': 0.084, 'MT': 0.00, 'NE': 0.068, 'NV': 0.082,
+    'NH': 0.00, 'NJ': 0.066, 'NM': 0.078, 'NY': 0.084,
+    'NC': 0.07, 'ND': 0.068, 'OH': 0.072, 'OK': 0.089,
+    'OR': 0.00, 'PA': 0.063, 'RI': 0.07, 'SC': 0.072,
+    'SD': 0.06, 'TN': 0.10, 'TX': 0.082, 'UT': 0.071,
+    'VT': 0.06, 'VA': 0.057, 'WA': 0.088, 'WV': 0.06,
+    'WI': 0.054, 'WY': 0.054, 'DC': 0.06
+};
+
+// Products
+const products = {
+    trial: { name: 'Trial Pack', price: 12.95 },
+    protocol_10: { name: 'Explorer Box Protocol (10 Pills/mo)', price: 47.56 },
+    protocol_30: { name: 'Optimizer Box Protocol (30 Pills/mo)', price: 128.31 },
+    protocol_60: { name: 'Master Box Protocol (60 Pills/mo)', price: 217.56 },
+    onetime_10: { name: '10 Pills (One-Time)', price: 55.95 },
+    onetime_30: { name: '30 Pills (One-Time)', price: 150.95 },
+    onetime_60: { name: '60 Pills (One-Time)', price: 255.95 }
 };
 
 // Cart
@@ -34,18 +50,43 @@ function saveCart() {
     localStorage.setItem('microdos_cart', JSON.stringify(cart));
 }
 
-function addToCart(id, name, price) {
-    const qtyInput = document.getElementById('qty-' + id);
-    const qty = qtyInput ? parseInt(qtyInput.value) : 1;
-    const existing = cart.find(item => item.id === id);
-    if (existing) {
-        existing.quantity += qty;
+function addToCart(planId) {
+    const quantity = parseInt(document.getElementById('qty-' + planId).value);
+    const product = products[planId];
+
+    const existingItem = cart.find(item => item.id === planId);
+
+    if (existingItem) {
+        const newQty = existingItem.quantity + quantity;
+        if (newQty <= 10) {
+            existingItem.quantity = newQty;
+        } else {
+            alert('Maximum quantity per item is 10');
+            return;
+        }
     } else {
-        cart.push({ id, name, price, quantity: qty });
+        cart.push({
+            id: planId,
+            name: product.name,
+            price: product.price,
+            quantity: quantity
+        });
     }
+
     saveCart();
     renderCart();
-    openCart();
+    showToast(product.name + ' added to cart!');
+}
+
+function showToast(message) {
+    const toast = document.createElement('div');
+    toast.className = 'fixed bottom-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50 animate-fade-in';
+    toast.textContent = message;
+    document.body.appendChild(toast);
+
+    setTimeout(function() {
+        toast.remove();
+    }, 3000);
 }
 
 function removeFromCart(id) {
@@ -171,13 +212,12 @@ function toggleBillingAddress() {
 }
 
 // Quantity Management
-function updateQty(id, change) {
-    const input = document.getElementById('qty-' + id);
+function adjustQuantity(planId, change) {
+    const input = document.getElementById('qty-' + planId);
     if (!input) return;
-    let val = parseInt(input.value) + change;
-    if (val < 1) val = 1;
-    if (val > 99) val = 99;
-    input.value = val;
+    let value = parseInt(input.value) + change;
+    value = Math.max(1, Math.min(10, value));
+    input.value = value;
 }
 
 // Video Rotator
