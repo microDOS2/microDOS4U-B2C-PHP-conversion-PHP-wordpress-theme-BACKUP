@@ -81,12 +81,24 @@ get_header();
                     <span style="font-size:12px;opacity:0.85;font-weight:400;margin-top:4px;">The Day the Colors Came Back</span>
                 </a>
                 <a href="<?php echo esc_url(home_url('/user-stories')); ?>" class="text-center py-2 px-4 rounded-lg transition duration-300 flex flex-col justify-center items-center" style="background: linear-gradient(90deg, #38bdf8, #8b5cf6); color: #fff; max-width:250px;">
-                    <span style="font-size:16px;">Eleanor's Story</span>
+                    <span style="font-size:16px;">Elanor's Story</span>
                     <span style="font-size:12px;opacity:0.85;font-weight:400;margin-top:4px;">A Quiet Revolution</span>
                 </a>
                 <a href="<?php echo esc_url(home_url('/user-stories')); ?>" class="text-center py-2 px-4 rounded-lg transition duration-300 flex flex-col justify-center items-center" style="background: linear-gradient(90deg, #38bdf8, #8b5cf6); color: #fff; max-width:250px;">
                     <span style="font-size:16px;">Jalen's Story</span>
-                    <span style="font-size:12px;opacity:0.85;font-weight:400;margin-top:4px;">Quiet Score</span>
+                    <span style="font-size:12px;opacity:0.85;font-weight:400;margin-top:4px;">A Journey Back to Self</span>
+                </a>
+                <a href="<?php echo esc_url(home_url('/user-stories')); ?>" class="text-center py-2 px-4 rounded-lg transition duration-300 flex flex-col justify-center items-center" style="background: linear-gradient(90deg, #38bdf8, #8b5cf6); color: #fff; max-width:250px;">
+                    <span style="font-size:16px;">Lena's Story</span>
+                    <span style="font-size:12px;opacity:0.85;font-weight:400;margin-top:4px;">Finding Flow in the Everyday</span>
+                </a>
+                <a href="<?php echo esc_url(home_url('/user-stories')); ?>" class="text-center py-2 px-4 rounded-lg transition duration-300 flex flex-col justify-center items-center" style="background: linear-gradient(90deg, #38bdf8, #8b5cf6); color: #fff; max-width:250px;">
+                    <span style="font-size:16px;">Mateo's Story</span>
+                    <span style="font-size:12px;opacity:0.85;font-weight:400;margin-top:4px;">The Professor's Spark</span>
+                </a>
+                <a href="<?php echo esc_url(home_url('/user-stories')); ?>" class="text-center py-2 px-4 rounded-lg transition duration-300 flex flex-col justify-center items-center" style="background: linear-gradient(90deg, #38bdf8, #8b5cf6); color: #fff; max-width:250px;">
+                    <span style="font-size:16px;">Banyu's Story</span>
+                    <span style="font-size:12px;opacity:0.85;font-weight:400;margin-top:4px;">Blueprint for Clarity</span>
                 </a>
             </div>
         </div>
