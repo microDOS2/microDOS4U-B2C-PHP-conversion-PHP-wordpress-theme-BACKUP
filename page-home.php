@@ -216,6 +216,7 @@ get_header();
                 <!-- One-Time Container -->
                 <div id="content-onetime" class="hidden flex-col flex-grow transition-opacity duration-300">
                     <h3 class="text-2xl font-bold text-white mb-2">One-Time Purchase</h3>
+                    <p class="text-slate-400 mb-6">No commitment. Pay as you go.</p>
                     <p class="text-slate-400 mb-6">Buy once, no subscription.</p>
                     <div class="space-y-4 mt-auto">
                         <!-- One-Time 10 -->
