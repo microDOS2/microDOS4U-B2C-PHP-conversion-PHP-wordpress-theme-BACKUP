@@ -62,9 +62,11 @@ get_header();
     </section>
 
     <!-- Potential Benefits -->
-    <section class="section" id="benefits" style="padding:32px 0 68px 0;">
+    <section class="section" id="benefits" style="padding:32px 0 32px 0;">
         <div class="container" style="max-width:1100px;margin:auto;padding:0 24px;">
-            <h3 style="color:#fff;font-weight:800;font-size:24px;margin-bottom:16px;border-bottom:1px solid #1a1329;padding-bottom:8px;">Potential Benefits of Microdosing</h3>
+            <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:16px;margin-bottom:16px;">
+                <h3 style="color:#fff;font-weight:800;font-size:24px;margin:0;border-bottom:1px solid #1a1329;padding-bottom:8px;">Potential Benefits of Microdosing</h3>
+            </div>
             <p style="color:#94a3b8;margin-bottom:16px;">While individual experiences vary, users often microdose to seek:</p>
             <ul style="color:#94a3b8;padding-left:20px;line-height:1.8;">
                 <li>Enhanced focus and concentration</li>
@@ -73,6 +75,45 @@ get_header();
                 <li>Greater presence and sensory awareness</li>
                 <li>Reduced anxiety in social or professional settings</li>
             </ul>
+            <div style="display:grid;grid-template-columns:repeat(2, 1fr);gap:16px;margin-top:24px;">
+                <a href="<?php echo esc_url(home_url('/user-stories')); ?>" class="text-center py-2 px-4 rounded-lg transition duration-300 flex flex-col justify-center items-center" style="background: linear-gradient(90deg, #38bdf8, #8b5cf6); color: #fff; max-width:250px;">
+                    <span style="font-size:16px;">Joe's Story</span>
+                    <span style="font-size:12px;opacity:0.85;font-weight:400;margin-top:4px;">The Day the Colors Came Back</span>
+                </a>
+                <a href="<?php echo esc_url(home_url('/user-stories')); ?>" class="text-center py-2 px-4 rounded-lg transition duration-300 flex flex-col justify-center items-center" style="background: linear-gradient(90deg, #38bdf8, #8b5cf6); color: #fff; max-width:250px;">
+                    <span style="font-size:16px;">Eleanor's Story</span>
+                    <span style="font-size:12px;opacity:0.85;font-weight:400;margin-top:4px;">A Quiet Revolution</span>
+                </a>
+                <a href="<?php echo esc_url(home_url('/user-stories')); ?>" class="text-center py-2 px-4 rounded-lg transition duration-300 flex flex-col justify-center items-center" style="background: linear-gradient(90deg, #38bdf8, #8b5cf6); color: #fff; max-width:250px;">
+                    <span style="font-size:16px;">Jalen's Story</span>
+                    <span style="font-size:12px;opacity:0.85;font-weight:400;margin-top:4px;">Quiet Score</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Safety & Use Notes -->
+    <section class="section" style="padding:32px 0 32px 0;">
+        <div class="container" style="max-width:1100px;margin:auto;padding:0 24px;">
+            <div style="background:#150f24;border:1px solid #1a1329;border-radius:12px;padding:24px;">
+                <h3 style="color:#fff;font-weight:800;font-size:24px;margin-bottom:16px;">Safety &amp; Use Notes</h3>
+                <ul style="color:#94a3b8;padding-left:20px;line-height:1.8;">
+                    <li><strong style="color:#fff;">Start Low:</strong> If you are new to Metocin, begin with a light microdose (1/4 tab) to assess your sensitivity.</li>
+                    <li><strong style="color:#fff;">Legal:</strong> 4&#8209;HO&#8209;MET is not federally scheduled in the U.S.; always verify your local laws.</li>
+                    <li><strong style="color:#fff;">Set &amp; setting:</strong> While microdosing is sub-perceptual, be mindful of your environment. Avoid driving until you understand how it affects you.</li>
+                    <li><strong style="color:#fff;">Plan your day:</strong> Effects are subtle but can last ~4 hours.</li>
+                    <li><strong style="color:#fff;">Hydration:</strong> Drink water and avoid mixing with alcohol.</li>
+                    <li><strong style="color:#fff;">Adults only:</strong> Intended for 21+. Consult a healthcare professional if you have medical conditions or take other medications.</li>
+                </ul>
+                <p style="color:#64748b;font-size:14px;margin-top:16px;">This content is for informational purposes only and is not medical advice. These statements have not been evaluated by the FDA.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Order Now CTA -->
+    <section style="padding:0 0 32px 0;text-align:center;">
+        <div class="container" style="max-width:1100px;margin:auto;padding:0 24px;">
+            <a href="<?php echo esc_url(home_url('/#pricing')); ?>" class="inline-block text-white font-bold rounded-lg transition duration-300 shadow-lg transform hover:scale-105" style="background: linear-gradient(90deg, #38bdf8, #8b5cf6); padding: 16px 32px; font-size: 20px;">Order Now</a>
         </div>
     </section>
 </main>

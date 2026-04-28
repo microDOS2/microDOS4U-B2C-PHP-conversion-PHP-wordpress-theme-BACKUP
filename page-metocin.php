@@ -140,6 +140,70 @@ get_header();
             <p style="color:#94a3b8;margin-top:24px;font-size:14px;"><strong style="color:#fff;">Equivalence:</strong> 1 tablet ≈ the experience of 500 mg dried mushrooms. Quarter‑ or half‑tab microdosing provides gentler effects.</p>
         </div>
     </section>
+
+    <!-- Further Reading Section -->
+    <section class="section" style="padding:32px 0 0 0;">
+        <div class="container" style="max-width:1100px;margin:auto;padding:0 24px;">
+            <div style="background:#150f24;border:1px solid #1a1329;border-radius:12px;padding:24px;text-align:center;">
+                <h3 style="color:#fff;font-weight:800;font-size:24px;margin-bottom:16px;">Further Reading</h3>
+                <a href="<?php echo esc_url(home_url('/articles-studies')); ?>" class="inline-block text-white font-bold py-3 px-6 rounded-lg transition duration-300 shadow-lg transform hover:scale-105 mr-4" style="background: linear-gradient(90deg, #38bdf8, #8b5cf6);" target="_blank">Articles &amp; Studies</a>
+                <a href="<?php echo esc_url(home_url('/user-stories')); ?>" class="inline-block text-white font-bold py-3 px-6 rounded-lg transition duration-300 shadow-lg transform hover:scale-105" style="background: linear-gradient(90deg, #38bdf8, #8b5cf6);" target="_blank">User Stories</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- What does it feel like? -->
+    <section class="section" style="padding:32px 0 0 0;">
+        <div class="container" style="max-width:1100px;margin:auto;padding:0 24px;">
+            <div style="background:#150f24;border:1px solid #1a1329;border-radius:12px;padding:24px;">
+                <h3 style="color:#fff;font-weight:800;font-size:24px;margin-bottom:16px;">What does it feel like?</h3>
+                <div style="display:grid;gap:16px;grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));">
+                    <div style="background:#0a0514;border:1px solid #1a1329;border-radius:8px;padding:16px;text-align:center;">
+                        <p style="color:#cbd5e1;margin:0;"><strong style="color:#fff;font-weight:800;">Euphoria</strong> and mood lift</p>
+                    </div>
+                    <div style="background:#0a0514;border:1px solid #1a1329;border-radius:8px;padding:16px;text-align:center;">
+                        <p style="color:#cbd5e1;margin:0;">Tingling somatic sensations</p>
+                    </div>
+                    <div style="background:#0a0514;border:1px solid #1a1329;border-radius:8px;padding:16px;text-align:center;">
+                        <p style="color:#cbd5e1;margin:0;">Perceptual enhancement (color, texture)</p>
+                    </div>
+                    <div style="background:#0a0514;border:1px solid #1a1329;border-radius:8px;padding:16px;text-align:center;">
+                        <p style="color:#cbd5e1;margin:0;">Open/closed‑eye visuals</p>
+                    </div>
+                    <div style="background:#0a0514;border:1px solid #1a1329;border-radius:8px;padding:16px;text-align:center;">
+                        <p style="color:#cbd5e1;margin:0;">Synesthesia (mixing of senses)</p>
+                    </div>
+                    <div style="background:#0a0514;border:1px solid #1a1329;border-radius:8px;padding:16px;text-align:center;">
+                        <p style="color:#cbd5e1;margin:0;">Time dilation &amp; cognitive shifts</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Safety & Use Notes -->
+    <section class="section" style="padding:32px 0 32px 0;">
+        <div class="container" style="max-width:1100px;margin:auto;padding:0 24px;">
+            <div style="background:#150f24;border:1px solid #1a1329;border-radius:12px;padding:24px;">
+                <h3 style="color:#fff;font-weight:800;font-size:24px;margin-bottom:16px;">Safety &amp; Use Notes</h3>
+                <ul style="color:#94a3b8;padding-left:20px;line-height:1.8;">
+                    <li><strong style="color:#fff;">Legal:</strong> 4&#8209;HO&#8209;MET is not federally scheduled in the U.S.; verify local laws.</li>
+                    <li><strong style="color:#fff;">Set &amp; setting:</strong> Comfortable, safe environment; avoid driving or operating machinery.</li>
+                    <li><strong style="color:#fff;">Plan your window:</strong> Allocate ~4 hours (onset ~15 min; peak 1.5&#8209;2 hrs).</li>
+                    <li><strong style="color:#fff;">Hydration:</strong> Drink water; avoid alcohol mixing.</li>
+                    <li><strong style="color:#fff;">Adults only:</strong> Intended for 21+; consult a healthcare professional if you have medical conditions or take medications.</li>
+                </ul>
+                <p style="color:#64748b;font-size:14px;margin-top:16px;">These statements have not been evaluated by the FDA. This content is informational and not medical advice.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Order Now CTA -->
+    <section style="padding:0 0 32px 0;text-align:center;">
+        <div class="container" style="max-width:1100px;margin:auto;padding:0 24px;">
+            <a href="<?php echo esc_url(home_url('/#pricing')); ?>" class="inline-block text-white font-bold rounded-lg transition duration-300 shadow-lg transform hover:scale-105" style="background: linear-gradient(90deg, #38bdf8, #8b5cf6); padding: 16px 32px; font-size: 20px;">Order Now</a>
+        </div>
+    </section>
 </main>
 
 <?php
