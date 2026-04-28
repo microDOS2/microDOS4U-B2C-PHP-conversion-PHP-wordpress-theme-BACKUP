@@ -239,93 +239,98 @@ function initVideoRotator() {
 
     if (!container || !title || !sub || !dots) return;
 
-    // Create wrapper styles for thumbnail + play button
-    if (!document.getElementById('video-thumb-styles')) {
-        const style = document.createElement('style');
-        style.id = 'video-thumb-styles';
-        style.textContent = `
-            .video-slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 0.5s ease; z-index: 1; }
-            .video-slide.active { opacity: 1; z-index: 2; }
-            .video-thumb-wrap { position: relative; width: 100%; height: 100%; cursor: pointer; background: #0a0514; border-radius: 8px; overflow: hidden; }
-            .video-thumb-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
-            .video-play-overlay { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(10,5,20,0.3); transition: background 0.3s ease; }
-            .video-thumb-wrap:hover .video-play-overlay { background: rgba(10,5,20,0.15); }
-            .video-play-btn { width: 80px; height: 80px; border-radius: 50%; background: linear-gradient(135deg, #44f80c, #9a02d0, #ff66c4); display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 30px rgba(154,2,208,0.5); transition: transform 0.3s ease, box-shadow 0.3s ease; }
-            .video-thumb-wrap:hover .video-play-btn { transform: scale(1.1); box-shadow: 0 6px 40px rgba(154,2,208,0.7); }
-            .video-play-btn svg { width: 28px; height: 28px; fill: white; margin-left: 4px; }
-            .video-iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; border-radius: 8px; }
-        `;
-        document.head.appendChild(style);
-    }
-
+    // Create slide wrappers with Plyr video embed
     videoData.forEach((d, i) => {
-        // Create slide wrapper
         const slide = document.createElement('div');
         slide.className = 'video-slide' + (i === 0 ? ' active' : '');
         slide.dataset.index = i;
 
-        // Create thumbnail wrapper
-        const thumbWrap = document.createElement('div');
-        thumbWrap.className = 'video-thumb-wrap';
+        // Plyr embed container
+        const plyrDiv = document.createElement('div');
+        plyrDiv.className = 'plyr__video-embed';
+        plyrDiv.id = 'hero-player-' + i;
+        plyrDiv.style.cssText = 'width:100%;height:100%;border-radius:8px;';
 
-        // Thumbnail image from YouTube
-        const thumb = document.createElement('img');
-        thumb.src = `https://img.youtube.com/vi/${d.videoId}/hqdefault.jpg`;
-        thumb.alt = d.title;
-        thumb.loading = i === 0 ? 'eager' : 'lazy';
-        thumbWrap.appendChild(thumb);
+        // YouTube iframe for Plyr
+        const iframe = document.createElement('iframe');
+        iframe.src = 'https://www.youtube.com/embed/' + d.videoId + '?origin=' + encodeURIComponent(window.location.origin) + '&iv_load_policy=3&modestbranding=1&playsinline=1&rel=0&enablejsapi=1';
+        iframe.setAttribute('allowfullscreen', '');
+        iframe.setAttribute('allow', 'autoplay; fullscreen; picture-in-picture');
+        iframe.setAttribute('frameborder', '0');
+        iframe.style.cssText = 'width:100%;height:100%;border-radius:8px;';
 
-        // Play button overlay
-        const overlay = document.createElement('div');
-        overlay.className = 'video-play-overlay';
-        overlay.innerHTML = `
-            <div class="video-play-btn">
-                <svg viewBox="0 0 24 24"><polygon points="8,5 8,19 20,12"></polygon></svg>
-            </div>
-        `;
-        thumbWrap.appendChild(overlay);
-
-        slide.appendChild(thumbWrap);
+        plyrDiv.appendChild(iframe);
+        slide.appendChild(plyrDiv);
         container.appendChild(slide);
         d.slide = slide;
-        d.thumbWrap = thumbWrap;
-
-        // Click handler: replace thumbnail with iframe
-        thumbWrap.addEventListener('click', () => {
-            const iframe = document.createElement('iframe');
-            iframe.src = `https://www.youtube.com/embed/${d.videoId}?autoplay=1&mute=0&loop=1&playlist=${d.videoId}&controls=0&modestbranding=1&rel=0&iv_load_policy=3`;
-            iframe.className = 'video-iframe';
-            iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
-            iframe.setAttribute('allowfullscreen', '');
-            slide.removeChild(thumbWrap);
-            slide.appendChild(iframe);
-        });
+        d.plyrContainer = plyrDiv;
 
         // Dot
         const dot = document.createElement('button');
         dot.className = 'video-dot' + (i === 0 ? ' active' : '');
-        dot.setAttribute('aria-label', `Slide ${i + 1}`);
+        dot.setAttribute('aria-label', 'Slide ' + (i + 1));
         dot.onclick = () => show(i);
         dots.appendChild(dot);
     });
+
+    // Initialize Plyr instances after a short delay to ensure DOM is ready
+    setTimeout(() => {
+        videoData.forEach((d, i) => {
+            d.player = new Plyr(d.plyrContainer, {
+                controls: [],
+                clickToPlay: false,
+                hideControls: true,
+                muted: true,
+                loop: { active: true },
+                youtube: {
+                    noCookie: false,
+                    rel: 0,
+                    showinfo: 0,
+                    iv_load_policy: 3,
+                    modestbranding: 1
+                }
+            });
+            d.player.on('ready', () => {
+                // Mute and set volume to 0
+                d.player.volume = 0;
+                d.player.muted = true;
+            });
+        });
+
+        // Start playing the first video
+        if (videoData[0].player) {
+            videoData[0].player.play().catch(() => {});
+        }
+    }, 1000);
 
     function show(n) {
         index = n;
         title.style.opacity = 0;
         sub.style.opacity = 0;
+
+        // Pause current video, play new one
+        videoData.forEach((v, i) => {
+            if (v.player) {
+                if (i === n) {
+                    v.player.play().catch(() => {});
+                } else {
+                    v.player.pause();
+                }
+            }
+            v.slide.classList.toggle('active', i === n);
+        });
+
         setTimeout(() => {
             title.innerHTML = videoData[n].title;
             sub.textContent = videoData[n].subtitle;
             title.style.opacity = 1;
             sub.style.opacity = 1;
-            videoData.forEach((v, i) => v.slide.classList.toggle('active', i === n));
             Array.from(dots.children).forEach((d, i) => d.classList.toggle('active', i === n));
         }, 500);
     }
 
     setInterval(() => show((index + 1) % videoData.length), 8000);
 }
-
 // Reviews
 function initReviews() {
     const reviews = [
