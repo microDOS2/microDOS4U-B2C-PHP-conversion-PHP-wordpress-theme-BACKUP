@@ -541,8 +541,5 @@ get_header();
     </div>
 </section>
 
-<!-- Plyr.io Video Player -->
-<script src="https://cdn.plyr.io/3.7.8/plyr.js"></script>
-
 <?php
 get_footer();
