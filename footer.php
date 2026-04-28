@@ -47,6 +47,8 @@
     </div>
 </div>
 
+<?php if (is_front_page()) : ?>
+<!-- Full Footer (Homepage) -->
 <footer class="bg-slate-900 border-t border-slate-800" style="background-color: #0a0514 !important;">
     <div class="container mx-auto px-6 py-12">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -90,6 +92,12 @@
         </div>
     </div>
 </footer>
+<?php else : ?>
+<!-- Simple Footer (Sub-pages) -->
+<footer class="text-center py-10 border-t border-slate-800" style="background-color: #0a0514 !important;">
+    <p class="text-slate-500">&copy; <?php echo date('Y'); ?> <span class="text-[#44f80c]">micro</span><span class="text-[#9a02d0]">DOS</span><span class="text-[#ff66c4]">(2)</span>. All rights reserved.</p>
+</footer>
+<?php endif; ?>
 
 <?php wp_footer(); ?>
 </body>
