@@ -6,18 +6,6 @@
  */
 
 get_header();
-
-<!-- Plyr.io Video Player -->
-<link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
-<style>
-    .plyr--video { background: transparent; }
-    .plyr--full-ui.plyr--video .plyr__control--overlaid { display: none; }
-    .plyr__video-wrapper { background: #0a0514; }
-    .video-slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 0.5s ease; z-index: 1; }
-    .video-slide.active { opacity: 1; z-index: 2; }
-    .video-slide .plyr { width: 100%; height: 100%; border-radius: 8px; }
-    .video-slide .plyr__video-wrapper { border-radius: 8px; }
-</style>
 ?>
 
 <!-- Hero Section -->
@@ -553,9 +541,8 @@ get_header();
     </div>
 </section>
 
-<?php
 <!-- Plyr.io Video Player -->
 <script src="https://cdn.plyr.io/3.7.8/plyr.js"></script>
 
+<?php
 get_footer();
-
