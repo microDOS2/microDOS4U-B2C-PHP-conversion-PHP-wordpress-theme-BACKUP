@@ -32,7 +32,7 @@ get_header();
                 <blockquote class="border-l-4 border-indigo-500 pl-4 text-gray-300 italic mb-6">
                     "It had quieted the noise, allowing him to hear his own instincts, to trust his own talent."
                 </blockquote>
-                <a href="#" class="text-center w-full font-bold py-3 px-6 rounded-lg transition duration-300 shadow-lg transform hover:scale-105" style="background: linear-gradient(90deg, #38bdf8, #8b5cf6); color: #fff;">
+                <a href="<?php echo esc_url(home_url('/jalens-story/')); ?>" class="text-center w-full font-bold py-3 px-6 rounded-lg transition duration-300 shadow-lg transform hover:scale-105" style="background: linear-gradient(90deg, #38bdf8, #8b5cf6); color: #fff;">
                     Read Jalen's Full Story
                 </a>
             </div>
@@ -47,7 +47,7 @@ get_header();
                 <blockquote class="border-l-4 border-indigo-500 pl-4 text-gray-300 italic mb-6">
                     "The anxiety receded, leaving a quiet space. I saw the project not as a tangled mess, but as a system of interconnected parts."
                 </blockquote>
-                <a href="#" class="text-center w-full font-bold py-3 px-6 rounded-lg transition duration-300 shadow-lg transform hover:scale-105" style="background: linear-gradient(90deg, #38bdf8, #8b5cf6); color: #fff;">
+                <a href="<?php echo esc_url(home_url('/eleanors-story/')); ?>" class="text-center w-full font-bold py-3 px-6 rounded-lg transition duration-300 shadow-lg transform hover:scale-105" style="background: linear-gradient(90deg, #38bdf8, #8b5cf6); color: #fff;">
                     Read Eleanor's Full Story
                 </a>
             </div>
@@ -62,7 +62,7 @@ get_header();
                 <blockquote class="border-l-4 border-indigo-500 pl-4 text-gray-300 italic mb-6">
                     "It wasn't a change, but a tuning... The creative voice I thought I had lost had just been speaking too quietly."
                 </blockquote>
-                <a href="#" class="text-center w-full font-bold py-3 px-6 rounded-lg transition duration-300 shadow-lg transform hover:scale-105" style="background: linear-gradient(90deg, #38bdf8, #8b5cf6); color: #fff;">
+                <a href="<?php echo esc_url(home_url('/joes-story/')); ?>" class="text-center w-full font-bold py-3 px-6 rounded-lg transition duration-300 shadow-lg transform hover:scale-105" style="background: linear-gradient(90deg, #38bdf8, #8b5cf6); color: #fff;">
                     Read Joe's Full Story
                 </a>
             </div>
@@ -77,7 +77,7 @@ get_header();
                 <blockquote class="border-l-4 border-indigo-500 pl-4 text-gray-300 italic mb-6">
                     "The protocol correlated with a period of increased creativity... culminating in a research breakthrough. Data point of one."
                 </blockquote>
-                <a href="#" class="text-center w-full font-bold py-3 px-6 rounded-lg transition duration-300 shadow-lg transform hover:scale-105" style="background: linear-gradient(90deg, #38bdf8, #8b5cf6); color: #fff;">
+                <a href="<?php echo esc_url(home_url('/lenas-story/')); ?>" class="text-center w-full font-bold py-3 px-6 rounded-lg transition duration-300 shadow-lg transform hover:scale-105" style="background: linear-gradient(90deg, #38bdf8, #8b5cf6); color: #fff;">
                     Read Lena's Full Story
                 </a>
             </div>
@@ -92,7 +92,7 @@ get_header();
                 <blockquote class="border-l-4 border-indigo-500 pl-4 text-gray-300 italic mb-6">
                     "The static was gone. In its place: quiet confidence and a renewed connection to creativity."
                 </blockquote>
-                <a href="#" class="text-center w-full font-bold py-3 px-6 rounded-lg transition duration-300 shadow-lg transform hover:scale-105" style="background: linear-gradient(90deg, #38bdf8, #8b5cf6); color: #fff;">
+                <a href="<?php echo esc_url(home_url('/banyus-story/')); ?>" class="text-center w-full font-bold py-3 px-6 rounded-lg transition duration-300 shadow-lg transform hover:scale-105" style="background: linear-gradient(90deg, #38bdf8, #8b5cf6); color: #fff;">
                     Read Banyu's Full Story
                 </a>
             </div>
@@ -107,7 +107,7 @@ get_header();
                 <blockquote class="border-l-4 border-indigo-500 pl-4 text-gray-300 italic mb-6">
                     "He had found his light again, and it was brighter than ever, illuminating the path for him and for the young minds he was privileged to teach."
                 </blockquote>
-                <a href="#" class="text-center w-full font-bold py-3 px-6 rounded-lg transition duration-300 shadow-lg transform hover:scale-105" style="background: linear-gradient(90deg, #38bdf8, #8b5cf6); color: #fff;">
+                <a href="<?php echo esc_url(home_url('/mateos-story/')); ?>" class="text-center w-full font-bold py-3 px-6 rounded-lg transition duration-300 shadow-lg transform hover:scale-105" style="background: linear-gradient(90deg, #38bdf8, #8b5cf6); color: #fff;">
                     Read Mateo's Full Story
                 </a>
             </div>
