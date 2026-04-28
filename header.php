@@ -40,14 +40,25 @@
                 <span id="cart-badge" class="cart-badge hidden">0</span>
             </button>
             
-            <button class="menu-toggle" aria-label="Toggle Menu">
+            <button id="mobile-menu-button" class="md:hidden p-2 rounded-md text-slate-400 hover:text-white" aria-label="Toggle Menu" style="background-color: #1a1329 !important;">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="3" y1="12" x2="21" y2="12"></line>
-                    <line x1="3" y1="6" x2="21" y2="6"></line>
-                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                    <line x1="4" x2="20" y1="12" y2="12"></line>
+                    <line x1="4" x2="20" y1="6" y2="6"></line>
+                    <line x1="4" x2="20" y1="18" y2="18"></line>
                 </svg>
             </button>
         </div>
+    </div>
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="hidden md:hidden px-6 pb-4 space-y-2" style="background-color: #0a0514 !important;">
+        <a href="#pricing" class="block text-slate-300 hover:text-white py-2">Pricing</a>
+        <a href="#how-it-works" class="block text-slate-300 hover:text-white py-2">How It Works</a>
+        <a href="#reviews" class="block text-slate-300 hover:text-white py-2">Reviews</a>
+        <a href="#faq" class="block text-slate-300 hover:text-white py-2">FAQ</a>
+        <a href="<?php echo esc_url(home_url('/contact')); ?>" class="block text-slate-300 hover:text-white py-2">Contact</a>
+        <a href="#pricing" class="block mt-4 w-full text-center px-6 py-3 text-white font-semibold rounded-lg shadow-md btn-primary">
+            Get Started
+        </a>
     </div>
 </header>
 

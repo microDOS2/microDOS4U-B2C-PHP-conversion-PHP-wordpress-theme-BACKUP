@@ -165,13 +165,14 @@ get_header();
                 <!-- Toggle Switch -->
                 <div class="flex justify-center mb-8">
                     <div class="bg-slate-900 p-1 rounded-full inline-flex relative w-64 border border-slate-700" style="background-color: #0a0514 !important;">
-                        <button id="btn-protocol" onclick="switchPurchaseTab('protocol')" class="relative z-10 w-1/2 py-2 text-sm font-bold text-white transition-colors" style="background-color: #1a1329; border-radius: 9999px;">The Protocol</button>
-                        <button id="btn-onetime" onclick="switchPurchaseTab('onetime')" class="relative z-10 w-1/2 py-2 text-sm font-bold text-slate-400 hover:text-white transition-colors">One-Time</button>
+                        <div id="toggle-bg" class="absolute top-1 bottom-1 left-1 w-[calc(50%-4px)] bg-slate-700 rounded-full transition-transform duration-300 ease-in-out translate-x-0" style="background-color: #1a1329 !important;"></div>
+                        <button id="btn-protocol" class="relative z-10 w-1/2 py-2 text-sm font-bold text-white transition-colors">The Protocol</button>
+                        <button id="btn-onetime" class="relative z-10 w-1/2 py-2 text-sm font-bold text-slate-400 hover:text-white transition-colors">One-Time</button>
                     </div>
                 </div>
 
                 <!-- Protocol Container -->
-                <div id="protocol-container" class="flex flex-col flex-grow">
+                <div id="content-protocol" class="flex flex-col flex-grow transition-opacity duration-300">
                     <h3 class="text-2xl font-bold text-white mb-2">The Protocol <span class="text-xs font-bold text-sky-400 bg-sky-400/10 px-2 py-1 rounded ml-2 align-middle">SAVE 15%</span></h3>
                     <p class="text-slate-400 mb-6">A guided Monthly Wellness Protocol.</p>
                     <div class="space-y-4 mt-auto">
@@ -213,7 +214,7 @@ get_header();
                 </div>
 
                 <!-- One-Time Container -->
-                <div id="onetime-container" class="flex flex-col flex-grow hidden">
+                <div id="content-onetime" class="hidden flex-col flex-grow transition-opacity duration-300">
                     <h3 class="text-2xl font-bold text-white mb-2">One-Time Purchase</h3>
                     <p class="text-slate-400 mb-6">Buy once, no subscription.</p>
                     <div class="space-y-4 mt-auto">

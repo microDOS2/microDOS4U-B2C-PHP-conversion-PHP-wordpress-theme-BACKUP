@@ -274,29 +274,30 @@ function initReviews() {
 function initPricingToggle() {
     const btnProtocol = document.getElementById('btn-protocol');
     const btnOneTime = document.getElementById('btn-onetime');
-    const contentProtocol = document.getElementById('protocol-container');
-    const contentOneTime = document.getElementById('onetime-container');
+    const contentProtocol = document.getElementById('content-protocol');
+    const contentOneTime = document.getElementById('content-onetime');
+    const toggleBg = document.getElementById('toggle-bg');
 
     if (!btnProtocol || !btnOneTime) return;
 
     btnProtocol.onclick = () => {
         contentProtocol.classList.remove('hidden');
+        contentProtocol.style.opacity = '1';
         contentOneTime.classList.add('hidden');
-        btnProtocol.style.backgroundColor = '#1a1329';
+        contentOneTime.style.opacity = '0';
         btnProtocol.style.color = '#ffffff';
-        btnProtocol.style.borderRadius = '9999px';
-        btnOneTime.style.backgroundColor = 'transparent';
         btnOneTime.style.color = '#94a3b8';
+        if (toggleBg) toggleBg.style.transform = 'translateX(0)';
     };
 
     btnOneTime.onclick = () => {
         contentOneTime.classList.remove('hidden');
+        contentOneTime.style.opacity = '1';
         contentProtocol.classList.add('hidden');
-        btnOneTime.style.backgroundColor = '#1a1329';
+        contentProtocol.style.opacity = '0';
         btnOneTime.style.color = '#ffffff';
-        btnOneTime.style.borderRadius = '9999px';
-        btnProtocol.style.backgroundColor = 'transparent';
         btnProtocol.style.color = '#94a3b8';
+        if (toggleBg) toggleBg.style.transform = 'translateX(100%)';
     };
 }
 
@@ -497,14 +498,10 @@ document.addEventListener('DOMContentLoaded', function() {
     loadCart();
 
     // Mobile Menu
-    const menuToggle = document.querySelector('.menu-toggle');
-    const mainNav = document.querySelector('.main-navigation');
-    if (menuToggle && mainNav) {
-        menuToggle.addEventListener('click', function() {
-            mainNav.classList.toggle('active');
-            const isOpen = mainNav.classList.contains('active');
-            menuToggle.setAttribute('aria-expanded', isOpen);
-        });
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    if (mobileMenuButton && mobileMenu) {
+        mobileMenuButton.onclick = () => mobileMenu.classList.toggle('hidden');
     }
 
     // Video Rotator
