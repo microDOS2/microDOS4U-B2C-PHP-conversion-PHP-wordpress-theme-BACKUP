@@ -239,98 +239,43 @@ function initVideoRotator() {
 
     if (!container || !title || !sub || !dots) return;
 
-    // Create slide wrappers with Plyr video embed
     videoData.forEach((d, i) => {
-        const slide = document.createElement('div');
-        slide.className = 'video-slide' + (i === 0 ? ' active' : '');
-        slide.dataset.index = i;
-
-        // Plyr embed container
-        const plyrDiv = document.createElement('div');
-        plyrDiv.className = 'plyr__video-embed';
-        plyrDiv.id = 'hero-player-' + i;
-        plyrDiv.style.cssText = 'width:100%;height:100%;border-radius:8px;';
-
-        // YouTube iframe for Plyr
         const iframe = document.createElement('iframe');
-        iframe.src = 'https://www.youtube.com/embed/' + d.videoId + '?origin=' + encodeURIComponent(window.location.origin) + '&iv_load_policy=3&modestbranding=1&playsinline=1&rel=0&enablejsapi=1';
-        iframe.setAttribute('allowfullscreen', '');
-        iframe.setAttribute('allow', 'autoplay; fullscreen; picture-in-picture');
+        iframe.src = `https://www.youtube.com/embed/${d.videoId}?autoplay=1&mute=1&loop=1&playlist=${d.videoId}&controls=0&modestbranding=1&rel=0&iv_load_policy=3&start=0`;
+        iframe.className = 'video-iframe opacity-0';
         iframe.setAttribute('frameborder', '0');
-        iframe.style.cssText = 'width:100%;height:100%;border-radius:8px;';
+        iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
+        iframe.setAttribute('allowfullscreen', '');
+        iframe.setAttribute('playsinline', '');
+        iframe.setAttribute('loading', i === 0 ? 'eager' : 'lazy');
+        container.appendChild(iframe);
+        d.el = iframe;
 
-        plyrDiv.appendChild(iframe);
-        slide.appendChild(plyrDiv);
-        container.appendChild(slide);
-        d.slide = slide;
-        d.plyrContainer = plyrDiv;
-
-        // Dot
         const dot = document.createElement('button');
-        dot.className = 'video-dot' + (i === 0 ? ' active' : '');
-        dot.setAttribute('aria-label', 'Slide ' + (i + 1));
+        dot.className = 'video-dot';
+        dot.setAttribute('aria-label', `Slide ${i + 1}`);
         dot.onclick = () => show(i);
         dots.appendChild(dot);
     });
-
-    // Initialize Plyr instances after a short delay to ensure DOM is ready
-    setTimeout(() => {
-        videoData.forEach((d, i) => {
-            d.player = new Plyr(d.plyrContainer, {
-                controls: [],
-                clickToPlay: false,
-                hideControls: true,
-                muted: true,
-                loop: { active: true },
-                youtube: {
-                    noCookie: false,
-                    rel: 0,
-                    showinfo: 0,
-                    iv_load_policy: 3,
-                    modestbranding: 1
-                }
-            });
-            d.player.on('ready', () => {
-                // Mute and set volume to 0
-                d.player.volume = 0;
-                d.player.muted = true;
-            });
-        });
-
-        // Start playing the first video
-        if (videoData[0].player) {
-            videoData[0].player.play().catch(() => {});
-        }
-    }, 1000);
 
     function show(n) {
         index = n;
         title.style.opacity = 0;
         sub.style.opacity = 0;
-
-        // Pause current video, play new one
-        videoData.forEach((v, i) => {
-            if (v.player) {
-                if (i === n) {
-                    v.player.play().catch(() => {});
-                } else {
-                    v.player.pause();
-                }
-            }
-            v.slide.classList.toggle('active', i === n);
-        });
-
         setTimeout(() => {
             title.innerHTML = videoData[n].title;
             sub.textContent = videoData[n].subtitle;
             title.style.opacity = 1;
             sub.style.opacity = 1;
+            videoData.forEach((v, i) => v.el.style.opacity = i === n ? '1' : '0');
             Array.from(dots.children).forEach((d, i) => d.classList.toggle('active', i === n));
         }, 500);
     }
 
+    setTimeout(() => show(0), 500);
     setInterval(() => show((index + 1) % videoData.length), 8000);
 }
+
 // Reviews
 function initReviews() {
     const reviews = [
