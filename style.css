@@ -659,6 +659,14 @@ input::placeholder, textarea::placeholder {
   .grid-cols-4 { grid-template-columns: 1fr !important; }
 }
 
+.px-4 { padding-left: 1rem; padding-right: 1rem; }
+
+/* ---- YouTube Player Chrome Hiding ---- */
+.plyr__control--overlaid { display: none !important; }
+.plyr__controls { opacity: 0 !important; }
+.plyr__poster { display: none !important; }
+.ytp-loader { display: none !important; }
+
 /* ============================================
    SCROLLBAR
    ============================================ */
