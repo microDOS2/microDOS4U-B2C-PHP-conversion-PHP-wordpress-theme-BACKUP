@@ -223,10 +223,15 @@ function adjustQuantity(planId, change) {
 // Video Rotator
 function initVideoRotator() {
     const videoData = [
-        { videoId: 'tVmKLPFWsP4', title: 'One Pill. One Dose. <span class="gradient-text">Pure Clarity.</span>', subtitle: 'Legal, fast-acting psychedelic exploration.' },
-        { videoId: '7IPRnhIub8I', title: 'Unlock Creative Flow. <span class="gradient-text">Elevate Your Senses.</span>', subtitle: 'Tap into a higher state of focus and inspiration.' },
-        { videoId: 'nXwnb-ej8J0', title: 'Expand Your Mind. <span class="gradient-text">Discover New Worlds.</span>', subtitle: 'Journey through vibrant landscapes of thought.' },
-        { videoId: 'HCzVzK66Nwc', title: 'One Pill. One Dose. <span class="gradient-text">Pure Clarity.</span>', subtitle: 'Legal, fast-acting psychedelic exploration.' }
+        { src: '/videos/microDOS2%20video%201.mp4', title: 'One Pill. One Dose. <span class="gradient-text">Pure Clarity.</span>', subtitle: 'Legal, fast-acting psychedelic exploration.' },
+        { src: '/videos/microDOS2%20video%202.mp4', title: 'Unlock Creative Flow. <span class="gradient-text">Elevate Your Senses.</span>', subtitle: 'Tap into a higher state of focus and inspiration.' },
+        { src: '/videos/microDOS2%20video%203.mp4', title: 'Expand Your Mind. <span class="gradient-text">Discover New Worlds.</span>', subtitle: 'Journey through vibrant landscapes of thought.' },
+        { src: '/videos/microDOS2%20video%204.mp4', title: 'One Pill. One Dose. <span class="gradient-text">Pure Clarity.</span>', subtitle: 'Legal, fast-acting psychedelic exploration.' },
+        { src: '/videos/microDOS2%20video%205.mp4', title: 'Unlock Creative Flow. <span class="gradient-text">Elevate Your Senses.</span>', subtitle: 'Tap into a higher state of focus and inspiration.' },
+        { src: '/videos/microDOS2%20video%206.mp4', title: 'Expand Your Mind. <span class="gradient-text">Discover New Worlds.</span>', subtitle: 'Journey through vibrant landscapes of thought.' },
+        { src: '/videos/microDOS2%20video%207.mp4', title: 'One Pill. One Dose. <span class="gradient-text">Pure Clarity.</span>', subtitle: 'Legal, fast-acting psychedelic exploration.' },
+        { src: '/videos/microDOS(2)%20video%208.mp4', title: 'Unlock Creative Flow. <span class="gradient-text">Elevate Your Senses.</span>', subtitle: 'Tap into a higher state of focus and inspiration.' },
+        { src: '/videos/microDOS(2)%20video%209.mp4', title: 'Expand Your Mind. <span class="gradient-text">Discover New Worlds.</span>', subtitle: 'Journey through vibrant landscapes of thought.' }
     ];
 
     let index = 0;
@@ -238,43 +243,68 @@ function initVideoRotator() {
     if (!container || !title || !sub || !dots) return;
 
     videoData.forEach((d, i) => {
-        const iframe = document.createElement('iframe');
-        iframe.src = `https://www.youtube.com/embed/${d.videoId}?autoplay=1&mute=1&loop=1&playlist=${d.videoId}&controls=0&modestbranding=1&rel=0&iv_load_policy=3&start=0`;
-        iframe.className = 'video-iframe opacity-0';
-        iframe.setAttribute('frameborder', '0');
-        iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
-        iframe.setAttribute('allowfullscreen', '');
-        iframe.setAttribute('playsinline', '');
-        iframe.setAttribute('loading', i === 0 ? 'eager' : 'lazy');
-        container.appendChild(iframe);
-        d.el = iframe;
+        const slide = document.createElement('div');
+        slide.className = 'video-slide' + (i === 0 ? ' active' : '');
+        slide.dataset.index = i;
+
+        const video = document.createElement('video');
+        video.className = 'video-player';
+        video.setAttribute('autoplay', i === 0 ? '' : '');
+        video.setAttribute('muted', '');
+        video.setAttribute('loop', '');
+        video.setAttribute('playsinline', '');
+        video.setAttribute('preload', i < 2 ? 'auto' : 'metadata');
+        video.style.cssText = 'width:100%;height:100%;object-fit:cover;border-radius:0.75rem;';
+
+        const source = document.createElement('source');
+        source.src = d.src;
+        source.type = 'video/mp4';
+
+        video.appendChild(source);
+        slide.appendChild(video);
+        container.appendChild(slide);
+        d.slide = slide;
+        d.video = video;
 
         const dot = document.createElement('button');
-        dot.className = 'video-dot';
-        dot.setAttribute('aria-label', `Slide ${i + 1}`);
+        dot.className = 'video-dot' + (i === 0 ? ' active' : '');
+        dot.setAttribute('aria-label', 'Slide ' + (i + 1));
         dot.onclick = () => show(i);
         dots.appendChild(dot);
     });
+
+    // Play first video
+    if (videoData[0].video) {
+        videoData[0].video.play().catch(() => {});
+    }
 
     function show(n) {
         index = n;
         title.style.opacity = 0;
         sub.style.opacity = 0;
+
+        videoData.forEach((v, i) => {
+            if (v.video) {
+                if (i === n) {
+                    v.video.play().catch(() => {});
+                } else {
+                    v.video.pause();
+                }
+            }
+            v.slide.classList.toggle('active', i === n);
+        });
+
         setTimeout(() => {
             title.innerHTML = videoData[n].title;
             sub.textContent = videoData[n].subtitle;
             title.style.opacity = 1;
             sub.style.opacity = 1;
-            videoData.forEach((v, i) => v.el.style.opacity = i === n ? '1' : '0');
             Array.from(dots.children).forEach((d, i) => d.classList.toggle('active', i === n));
         }, 500);
     }
 
-    setTimeout(() => show(0), 500);
     setInterval(() => show((index + 1) % videoData.length), 8000);
-}
-
-// Reviews
+}// Reviews
 function initReviews() {
     const reviews = [
         { name: "Sarah M.", text: "This has completely replaced my morning coffee. Clean energy and zero anxiety." },
