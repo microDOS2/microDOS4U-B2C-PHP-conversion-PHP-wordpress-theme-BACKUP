@@ -17,16 +17,13 @@
             </a>
         </div>
         
-        <nav class="main-navigation">
-            <?php
-            wp_nav_menu(array(
-                'theme_location' => 'primary',
-                'menu_id'        => 'primary-menu',
-                'container'      => false,
-                'fallback_cb'    => false,
-                'items_wrap'     => '<ul id="%1$s" class="%2$s">%3$s</ul>',
-            ));
-            ?>
+        <nav class="main-navigation hidden md:flex items-center space-x-8">
+            <a href="#benefits" class="text-slate-300 hover:text-white transition">Benefits</a>
+            <a href="#reviews" class="text-slate-300 hover:text-white transition">Reviews</a>
+            <a href="#how-it-works" class="text-slate-300 hover:text-white transition">How It Works</a>
+            <a href="#pricing" class="text-slate-300 hover:text-white transition">Pricing</a>
+            <a href="#faq" class="text-slate-300 hover:text-white transition">FAQ</a>
+            <a href="<?php echo esc_url(home_url('/contact')); ?>" class="text-slate-300 hover:text-white transition">Contact</a>
         </nav>
         
         <div class="header-actions">
