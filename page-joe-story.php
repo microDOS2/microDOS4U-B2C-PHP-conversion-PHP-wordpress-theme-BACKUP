@@ -56,7 +56,7 @@ get_header();
         <div class="max-w-3xl mx-auto space-y-16">
 
             <!-- Section 1: Introduction -->
-            <section class="flex flex-col md:flex-row items-center gap-8 fade-in-section">
+            <section class="flex flex-col md:flex-row items-center gap-8 bg-white p-8 rounded-lg shadow-lg fade-in-section">
                 <div class="w-full">
                     <img src="/images/stories/joe/pic-1.png" alt="Joe looking out over a city skyline at dusk" class="rounded-lg shadow-xl w-full">
                 </div>
@@ -76,7 +76,7 @@ get_header();
             </section>
 
             <!-- Section 3: The Inciting Incident -->
-            <section class="flex flex-col md:flex-row items-center gap-8 fade-in-section">
+            <section class="flex flex-col md:flex-row items-center gap-8 bg-white p-8 rounded-lg shadow-lg fade-in-section">
                 <div class="md:w-1/2">
                     <img src="/images/stories/joe/pic-3.png" alt="Joe looking at his phone with a hopeful expression" class="rounded-lg shadow-xl w-full">
                 </div>
@@ -102,7 +102,7 @@ get_header();
             </section>
 
             <!-- Section 5: Universe of Potential -->
-            <section class="flex flex-col md:flex-row items-center gap-8 fade-in-section">
+            <section class="flex flex-col md:flex-row items-center gap-8 bg-white p-8 rounded-lg shadow-lg fade-in-section">
                 <div class="md:w-1/2">
                     <img src="/images/stories/joe/pic-5.png" alt="Joe holding a small, plain white box" class="rounded-lg shadow-xl w-full">
                 </div>
@@ -128,7 +128,7 @@ get_header();
             </section>
 
             <!-- Section 7: The Wait -->
-            <section class="flex flex-col md:flex-row items-center gap-8 fade-in-section">
+            <section class="flex flex-col md:flex-row items-center gap-8 bg-white p-8 rounded-lg shadow-lg fade-in-section">
                 <div class="md:w-1/2">
                     <img src="/images/stories/joe/pic-7.png" alt="Joe sitting at his desk, looking thoughtful" class="rounded-lg shadow-xl w-full">
                 </div>
@@ -154,7 +154,7 @@ get_header();
             </section>
 
             <!-- Section 9: The Flow -->
-            <section class="flex flex-col md:flex-row items-center gap-8 fade-in-section">
+            <section class="flex flex-col md:flex-row items-center gap-8 bg-white p-8 rounded-lg shadow-lg fade-in-section">
                 <div class="md:w-1/2">
                     <img src="/images/stories/joe/pic-9.png" alt="Joe smiling and working on his computer, immersed in his creation" class="rounded-lg shadow-xl w-full">
                 </div>
