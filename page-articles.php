@@ -9,9 +9,9 @@ get_header();
 
 <nav class="main-navigation hidden md:flex items-center space-x-8">
             <a href="<?php echo esc_url(home_url('/')); ?>" class="text-slate-300 hover:text-white transition">Home</a>
-            <a href="<?php echo esc_url(home_url('/metocin-info')); ?>" class="text-slate-300 hover:text-white transition">Metocin Info</a>
-            <a href="<?php echo esc_url(home_url('/dosage-guide')); ?>" class="text-slate-300 hover:text-white transition">Dosage Guide</a>
-            <a href="<?php echo esc_url(home_url('/user-stories')); ?>" class="text-slate-300 hover:text-white transition">User Stories</a>
+            <a href="#user-experiences" class="text-slate-300 hover:text-white transition">User Experiences</a>
+            <a href="#articles" class="text-slate-300 hover:text-white transition">Articles</a>
+            <a href="#studies" class="text-slate-300 hover:text-white transition">Studies</a>
         </nav>
 ?>
 
