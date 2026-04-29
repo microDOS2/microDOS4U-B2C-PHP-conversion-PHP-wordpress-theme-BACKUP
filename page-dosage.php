@@ -13,7 +13,6 @@ get_header();
             <a href="<?php echo esc_url(home_url('/')); ?>" class="text-slate-300 hover:text-white transition">Home</a>
             <a href="#safety" class="text-slate-300 hover:text-white transition">Safety Notes</a>
         </nav>
-?>
 
 <main>
     <!-- Hero Section -->
