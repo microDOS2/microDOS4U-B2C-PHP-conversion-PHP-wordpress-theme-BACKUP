@@ -13,7 +13,6 @@ get_header();
             <a href="<?php echo esc_url(home_url('/metocin-info')); ?>" class="text-slate-300 hover:text-white transition">Metocin Info</a>
             <a href="<?php echo esc_url(home_url('/dosage-guide')); ?>" class="text-slate-300 hover:text-white transition">Dosage Guide</a>
         </nav>
-?>
 
 <main>
     <div class="container mx-auto px-6 py-16 md:py-24">
