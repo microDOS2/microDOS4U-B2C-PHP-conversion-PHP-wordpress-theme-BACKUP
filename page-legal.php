@@ -6,7 +6,7 @@
  */
 
 get_header();
-
+?>
 <nav class="main-navigation hidden md:flex items-center space-x-8">
             <a href="<?php echo esc_url(home_url('/')); ?>" class="text-sky-400 hover:text-white transition font-semibold">Back to Home</a>
         </nav>
