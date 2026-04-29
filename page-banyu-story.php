@@ -30,6 +30,8 @@ get_header();
 
         <div class="space-y-12">
             <!-- Cover -->
+            <h1 class="text-4xl md:text-5xl font-extrabold text-white text-center mb-4 tracking-tight">Banyu's Blueprint for Clarity</h1>
+
             <div class="story-block">
                 <img src="/images/stories/banyu/coverimage.png" alt="Cover image" class="rounded-lg shadow-md w-full">
             </div>
