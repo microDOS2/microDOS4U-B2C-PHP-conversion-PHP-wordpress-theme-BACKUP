@@ -1097,3 +1097,24 @@ input::placeholder, textarea::placeholder {
 .cart-icon-wrap {
   flex-shrink: 0;
 }
+
+/* ============================================
+   NAV CENTERING FIX
+   ============================================ */
+.site-header .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.main-navigation {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  margin: 0 auto;
+}
+.site-logo {
+  flex-shrink: 0;
+}
+.cart-icon-wrap {
+  flex-shrink: 0;
+}
