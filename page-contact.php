@@ -7,13 +7,6 @@
 
 get_header();
 ?>
-<nav class="main-navigation hidden md:flex items-center space-x-8">
-            <a href="<?php echo esc_url(home_url('/')); ?>" class="text-slate-300 hover:text-white transition">Home</a>
-            <a href="<?php echo esc_url(home_url('/articles-studies')); ?>" class="text-slate-300 hover:text-white transition">Articles & Studies</a>
-            <a href="<?php echo esc_url(home_url('/metocin-info')); ?>" class="text-slate-300 hover:text-white transition">Metocin Info</a>
-            <a href="<?php echo esc_url(home_url('/dosage-guide')); ?>" class="text-slate-300 hover:text-white transition">Dosage Guide</a>
-        </nav>
-
 <main class="flex-grow container mx-auto px-6 py-12 md:py-20">
     <div class="max-w-4xl mx-auto">
         <div class="text-center mb-16">
