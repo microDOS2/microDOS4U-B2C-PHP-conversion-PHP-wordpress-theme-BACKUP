@@ -13,7 +13,6 @@ get_header();
             <a href="#articles" class="text-slate-300 hover:text-white transition">Articles</a>
             <a href="#studies" class="text-slate-300 hover:text-white transition">Studies</a>
         </nav>
-?>
 
 <main>
     <!-- Hero Section -->
