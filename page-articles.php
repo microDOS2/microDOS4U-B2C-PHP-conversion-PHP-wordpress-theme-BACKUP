@@ -6,7 +6,7 @@
  */
 
 get_header();
-
+?>
 <nav class="main-navigation hidden md:flex items-center space-x-8">
             <a href="<?php echo esc_url(home_url('/')); ?>" class="text-slate-300 hover:text-white transition">Home</a>
             <a href="#user-experiences" class="text-slate-300 hover:text-white transition">User Experiences</a>
