@@ -17,14 +17,7 @@
             </a>
         </div>
         
-        <nav class="main-navigation hidden md:flex items-center space-x-8">
-            <a href="<?php echo esc_url(home_url('/#benefits')); ?>" class="text-slate-300 hover:text-white transition">Benefits</a>
-            <a href="<?php echo esc_url(home_url('/#reviews')); ?>" class="text-slate-300 hover:text-white transition">Reviews</a>
-            <a href="<?php echo esc_url(home_url('/#how-it-works')); ?>" class="text-slate-300 hover:text-white transition">How It Works</a>
-            <a href="<?php echo esc_url(home_url('/#pricing')); ?>" class="text-slate-300 hover:text-white transition">Pricing</a>
-            <a href="<?php echo esc_url(home_url('/#faq')); ?>" class="text-slate-300 hover:text-white transition">FAQ</a>
-            <a href="<?php echo esc_url(home_url('/contact')); ?>" class="text-slate-300 hover:text-white transition">Contact</a>
-        </nav>
+        <!-- Navigation will be added per-page template -->
         
         <div class="header-actions">
             <!-- Cart Icon -->
