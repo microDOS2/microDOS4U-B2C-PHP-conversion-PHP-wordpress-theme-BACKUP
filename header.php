@@ -32,7 +32,7 @@
                 <a href="<?php echo esc_url(home_url('/contact')); ?>" class="text-slate-300 hover:text-white transition">Contact</a>
             <?php elseif (is_page('articles-studies') || is_page_template('page-articles.php')) : ?>
                 <a href="<?php echo esc_url(home_url('/')); ?>" class="text-slate-300 hover:text-white transition">Home</a>
-                <a href="#user-experiences" class="text-slate-300 hover:text-white transition">User Experiences</a>
+                <a href="<?php echo esc_url(home_url('/user-stories')); ?>" class="text-slate-300 hover:text-white transition">User Experiences</a>
                 <a href="#articles" class="text-slate-300 hover:text-white transition">Articles</a>
                 <a href="#studies" class="text-slate-300 hover:text-white transition">Studies</a>
             <?php elseif (is_page('dosage-guide') || is_page_template('page-dosage.php')) : ?>
