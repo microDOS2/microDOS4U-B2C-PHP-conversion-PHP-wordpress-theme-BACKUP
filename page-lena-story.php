@@ -39,8 +39,7 @@ get_header();
 
             <!-- Cover Image -->
             <div class="story-block">
-                <h1 class="text-3xl font-bold text-center mb-2" style="color:#fff;">Data Point of One</h1>
-            <h2 class="text-2xl font-bold text-center mb-4">Lena's Story</h2>
+                <h2 class="text-2xl font-bold text-center mb-4">Lena's Story</h2>
                 <img src="/images/stories/lena/coverimage.png" alt="Lena in a server room" class="rounded-lg shadow-md w-full">
             </div>
 
