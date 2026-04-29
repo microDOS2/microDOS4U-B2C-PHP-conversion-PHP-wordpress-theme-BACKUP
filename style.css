@@ -226,18 +226,25 @@ input::placeholder, textarea::placeholder {
   flex-shrink: 0;
 }
 
-.main-navigation {
-  position: absolute !important;
-  left: 50% !important;
-  transform: translateX(-50%) !important;
-  display: flex;
-  align-items: center;
-  gap: 2rem;
+.site-header .container {
+  display: flex !important;
+  align-items: center !important;
 }
 
-.cart-icon-wrap {
-  flex-shrink: 0;
-  margin-left: auto;
+.site-logo {
+  flex: 0 0 auto !important;
+}
+
+.main-navigation {
+  flex: 1 1 auto !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  gap: 2rem !important;
+}
+
+.header-actions {
+  flex: 0 0 auto !important;
 }
 
 .site-logo a {
