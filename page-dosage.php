@@ -103,7 +103,7 @@ get_header();
     </section>
 
     <!-- Safety & Use Notes -->
-    <section class="section" style="padding:32px 0 32px 0;">
+    <section class="section" id="safety" style="padding:32px 0 32px 0;">
         <div class="container" style="max-width:1100px;margin:auto;padding:0 24px;">
             <div style="background:#150f24;border:1px solid #1a1329;border-radius:12px;padding:24px;">
                 <h3 style="color:#fff;font-weight:800;font-size:24px;margin-bottom:16px;">Safety &amp; Use Notes</h3>
