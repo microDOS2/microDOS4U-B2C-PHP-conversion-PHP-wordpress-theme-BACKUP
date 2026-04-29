@@ -17,7 +17,44 @@
             </a>
         </div>
         
-        <!-- Navigation will be added per-page template -->
+        <?php
+        $template = get_page_template_slug(get_queried_object_id());
+        $is_story = (strpos($template, 'story') !== false);
+        ?>
+        <?php if (!$is_story) : ?>
+        <nav class="main-navigation hidden md:flex items-center space-x-8">
+            <?php if (is_front_page() || is_page_template('page-home.php') || (!is_page() && !is_singular())) : ?>
+                <a href="#benefits" class="text-slate-300 hover:text-white transition">Benefits</a>
+                <a href="#reviews" class="text-slate-300 hover:text-white transition">Reviews</a>
+                <a href="#how-it-works" class="text-slate-300 hover:text-white transition">How It Works</a>
+                <a href="#pricing" class="text-slate-300 hover:text-white transition">Pricing</a>
+                <a href="#faq" class="text-slate-300 hover:text-white transition">FAQ</a>
+                <a href="<?php echo esc_url(home_url('/contact')); ?>" class="text-slate-300 hover:text-white transition">Contact</a>
+            <?php elseif (is_page('articles-studies') || is_page_template('page-articles.php')) : ?>
+                <a href="<?php echo esc_url(home_url('/')); ?>" class="text-slate-300 hover:text-white transition">Home</a>
+                <a href="#user-experiences" class="text-slate-300 hover:text-white transition">User Experiences</a>
+                <a href="#articles" class="text-slate-300 hover:text-white transition">Articles</a>
+                <a href="#studies" class="text-slate-300 hover:text-white transition">Studies</a>
+            <?php elseif (is_page('dosage-guide') || is_page_template('page-dosage.php')) : ?>
+                <a href="<?php echo esc_url(home_url('/articles-studies')); ?>" class="text-slate-300 hover:text-white transition">Articles & Studies</a>
+                <a href="#microdosing" class="text-slate-300 hover:text-white transition">Dosage Guide</a>
+                <a href="<?php echo esc_url(home_url('/')); ?>" class="text-slate-300 hover:text-white transition">Home</a>
+                <a href="#safety" class="text-slate-300 hover:text-white transition">Safety Notes</a>
+            <?php elseif (is_page('legal-disclaimer') || is_page_template('page-legal.php')) : ?>
+                <a href="<?php echo esc_url(home_url('/')); ?>" class="text-sky-400 hover:text-white transition font-semibold">Back to Home</a>
+            <?php elseif (is_page('metocin-info') || is_page_template('page-metocin.php')) : ?>
+                <a href="<?php echo esc_url(home_url('/articles-studies')); ?>" class="text-slate-300 hover:text-white transition">Articles & Studies</a>
+                <a href="<?php echo esc_url(home_url('/')); ?>" class="text-slate-300 hover:text-white transition">Home</a>
+                <a href="<?php echo esc_url(home_url('/dosage-guide')); ?>" class="text-slate-300 hover:text-white transition">Dosage Guide</a>
+                <a href="#safety" class="text-slate-300 hover:text-white transition">Safety Notes</a>
+            <?php else : ?>
+                <a href="<?php echo esc_url(home_url('/')); ?>" class="text-slate-300 hover:text-white transition">Home</a>
+                <a href="<?php echo esc_url(home_url('/articles-studies')); ?>" class="text-slate-300 hover:text-white transition">Articles & Studies</a>
+                <a href="<?php echo esc_url(home_url('/metocin-info')); ?>" class="text-slate-300 hover:text-white transition">Metocin Info</a>
+                <a href="<?php echo esc_url(home_url('/dosage-guide')); ?>" class="text-slate-300 hover:text-white transition">Dosage Guide</a>
+            <?php endif; ?>
+        </nav>
+        <?php endif; ?>
         
         <div class="header-actions">
             <!-- Cart Icon -->
