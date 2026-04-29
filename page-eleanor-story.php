@@ -44,6 +44,8 @@ get_header();
         <!-- Story Content -->
         <div class="space-y-12">
 
+            <h1 class="text-4xl md:text-5xl font-extrabold text-white text-center mb-4 tracking-tight">Eleanor's Quiet Triumph</h1>
+
             <!-- Cover Image -->
             <div class="story-block">
                 <img src="/images/stories/eleanor/elenor-cover.png" alt="Eleanor looking serene over a city skyline" class="rounded-lg shadow-md w-full">
