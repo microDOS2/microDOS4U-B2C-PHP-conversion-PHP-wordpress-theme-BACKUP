@@ -37,7 +37,7 @@ get_header();
 
         <main class="space-y-16">
             <!-- Story Section 1 -->
-            <section class="flex flex-col md:flex-row items-center gap-8">
+            <section class="flex flex-col md:flex-row items-center gap-8 bg-white p-8 rounded-lg shadow-lg">
                 <div class="md:w-1/2">
                     <img src="/images/stories/mateo/image2.png" alt="Professor Mateo Garcia in his office surrounded by books." class="rounded-lg shadow-xl w-full h-auto">
                 </div>
@@ -49,7 +49,7 @@ get_header();
             </section>
 
             <!-- Story Section 2 -->
-            <section class="flex flex-col md:flex-row-reverse items-center gap-8">
+            <section class="flex flex-col md:flex-row-reverse items-center gap-8 bg-white p-8 rounded-lg shadow-lg">
                 <div class="md:w-1/2">
                     <img src="/images/stories/mateo/image3.png" alt="Professor Garcia looking disheartened in a lecture hall." class="rounded-lg shadow-xl w-full h-auto">
                 </div>
@@ -61,7 +61,7 @@ get_header();
             </section>
 
             <!-- Story Section 3 -->
-            <section class="flex flex-col md:flex-row items-center gap-8">
+            <section class="flex flex-col md:flex-row items-center gap-8 bg-white p-8 rounded-lg shadow-lg">
                 <div class="md:w-1/2">
                     <img src="/images/stories/mateo/image4.png" alt="Mateo talking with his friend Dr. Anya Sharma at a cafe." class="rounded-lg shadow-xl w-full h-auto">
                 </div>
@@ -73,7 +73,7 @@ get_header();
             </section>
 
             <!-- Story Section 4 -->
-            <section class="flex flex-col md:flex-row-reverse items-center gap-8">
+            <section class="flex flex-col md:flex-row-reverse items-center gap-8 bg-white p-8 rounded-lg shadow-lg">
                 <div class="md:w-1/2">
                     <img src="/images/stories/mateo/image5.png" alt="Mateo looking at his laptop in his study." class="rounded-lg shadow-xl w-full h-auto">
                 </div>
@@ -85,7 +85,7 @@ get_header();
             </section>
 
             <!-- Story Section 5 -->
-            <section class="flex flex-col md:flex-row items-center gap-8">
+            <section class="flex flex-col md:flex-row items-center gap-8 bg-white p-8 rounded-lg shadow-lg">
                 <div class="md:w-1/2">
                     <img src="/images/stories/mateo/image6.png" alt="Mateo receiving a discreet package at his door." class="rounded-lg shadow-xl w-full h-auto">
                 </div>
@@ -97,7 +97,7 @@ get_header();
             </section>
 
             <!-- Story Section 6 -->
-            <section class="flex flex-col md:flex-row-reverse items-center gap-8">
+            <section class="flex flex-col md:flex-row-reverse items-center gap-8 bg-white p-8 rounded-lg shadow-lg">
                 <div class="md:w-1/2">
                     <img src="/images/stories/mateo/image7.png" alt="Mateo walking in a park, looking up at the trees with a sense of wonder." class="rounded-lg shadow-xl w-full h-auto">
                 </div>
@@ -109,7 +109,7 @@ get_header();
             </section>
 
             <!-- Story Section 7 -->
-            <section class="flex flex-col md:flex-row items-center gap-8">
+            <section class="flex flex-col md:flex-row items-center gap-8 bg-white p-8 rounded-lg shadow-lg">
                 <div class="md:w-1/2">
                     <img src="/images/stories/mateo/image8.png" alt="Mateo lecturing to an engaged and interested class of students." class="rounded-lg shadow-xl w-full h-auto">
                 </div>
@@ -121,7 +121,7 @@ get_header();
             </section>
 
             <!-- Story Section 8 -->
-            <section class="flex flex-col md:flex-row-reverse items-center gap-8">
+            <section class="flex flex-col md:flex-row-reverse items-center gap-8 bg-white p-8 rounded-lg shadow-lg">
                 <div class="md:w-1/2">
                     <img src="/images/stories/mateo/image9.png" alt="Mateo talking one-on-one with a student after class." class="rounded-lg shadow-xl w-full h-auto">
                 </div>
@@ -133,7 +133,7 @@ get_header();
             </section>
 
             <!-- Story Section 9 -->
-            <section class="flex flex-col md:flex-row items-center gap-8">
+            <section class="flex flex-col md:flex-row items-center gap-8 bg-white p-8 rounded-lg shadow-lg">
                 <div class="md:w-1/2">
                     <img src="/images/stories/mateo/image10.png" alt="Mateo joyfully painting on an easel in his study." class="rounded-lg shadow-xl w-full h-auto">
                 </div>
@@ -145,7 +145,7 @@ get_header();
             </section>
 
             <!-- Story Section 10 -->
-            <section class="flex flex-col md:flex-row-reverse items-center gap-8">
+            <section class="flex flex-col md:flex-row-reverse items-center gap-8 bg-white p-8 rounded-lg shadow-lg">
                 <div class="md:w-1/2">
                     <img src="/images/stories/mateo/image11.png" alt="A confident and happy Professor Garcia standing in front of his full lecture hall." class="rounded-lg shadow-xl w-full h-auto">
                 </div>
