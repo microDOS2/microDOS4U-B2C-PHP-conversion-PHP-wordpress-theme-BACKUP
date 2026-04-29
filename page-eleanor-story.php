@@ -46,7 +46,6 @@ get_header();
 
             <!-- Cover Image -->
             <div class="story-block">
-                <h2 class="text-2xl font-bold text-center mb-4">Eleanor's Story</h2>
                 <img src="/images/stories/eleanor/elenor-cover.png" alt="Eleanor looking serene over a city skyline" class="rounded-lg shadow-md w-full">
             </div>
 
