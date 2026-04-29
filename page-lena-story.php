@@ -39,7 +39,6 @@ get_header();
 
             <!-- Cover Image -->
             <div class="story-block">
-                <h2 class="text-2xl font-bold text-center mb-4">Lena's Story</h2>
                 <img src="/images/stories/lena/coverimage.png" alt="Lena in a server room" class="rounded-lg shadow-md w-full">
             </div>
 
