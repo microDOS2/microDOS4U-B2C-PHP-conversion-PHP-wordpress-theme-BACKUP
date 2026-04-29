@@ -9,42 +9,46 @@ get_header();
 ?>
 <style>
 /* ===== Critical Hero Video Styles (inline backup) ===== */
-.video-iframe {
+#video-container {
+    position: relative;
     width: 100%;
     height: 100%;
+    background-color: #150f24 !important;
     border-radius: 0.75rem;
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    overflow: hidden;
+}
+#video-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-color: #150f24 !important;
+    border-radius: 0.75rem;
+    overflow: hidden;
+}
+.video-player {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 0.75rem;
     position: absolute;
     top: 0;
     left: 0;
     transition: opacity 1s ease;
 }
-.opacity-0 { opacity: 0; }
-.opacity-1 { opacity: 1; }
-.transition-opacity { transition-property: opacity; }
-.duration-500 { transition-duration: 500ms; }
-.video-dot {
-    cursor: pointer;
-    height: 12px;
-    width: 12px;
-    margin: 0 4px;
-    background-color: #475569;
-    border-radius: 50%;
-    display: inline-block;
-    transition: background-color 0.6s ease;
-    border: 2px solid transparent;
+.video-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    z-index: 1;
 }
-.video-dot.active, .video-dot:hover {
-    background-color: #38bdf8;
-    border-color: #38bdf8;
-    transform: scale(1.2);
-}
-.hero-bg {
-    background: radial-gradient(circle at 20% 30%, rgba(107, 33, 168, 0.4) 0%, transparent 40%),
-                radial-gradient(circle at 80% 70%, rgba(68, 248, 12, 0.2) 0%, transparent 40%),
-                #0a0514 !important;
-}
-</style>
+.video-slide.active {
+    opacity: 1;
+    z-index: 2;
+}</style>
 
 <!-- Hero Section -->
 <section class="hero-bg py-20 md:py-28">
