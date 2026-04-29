@@ -13,7 +13,6 @@ get_header();
             <a href="<?php echo esc_url(home_url('/dosage-guide')); ?>" class="text-slate-300 hover:text-white transition">Dosage Guide</a>
             <a href="#safety" class="text-slate-300 hover:text-white transition">Safety Notes</a>
         </nav>
-?>
 
 <style>
     /* ===== Metocin page dark UI ===== */
