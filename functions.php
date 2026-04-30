@@ -12,7 +12,7 @@ if (!defined('ABSPATH')) {
 
 // Theme version
 if (!defined('MICRODOS_VERSION')) {
-    define('MICRODOS_VERSION', '1.0.0');
+    define('MICRODOS_VERSION', '1.1.0');
 }
 
 // ============================================
@@ -20,16 +20,9 @@ if (!defined('MICRODOS_VERSION')) {
 // ============================================
 
 function microdos4u_setup() {
-    // Add default posts and comments RSS feed links to head
     add_theme_support('automatic-feed-links');
-    
-    // Let WordPress manage the document title
     add_theme_support('title-tag');
-    
-    // Enable post thumbnails
     add_theme_support('post-thumbnails');
-    
-    // HTML5 support
     add_theme_support('html5', array(
         'search-form',
         'comment-form',
@@ -39,15 +32,11 @@ function microdos4u_setup() {
         'style',
         'script',
     ));
-    
-    // Responsive embeds
     add_theme_support('responsive-embeds');
-    
-    // Block editor styles
     add_theme_support('editor-styles');
     add_editor_style('style.css');
-    
-    // WooCommerce support
+
+    // Full WooCommerce support
     add_theme_support('woocommerce', array(
         'thumbnail_image_width' => 400,
         'single_image_width'    => 600,
@@ -60,11 +49,22 @@ function microdos4u_setup() {
     add_theme_support('wc-product-gallery-zoom');
     add_theme_support('wc-product-gallery-lightbox');
     add_theme_support('wc-product-gallery-slider');
-    
+
     // Register menus
     register_nav_menus(array(
         'primary' => __('Primary Menu', 'microdos4u'),
         'footer'  => __('Footer Menu', 'microdos4u'),
+    ));
+
+    // Register WooCommerce widget areas
+    register_sidebar(array(
+        'name'          => __('WooCommerce Sidebar', 'microdos4u'),
+        'id'            => 'woocommerce-sidebar',
+        'description'   => __('Widgets for WooCommerce shop and product pages.', 'microdos4u'),
+        'before_widget' => '<div id="%1$s" class="widget %2$s">',
+        'after_widget'  => '</div>',
+        'before_title'  => '<h4 class="widget-title">',
+        'after_title'   => '</h4>',
     ));
 }
 add_action('after_setup_theme', 'microdos4u_setup');
@@ -74,23 +74,20 @@ add_action('after_setup_theme', 'microdos4u_setup');
 // ============================================
 
 function microdos4u_scripts() {
-    // Theme stylesheet
     wp_enqueue_style(
         'microdos4u-style',
         get_stylesheet_uri(),
         array(),
         MICRODOS_VERSION
     );
-    
-    // Google Fonts
+
     wp_enqueue_style(
         'microdos4u-fonts',
         'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap',
         array(),
         null
     );
-    
-    // Tailwind CSS via CDN (for rapid styling; can be built locally later)
+
     wp_enqueue_script(
         'tailwind-cdn',
         'https://cdn.tailwindcss.com',
@@ -98,8 +95,7 @@ function microdos4u_scripts() {
         null,
         false
     );
-    
-    // IMask.js for input masking
+
     wp_enqueue_script(
         'imask',
         'https://unpkg.com/imask',
@@ -107,8 +103,13 @@ function microdos4u_scripts() {
         null,
         true
     );
-    
-    // Theme JavaScript
+
+    // WooCommerce AJAX cart support
+    if (class_exists('WooCommerce')) {
+        wp_enqueue_script('wc-add-to-cart');
+        wp_enqueue_script('wc-cart-fragments');
+    }
+
     wp_enqueue_script(
         'microdos4u-scripts',
         get_template_directory_uri() . '/js/main.js',
@@ -116,23 +117,13 @@ function microdos4u_scripts() {
         MICRODOS_VERSION,
         true
     );
-    
-    // WooCommerce-specific scripts
-    if (class_exists('WooCommerce')) {
-        wp_enqueue_script(
-            'microdos4u-woocommerce',
-            get_template_directory_uri() . '/js/woocommerce.js',
-            array('jquery', 'microdos4u-scripts'),
-            MICRODOS_VERSION,
-            true
-        );
-    }
-    
-    // Pass theme colors to JS
+
+    // Pass config to JS
     wp_localize_script('microdos4u-scripts', 'microdos4uConfig', array(
         'ajaxUrl'   => admin_url('admin-ajax.php'),
         'themeUrl'  => get_template_directory_uri(),
         'siteUrl'   => home_url(),
+        'wcActive'  => class_exists('WooCommerce'),
         'colors'    => array(
             'bgDark'      => get_theme_mod('microdos_bg_dark', '#0a0514'),
             'bgCard'      => get_theme_mod('microdos_bg_card', '#150f24'),
@@ -149,22 +140,18 @@ add_action('wp_enqueue_scripts', 'microdos4u_scripts');
 // ============================================
 
 function microdos4u_customize_register($wp_customize) {
-    
-    // Add a panel for Theme Colors
     $wp_customize->add_panel('microdos_colors_panel', array(
         'title'       => __('microDOS4U Colors', 'microdos4u'),
         'description' => __('Customize the color scheme for your site.', 'microdos4u'),
         'priority'    => 30,
     ));
-    
-    // --- Background Colors Section ---
+
     $wp_customize->add_section('microdos_bg_section', array(
         'title'    => __('Background Colors', 'microdos4u'),
         'panel'    => 'microdos_colors_panel',
         'priority' => 10,
     ));
-    
-    // Background Dark
+
     $wp_customize->add_setting('microdos_bg_dark', array(
         'default'           => '#0a0514',
         'sanitize_callback' => 'sanitize_hex_color',
@@ -174,8 +161,7 @@ function microdos4u_customize_register($wp_customize) {
         'label'   => __('Page Background', 'microdos4u'),
         'section' => 'microdos_bg_section',
     )));
-    
-    // Card Background
+
     $wp_customize->add_setting('microdos_bg_card', array(
         'default'           => '#150f24',
         'sanitize_callback' => 'sanitize_hex_color',
@@ -185,15 +171,13 @@ function microdos4u_customize_register($wp_customize) {
         'label'   => __('Card / Box Background', 'microdos4u'),
         'section' => 'microdos_bg_section',
     )));
-    
-    // --- Brand Colors Section ---
+
     $wp_customize->add_section('microdos_brand_section', array(
         'title'    => __('Brand Colors', 'microdos4u'),
         'panel'    => 'microdos_colors_panel',
         'priority' => 20,
     ));
-    
-    // micro (green)
+
     $wp_customize->add_setting('microdos_brand_micro', array(
         'default'           => '#44f80c',
         'sanitize_callback' => 'sanitize_hex_color',
@@ -203,8 +187,7 @@ function microdos4u_customize_register($wp_customize) {
         'label'   => __('"micro" Color (Green)', 'microdos4u'),
         'section' => 'microdos_brand_section',
     )));
-    
-    // DOS (purple)
+
     $wp_customize->add_setting('microdos_brand_dos', array(
         'default'           => '#9a02d0',
         'sanitize_callback' => 'sanitize_hex_color',
@@ -214,8 +197,7 @@ function microdos4u_customize_register($wp_customize) {
         'label'   => __('"DOS" Color (Purple)', 'microdos4u'),
         'section' => 'microdos_brand_section',
     )));
-    
-    // (2) (pink)
+
     $wp_customize->add_setting('microdos_brand_two', array(
         'default'           => '#ff66c4',
         'sanitize_callback' => 'sanitize_hex_color',
@@ -225,15 +207,13 @@ function microdos4u_customize_register($wp_customize) {
         'label'   => __('"(2)" Color (Pink)', 'microdos4u'),
         'section' => 'microdos_brand_section',
     )));
-    
-    // --- Text Colors Section ---
+
     $wp_customize->add_section('microdos_text_section', array(
         'title'    => __('Text Colors', 'microdos4u'),
         'panel'    => 'microdos_colors_panel',
         'priority' => 30,
     ));
-    
-    // Primary text
+
     $wp_customize->add_setting('microdos_text_primary', array(
         'default'           => '#d1d5db',
         'sanitize_callback' => 'sanitize_hex_color',
@@ -243,8 +223,7 @@ function microdos4u_customize_register($wp_customize) {
         'label'   => __('Body Text Color', 'microdos4u'),
         'section' => 'microdos_text_section',
     )));
-    
-    // Heading text
+
     $wp_customize->add_setting('microdos_text_heading', array(
         'default'           => '#ffffff',
         'sanitize_callback' => 'sanitize_hex_color',
@@ -254,8 +233,7 @@ function microdos4u_customize_register($wp_customize) {
         'label'   => __('Heading Color', 'microdos4u'),
         'section' => 'microdos_text_section',
     )));
-    
-    // Muted text
+
     $wp_customize->add_setting('microdos_text_muted', array(
         'default'           => '#94a3b8',
         'sanitize_callback' => 'sanitize_hex_color',
@@ -312,14 +290,24 @@ function microdos4u_widgets_init() {
         'before_title'  => '<h4 class="widget-title">',
         'after_title'   => '</h4>',
     ));
+
+    register_sidebar(array(
+        'name'          => __('WooCommerce Sidebar', 'microdos4u'),
+        'id'            => 'woocommerce-sidebar',
+        'description'   => __('Widgets for WooCommerce pages.', 'microdos4u'),
+        'before_widget' => '<div id="%1$s" class="widget %2$s">',
+        'after_widget'  => '</div>',
+        'before_title'  => '<h4 class="widget-title">',
+        'after_title'   => '</h4>',
+    ));
 }
 add_action('widgets_init', 'microdos4u_widgets_init');
 
 // ============================================
-// WOOCOMMERCE FUNCTIONS
+// WOOCOMMERCE INTEGRATION
 // ============================================
 
-// Update cart fragments
+// Cart fragments for AJAX cart count
 function microdos4u_cart_fragments($fragments) {
     if (function_exists('WC') && WC()->cart) {
         $fragments['span.cart-count'] = '<span class="cart-count">' . WC()->cart->get_cart_contents_count() . '</span>';
@@ -328,47 +316,60 @@ function microdos4u_cart_fragments($fragments) {
 }
 add_filter('woocommerce_add_to_cart_fragments', 'microdos4u_cart_fragments');
 
-// Change number of products per row
+// Loop columns
 function microdos4u_loop_columns() {
     return 4;
 }
 add_filter('loop_shop_columns', 'microdos4u_loop_columns', 20);
 
-// Change number of products per page
+// Products per page
 function microdos4u_products_per_page() {
     return 12;
 }
 add_filter('loop_shop_per_page', 'microdos4u_products_per_page', 20);
 
+// Disable WooCommerce default CSS (we'll style everything)
+add_filter('woocommerce_enqueue_styles', '__return_empty_array');
+
+// Add "Add to Cart" AJAX class to buttons on homepage
+function microdos4u_woo_ajax_add_to_cart() {
+    if (!class_exists('WooCommerce')) return;
+    wp_enqueue_script('wc-add-to-cart');
+}
+add_action('wp_enqueue_scripts', 'microdos4u_woo_ajax_add_to_cart');
+
+// ============================================
+// WOOCOMMERCE CHECKOUT PAGE SETUP
+// ============================================
+
+// Force checkout page to use full-width template (no sidebar)
+function microdos4u_checkout_page_template($template) {
+    if (is_checkout() || is_cart()) {
+        // Remove sidebar on cart/checkout
+        remove_action('woocommerce_sidebar', 'woocommerce_get_sidebar', 10);
+    }
+    return $template;
+}
+add_filter('template_include', 'microdos4u_checkout_page_template');
+
 // ============================================
 // HELPER FUNCTIONS
 // ============================================
 
-/**
- * Get the brand name with colored spans
- */
 function microdos4u_brand_name($context = 'product') {
     $micro = '<span style="color: var(--brand-micro);">micro</span>';
     $dos   = '<span style="color: var(--brand-dos);">DOS</span>';
     $two   = '<span style="color: var(--brand-two);">(2)</span>';
-    
     if ($context === 'site') {
         return 'microDOS4U';
     }
-    
     return $micro . $dos . $two;
 }
 
-/**
- * Get site URL brand (plain text)
- */
 function microdos4u_site_brand() {
     return 'microDOS4U';
 }
 
-/**
- * Get product brand (colored spans)
- */
 function microdos4u_product_brand() {
     return microdos4u_brand_name('product');
 }
@@ -386,12 +387,7 @@ add_filter('admin_footer_text', 'microdos4u_admin_footer_text');
 // SECURITY / PERFORMANCE
 // ============================================
 
-// Remove WordPress version from head
 remove_action('wp_head', 'wp_generator');
-
-// Disable XML-RPC
 add_filter('xmlrpc_enabled', '__return_false');
-
-// Remove emoji support (we don't need it)
 remove_action('wp_head', 'print_emoji_detection_script', 7);
 remove_action('wp_print_styles', 'print_emoji_styles');
