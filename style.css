@@ -2725,3 +2725,130 @@ form.cart {
     display: table !important;
     clear: both !important;
 }
+
+
+/* ============================================
+   CART LAYOUT - WIDER TOTALS, NO WRAP
+   ============================================ */
+
+/* Make cart form full width */
+.woocommerce-cart .woocommerce-cart-form {
+    width: 100% !important;
+    max-width: 100% !important;
+    flex: 1 1 60% !important;
+}
+
+/* Make cart totals wider */
+.woocommerce-cart .cart-collaterals {
+    width: 100% !important;
+    max-width: 400px !important;
+    flex: 1 1 35% !important;
+    min-width: 280px !important;
+}
+
+.woocommerce-cart .cart-collaterals .cart_totals {
+    width: 100% !important;
+    max-width: 400px !important;
+}
+
+/* Prevent shipping address from wrapping */
+.woocommerce-cart .cart_totals .woocommerce-shipping-totals td,
+.woocommerce-cart .cart_totals .woocommerce-shipping-destination,
+.woocommerce-cart .cart_totals .shipping-calculator-form {
+    white-space: nowrap !important;
+    text-align: left !important;
+}
+
+.woocommerce-cart .cart_totals .woocommerce-shipping-destination strong {
+    white-space: nowrap !important;
+    display: inline !important;
+}
+
+/* The "Change address" link */
+.woocommerce-cart .cart_totals .woocommerce-shipping-calculator a {
+    color: var(--brand-dos) !important;
+    text-decoration: none !important;
+    white-space: nowrap !important;
+}
+
+/* Two-column cart layout on desktop */
+@media (min-width: 1024px) {
+    .woocommerce-cart .woocommerce {
+        display: flex !important;
+        flex-direction: row !important;
+        gap: 30px !important;
+        align-items: flex-start !important;
+    }
+
+    .woocommerce-cart .woocommerce-cart-form {
+        flex: 1 1 65% !important;
+        max-width: 65% !important;
+    }
+
+    .woocommerce-cart .cart-collaterals {
+        flex: 1 1 32% !important;
+        max-width: 350px !important;
+        min-width: 280px !important;
+        margin-left: 0 !important;
+    }
+}
+
+/* ============================================
+   CART BUTTONS - FORCE GAP
+   ============================================ */
+
+/* Force actions area to have proper spacing */
+.woocommerce-cart table.cart td.actions {
+    padding: 16px !important;
+    overflow: visible !important;
+}
+
+/* Coupon + button in a row with gap */
+.woocommerce-cart table.cart td.actions .coupon {
+    display: inline-flex !important;
+    flex-wrap: wrap !important;
+    gap: 10px !important;
+    align-items: center !important;
+    margin-bottom: 12px !important;
+    float: none !important;
+}
+
+/* Update cart button on its own line below */
+.woocommerce-cart table.cart td.actions .button[name="update_cart"] {
+    display: inline-block !important;
+    margin-top: 0 !important;
+    margin-left: 0 !important;
+    clear: both !important;
+    float: none !important;
+}
+
+/* If they still stack, force them apart */
+.woocommerce-cart table.cart td.actions .coupon + .button[name="update_cart"] {
+    margin-top: 12px !important;
+    display: block !important;
+}
+
+/* ============================================
+   TABLE WIDTH FIX
+   ============================================ */
+.woocommerce-cart table.shop_table {
+    width: 100% !important;
+    table-layout: auto !important;
+}
+
+.woocommerce-cart table.shop_table td.product-thumbnail {
+    width: 80px !important;
+}
+
+.woocommerce-cart table.shop_table td.product-thumbnail a {
+    display: block !important;
+    width: 60px !important;
+    height: 60px !important;
+    overflow: hidden !important;
+}
+
+.woocommerce-cart table.shop_table td.product-thumbnail img {
+    width: 60px !important;
+    height: 60px !important;
+    object-fit: cover !important;
+}
