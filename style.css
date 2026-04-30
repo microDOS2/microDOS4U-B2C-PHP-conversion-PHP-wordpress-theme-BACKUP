@@ -2852,3 +2852,63 @@ form.cart {
     height: 60px !important;
     object-fit: cover !important;
 }
+
+
+/* ============================================
+   CART PANEL WIDTH FIX
+   ============================================ */
+
+/* Make cart totals panel wider */
+.woocommerce-cart .cart-collaterals,
+.woocommerce-cart .cart-collaterals .cart_totals {
+    width: 100% !important;
+    max-width: 500px !important;
+    min-width: 320px !important;
+}
+
+/* Prevent address text from breaking */
+.woocommerce-cart .cart_totals .woocommerce-shipping-totals td,
+.woocommerce-cart .cart_totals .woocommerce-shipping-destination,
+.woocommerce-cart .cart_totals .shipping-calculator-form {
+    white-space: normal !important;
+    word-wrap: normal !important;
+    overflow-wrap: normal !important;
+    text-align: left !important;
+    font-size: 0.95rem !important;
+    line-height: 1.5 !important;
+}
+
+.woocommerce-cart .cart_totals .woocommerce-shipping-destination strong {
+    display: inline !important;
+    white-space: normal !important;
+}
+
+/* Ensure the panel background extends */
+.woocommerce-cart .cart-collaterals .cart_totals {
+    background: var(--bg-card) !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: 12px !important;
+    padding: 24px !important;
+    width: 100% !important;
+}
+
+/* Two-column layout - cart totals on right, wider */
+@media (min-width: 1024px) {
+    .woocommerce-cart .woocommerce {
+        display: flex !important;
+        flex-direction: row !important;
+        gap: 30px !important;
+        align-items: flex-start !important;
+    }
+
+    .woocommerce-cart .woocommerce-cart-form {
+        flex: 1 1 60% !important;
+        max-width: 60% !important;
+    }
+
+    .woocommerce-cart .cart-collaterals {
+        flex: 1 1 38% !important;
+        max-width: 450px !important;
+        min-width: 320px !important;
+    }
+}
