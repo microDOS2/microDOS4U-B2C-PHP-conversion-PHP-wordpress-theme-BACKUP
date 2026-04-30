@@ -7,10 +7,9 @@
 
 get_header();
 
-<?php
 // Look up WooCommerce product IDs by SKU
 $woo_products = array();
-if (class_exists('WooCommerce')) {
+if (function_exists('wc_get_product_id_by_sku')) {
     $sku_map = array(
         'trial'       => 'MD2-TRIAL',
         'protocol_10' => 'MD2-PROTO-10',
