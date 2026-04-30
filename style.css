@@ -4,7 +4,7 @@ Theme URI: https://github.com/microDOS2/microDOS4U-B2C-PHP-conversion-PHP-wordpr
 Author: microDOS4U Team
 Author URI: https://microdos4u.com
 Description: Custom WordPress theme for microDOS4U e-commerce built with WooCommerce. Dark theme with microDOS(2) brand colors.
-Version: 1.0.0
+Version: 1.1.0
 License: GPL-2.0+
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: microdos4u
@@ -1100,3 +1100,518 @@ input::placeholder, textarea::placeholder {
 }
 
 
+
+
+/* ============================================
+   WOOCOMMERCE DARK THEME OVERRIDES
+   ============================================ */
+
+/* --- General WooCommerce Layout --- */
+.woocommerce,
+.woocommerce-page {
+  background: var(--bg-dark);
+  color: var(--text-primary);
+}
+
+.woocommerce .content-area,
+.woocommerce-page .content-area {
+  background: var(--bg-dark);
+}
+
+/* --- Shop / Product Grid --- */
+.woocommerce ul.products li.product,
+.woocommerce-page ul.products li.product {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 20px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.woocommerce ul.products li.product:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 32px rgba(154, 2, 208, 0.15);
+  border-color: var(--brand-dos);
+}
+
+.woocommerce ul.products li.product .woocommerce-loop-product__title {
+  color: var(--text-heading);
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-top: 12px;
+}
+
+.woocommerce ul.products li.product .price {
+  color: var(--brand-micro);
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+
+.woocommerce ul.products li.product .price del {
+  color: var(--text-muted);
+  font-weight: 400;
+}
+
+.woocommerce ul.products li.product .price ins {
+  text-decoration: none;
+}
+
+/* --- Product Page --- */
+.woocommerce div.product .product_title {
+  color: var(--text-heading);
+  font-size: 2rem;
+  font-weight: 800;
+}
+
+.woocommerce div.product p.price,
+.woocommerce div.product span.price {
+  color: var(--brand-micro);
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.woocommerce div.product .woocommerce-product-details__short-description {
+  color: var(--text-primary);
+}
+
+.woocommerce div.product .product_meta {
+  color: var(--text-muted);
+  border-top: 1px solid var(--border-color);
+  padding-top: 1rem;
+  margin-top: 1rem;
+}
+
+.woocommerce div.product .product_meta a {
+  color: var(--brand-dos);
+}
+
+/* --- Add to Cart Button --- */
+.woocommerce a.button,
+.woocommerce button.button,
+.woocommerce input.button,
+.woocommerce #respond input#submit {
+  background: linear-gradient(135deg, var(--brand-micro), var(--brand-dos));
+  color: #000;
+  font-weight: 700;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 24px;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.1s;
+}
+
+.woocommerce a.button:hover,
+.woocommerce button.button:hover,
+.woocommerce input.button:hover,
+.woocommerce #respond input#submit:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.woocommerce a.button.alt,
+.woocommerce button.button.alt,
+.woocommerce input.button.alt {
+  background: linear-gradient(135deg, var(--brand-dos), var(--brand-two));
+  color: #fff;
+}
+
+.woocommerce a.button.alt:hover,
+.woocommerce button.button.alt:hover,
+.woocommerce input.button.alt:hover {
+  opacity: 0.9;
+}
+
+/* --- Quantity Input --- */
+.woocommerce .quantity .qty {
+  background: var(--bg-dark);
+  color: var(--text-heading);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 8px;
+  width: 70px;
+}
+
+/* --- Cart / Checkout Pages --- */
+.woocommerce-cart table.cart,
+.woocommerce-checkout .checkout {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 24px;
+}
+
+.woocommerce table.shop_table {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+}
+
+.woocommerce table.shop_table th {
+  color: var(--text-heading);
+  background: var(--bg-dark);
+  border-bottom: 1px solid var(--border-color);
+  padding: 12px;
+}
+
+.woocommerce table.shop_table td {
+  color: var(--text-primary);
+  border-bottom: 1px solid var(--border-color);
+  padding: 12px;
+}
+
+.woocommerce table.shop_table a {
+  color: var(--brand-dos);
+}
+
+.woocommerce table.shop_table .product-name a {
+  color: var(--text-heading);
+  font-weight: 600;
+}
+
+/* --- Cart Totals --- */
+.woocommerce .cart-collaterals .cart_totals,
+.woocommerce-page .cart-collaterals .cart_totals {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 24px;
+}
+
+.woocommerce .cart-collaterals .cart_totals h2 {
+  color: var(--text-heading);
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+/* --- Checkout Form Fields --- */
+.woocommerce form .form-row label {
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.woocommerce form .form-row input,
+.woocommerce form .form-row textarea,
+.woocommerce form .form-row select {
+  background: var(--bg-dark);
+  color: var(--text-heading);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 10px 12px;
+}
+
+.woocommerce form .form-row input:focus,
+.woocommerce form .form-row textarea:focus,
+.woocommerce form .form-row select:focus {
+  border-color: var(--accent-blue);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.15);
+}
+
+.woocommerce-checkout #payment {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+}
+
+.woocommerce-checkout #payment div.payment_box {
+  background: var(--bg-dark);
+  color: var(--text-primary);
+  border-radius: 8px;
+}
+
+.woocommerce-checkout #payment div.payment_box::before {
+  border-bottom-color: var(--bg-dark);
+}
+
+.woocommerce-checkout #payment ul.payment_methods {
+  border-bottom: 1px solid var(--border-color);
+}
+
+.woocommerce-checkout #payment ul.payment_methods li {
+  color: var(--text-primary);
+}
+
+/* --- Order Confirmation --- */
+.woocommerce-order {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 32px;
+}
+
+.woocommerce-order h2 {
+  color: var(--text-heading);
+}
+
+.woocommerce-order .woocommerce-order-overview {
+  background: var(--bg-dark);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.woocommerce-order .woocommerce-order-overview li {
+  color: var(--text-primary);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.woocommerce-order .woocommerce-order-overview li strong {
+  color: var(--text-heading);
+}
+
+/* --- My Account --- */
+.woocommerce-account .woocommerce-MyAccount-navigation {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.woocommerce-account .woocommerce-MyAccount-navigation ul {
+  list-style: none;
+  padding: 0;
+}
+
+.woocommerce-account .woocommerce-MyAccount-navigation ul li {
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.woocommerce-account .woocommerce-MyAccount-navigation ul li a {
+  color: var(--text-primary);
+  text-decoration: none;
+}
+
+.woocommerce-account .woocommerce-MyAccount-navigation ul li a:hover {
+  color: var(--brand-dos);
+}
+
+.woocommerce-account .woocommerce-MyAccount-content {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 24px;
+  color: var(--text-primary);
+}
+
+.woocommerce-account .woocommerce-MyAccount-content h2,
+.woocommerce-account .woocommerce-MyAccount-content h3 {
+  color: var(--text-heading);
+}
+
+/* --- Messages / Notices --- */
+.woocommerce-message,
+.woocommerce-info,
+.woocommerce-error {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  color: var(--text-primary);
+}
+
+.woocommerce-message {
+  border-left: 4px solid var(--brand-micro);
+}
+
+.woocommerce-info {
+  border-left: 4px solid var(--accent-blue);
+}
+
+.woocommerce-error {
+  border-left: 4px solid #ef4444;
+}
+
+.woocommerce-message a.button {
+  background: var(--brand-micro);
+  color: #000;
+}
+
+/* --- Breadcrumbs --- */
+.woocommerce .woocommerce-breadcrumb {
+  color: var(--text-muted);
+}
+
+.woocommerce .woocommerce-breadcrumb a {
+  color: var(--brand-dos);
+}
+
+/* --- Tabs on Product Page --- */
+.woocommerce div.product .woocommerce-tabs ul.tabs {
+  border-bottom: 1px solid var(--border-color);
+}
+
+.woocommerce div.product .woocommerce-tabs ul.tabs li {
+  background: var(--bg-dark);
+  border: 1px solid var(--border-color);
+  border-radius: 8px 8px 0 0;
+}
+
+.woocommerce div.product .woocommerce-tabs ul.tabs li a {
+  color: var(--text-primary);
+}
+
+.woocommerce div.product .woocommerce-tabs ul.tabs li.active {
+  background: var(--bg-card);
+  border-bottom-color: var(--bg-card);
+}
+
+.woocommerce div.product .woocommerce-tabs ul.tabs li.active a {
+  color: var(--text-heading);
+}
+
+.woocommerce div.product .woocommerce-tabs .panel {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 0 8px 8px 8px;
+  padding: 20px;
+  color: var(--text-primary);
+}
+
+/* --- Sale Badge --- */
+.woocommerce span.onsale {
+  background: var(--brand-two);
+  color: #000;
+  font-weight: 700;
+  border-radius: 20px;
+  padding: 4px 12px;
+}
+
+/* --- Star Ratings --- */
+.woocommerce .star-rating {
+  color: #fbbf24;
+}
+
+/* --- Mini Cart Widget (if used in sidebar/header) --- */
+.woocommerce .widget_shopping_cart,
+.woocommerce.widget_shopping_cart {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  color: var(--text-primary);
+}
+
+.woocommerce .widget_shopping_cart .widget_shopping_cart_content .mini_cart_item {
+  border-bottom: 1px solid var(--border-color);
+}
+
+.woocommerce .widget_shopping_cart .total {
+  color: var(--text-heading);
+  border-top: 1px solid var(--border-color);
+}
+
+/* --- WooCommerce Pagination --- */
+.woocommerce nav.woocommerce-pagination ul {
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+}
+
+.woocommerce nav.woocommerce-pagination ul li {
+  border-right: 1px solid var(--border-color);
+}
+
+.woocommerce nav.woocommerce-pagination ul li a,
+.woocommerce nav.woocommerce-pagination ul li span {
+  color: var(--text-primary);
+  background: var(--bg-card);
+  padding: 8px 14px;
+}
+
+.woocommerce nav.woocommerce-pagination ul li a:hover {
+  background: var(--brand-dos);
+  color: #fff;
+}
+
+.woocommerce nav.woocommerce-pagination ul li span.current {
+  background: var(--brand-micro);
+  color: #000;
+  font-weight: 700;
+}
+
+/* --- Coupons --- */
+.woocommerce form.checkout_coupon {
+  background: var(--bg-card);
+  border: 1px dashed var(--border-color);
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.woocommerce form.checkout_coupon .form-row input {
+  background: var(--bg-dark);
+}
+
+/* --- Remove Product Button in Cart --- */
+.woocommerce a.remove {
+  color: #ef4444 !important;
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.woocommerce a.remove:hover {
+  color: #fff !important;
+  background: #ef4444;
+  border-radius: 50%;
+}
+
+/* --- Cart Icon in Header --- */
+.cart-count {
+  background: var(--brand-two);
+  color: #000;
+  font-size: 0.65rem;
+  font-weight: 800;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: -6px;
+  right: -6px;
+}
+
+/* --- WooCommerce Widgets --- */
+.woocommerce .widget_price_filter .price_slider_wrapper {
+  background: var(--bg-card);
+  padding: 16px;
+  border-radius: 8px;
+}
+
+.woocommerce .widget_price_filter .ui-slider .ui-slider-range {
+  background: var(--brand-dos);
+}
+
+.woocommerce .widget_price_filter .ui-slider .ui-slider-handle {
+  background: var(--brand-micro);
+}
+
+.woocommerce .widget_layered_nav ul li a {
+  color: var(--text-primary);
+}
+
+.woocommerce .widget_layered_nav ul li.chosen a {
+  color: var(--brand-micro);
+  font-weight: 600;
+}
+
+/* --- Responsive Tweaks for WooCommerce --- */
+@media (max-width: 768px) {
+  .woocommerce ul.products li.product {
+    padding: 12px;
+  }
+
+  .woocommerce table.shop_table_responsive tr {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    margin-bottom: 12px;
+  }
+
+  .woocommerce table.shop_table_responsive tr td {
+    border-bottom: 1px solid var(--border-color);
+  }
+}
+
+/* ============================================
+   END WOOCOMMERCE OVERRIDES
+   ============================================ */
