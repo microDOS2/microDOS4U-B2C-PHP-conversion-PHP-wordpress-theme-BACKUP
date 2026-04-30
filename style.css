@@ -1641,3 +1641,78 @@ form.cart {
 .pricing-card > div:last-child {
     margin-top: 1rem;
 }
+
+
+/* ============================================
+   CHECKOUT FIXES
+   ============================================ */
+
+/* Fix duplicate order summary on checkout */
+.woocommerce-checkout .woocommerce-checkout-review-order-table,
+.woocommerce-checkout #order_review {
+    display: block !important;
+}
+
+/* Hide any duplicate order review sections */
+.woocommerce-checkout .woocommerce-checkout-review-order-table + .woocommerce-checkout-review-order-table,
+.woocommerce-checkout #order_review + #order_review {
+    display: none !important;
+}
+
+/* Ensure ship-to-different-address checkbox is visible */
+.woocommerce-shipping-fields {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+.woocommerce-shipping-fields .shipping_address {
+    display: block !important;
+}
+
+#ship-to-different-address {
+    display: block !important;
+    visibility: visible !important;
+    margin: 1rem 0;
+}
+
+#ship-to-different-address-checkbox {
+    display: inline-block !important;
+    visibility: visible !important;
+}
+
+/* Fix checkout form spacing */
+.woocommerce-checkout .woocommerce form.woocommerce-checkout {
+    background: var(--bg-card) !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: 12px !important;
+    padding: 24px !important;
+}
+
+/* Fix the place order button */
+.woocommerce-checkout #place_order {
+    background: linear-gradient(135deg, var(--brand-micro), var(--brand-dos)) !important;
+    color: #000 !important;
+    font-weight: 700 !important;
+    border: none !important;
+    border-radius: 8px !important;
+    padding: 14px 24px !important;
+    font-size: 1.1rem !important;
+    cursor: pointer !important;
+    width: 100% !important;
+    margin-top: 1rem !important;
+}
+
+/* Fix coupon section */
+.woocommerce-checkout .checkout_coupon {
+    background: var(--bg-card) !important;
+    border: 1px dashed var(--border-color) !important;
+    border-radius: 8px !important;
+    padding: 16px !important;
+}
+
+/* Fix duplicate table on checkout - hide the second occurrence */
+.woocommerce-checkout .shop_table.woocommerce-checkout-review-order-table:nth-of-type(2),
+.woocommerce-checkout .shop_table.woocommerce-checkout-review-order-table + .shop_table {
+    display: none !important;
+}
