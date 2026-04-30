@@ -2140,3 +2140,99 @@ form.cart {
         border-bottom: none;
     }
 }
+
+
+/* ============================================
+   SINGLE PRODUCT PAGE FIXES
+   ============================================ */
+
+/* Fix Add to Cart button on single product */
+.woocommerce div.product form.cart .button,
+.woocommerce div.product .single_add_to_cart_button {
+    background: linear-gradient(135deg, var(--brand-micro), var(--brand-dos)) !important;
+    color: #000 !important;
+    font-weight: 700 !important;
+    border: none !important;
+    border-radius: 8px !important;
+    padding: 12px 24px !important;
+    font-size: 1rem !important;
+    cursor: pointer !important;
+    transition: opacity 0.2s !important;
+}
+
+.woocommerce div.product form.cart .button:hover,
+.woocommerce div.product .single_add_to_cart_button:hover {
+    opacity: 0.9 !important;
+}
+
+/* Fix product image gallery */
+.woocommerce div.product .woocommerce-product-gallery {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 20px;
+}
+
+.woocommerce div.product .woocommerce-product-gallery__wrapper {
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.woocommerce div.product .woocommerce-product-gallery__image img {
+    border-radius: 8px;
+    width: 100%;
+    height: auto;
+}
+
+/* Fix product image placeholder when no image */
+.woocommerce div.product .woocommerce-product-gallery__wrapper .wp-post-image,
+.woocommerce div.product .woocommerce-product-gallery__wrapper img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+/* Fix related products grid */
+.woocommerce div.product .related.products {
+    margin-top: 3rem;
+    clear: both;
+}
+
+.woocommerce div.product .related.products h2 {
+    color: var(--text-heading);
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.woocommerce div.product .related.products ul.products {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 20px;
+}
+
+/* Fix product meta (SKU, categories) */
+.woocommerce div.product .product_meta {
+    color: var(--text-muted);
+    border-top: 1px solid var(--border-color);
+    padding-top: 1rem;
+    margin-top: 2rem;
+}
+
+.woocommerce div.product .product_meta span {
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.woocommerce div.product .product_meta a {
+    color: var(--brand-dos);
+    text-decoration: none;
+}
+
+.woocommerce div.product .product_meta a:hover {
+    text-decoration: underline;
+}
+
+/* Fix tabs styling */
+.woocommerce div.product .woocommerce-tabs {
+    margin-top: 2rem;
+}
