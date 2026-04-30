@@ -2236,3 +2236,199 @@ form.cart {
 .woocommerce div.product .woocommerce-tabs {
     margin-top: 2rem;
 }
+
+
+/* ============================================
+   AGGRESSIVE CART TABLE FIXES
+   ============================================ */
+
+/* Force the cart table to be wide */
+.woocommerce-cart .woocommerce-cart-form {
+    width: 100% !important;
+    max-width: 100% !important;
+}
+
+/* Make the table full width */
+.woocommerce-cart .woocommerce table.shop_table {
+    width: 100% !important;
+    table-layout: auto !important;
+}
+
+/* Table cells - proper sizing */
+.woocommerce-cart .woocommerce table.shop_table td,
+.woocommerce-cart .woocommerce table.shop_table th {
+    vertical-align: middle !important;
+    padding: 12px 8px !important;
+}
+
+/* Product thumbnail column - FORCE SMALL */
+.woocommerce-cart .woocommerce table.shop_table td.product-thumbnail {
+    width: 80px !important;
+    max-width: 80px !important;
+    min-width: 80px !important;
+    padding: 8px !important;
+}
+
+.woocommerce-cart .woocommerce table.shop_table td.product-thumbnail a {
+    display: block !important;
+    width: 60px !important;
+    height: 60px !important;
+    overflow: hidden !important;
+    border-radius: 8px !important;
+}
+
+.woocommerce-cart .woocommerce table.shop_table td.product-thumbnail img {
+    width: 60px !important;
+    height: 60px !important;
+    max-width: 60px !important;
+    max-height: 60px !important;
+    object-fit: cover !important;
+    display: block !important;
+    border-radius: 8px !important;
+}
+
+/* Product name column */
+.woocommerce-cart .woocommerce table.shop_table td.product-name {
+    min-width: 200px !important;
+}
+
+.woocommerce-cart .woocommerce table.shop_table td.product-name a {
+    color: var(--text-heading) !important;
+    font-weight: 600 !important;
+    text-decoration: none !important;
+}
+
+/* Price, quantity, subtotal columns */
+.woocommerce-cart .woocommerce table.shop_table td.product-price,
+.woocommerce-cart .woocommerce table.shop_table td.product-subtotal {
+    color: var(--brand-micro) !important;
+    font-weight: 700 !important;
+    white-space: nowrap !important;
+}
+
+.woocommerce-cart .woocommerce table.shop_table td.product-quantity {
+    text-align: center !important;
+}
+
+/* Remove button */
+.woocommerce-cart .woocommerce table.shop_table td.product-remove {
+    width: 40px !important;
+    text-align: center !important;
+}
+
+.woocommerce-cart .woocommerce table.shop_table td.product-remove a.remove {
+    color: #ef4444 !important;
+    font-size: 1.5rem !important;
+    font-weight: 700 !important;
+    text-decoration: none !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 28px !important;
+    height: 28px !important;
+    border-radius: 50% !important;
+}
+
+.woocommerce-cart .woocommerce table.shop_table td.product-remove a.remove:hover {
+    color: #fff !important;
+    background: #ef4444 !important;
+}
+
+/* ===== COUPON + ACTIONS AREA - FIX OVERLAP ===== */
+.woocommerce-cart .woocommerce .actions {
+    padding: 16px !important;
+    background: var(--bg-dark) !important;
+    border-top: 1px solid var(--border-color) !important;
+}
+
+/* Coupon section */
+.woocommerce-cart .woocommerce .coupon {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 10px !important;
+    align-items: center !important;
+    margin-bottom: 16px !important;
+    float: none !important;
+    width: 100% !important;
+}
+
+.woocommerce-cart .woocommerce .coupon input#coupon_code {
+    flex: 1 1 200px !important;
+    min-width: 150px !important;
+    background: var(--bg-dark) !important;
+    color: var(--text-heading) !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: 8px !important;
+    padding: 10px 12px !important;
+}
+
+.woocommerce-cart .woocommerce .coupon button {
+    flex: 0 0 auto !important;
+    background: linear-gradient(135deg, var(--brand-micro), var(--brand-dos)) !important;
+    color: #000 !important;
+    font-weight: 700 !important;
+    border: none !important;
+    border-radius: 8px !important;
+    padding: 10px 20px !important;
+    cursor: pointer !important;
+}
+
+/* Update cart button - separate line */
+.woocommerce-cart .woocommerce button[name="update_cart"] {
+    background: var(--brand-dos) !important;
+    color: #fff !important;
+    font-weight: 600 !important;
+    border: none !important;
+    border-radius: 8px !important;
+    padding: 10px 20px !important;
+    cursor: pointer !important;
+    float: none !important;
+    display: inline-block !important;
+    clear: both !important;
+    margin-top: 0 !important;
+}
+
+/* Clear floats */
+.woocommerce-cart .woocommerce .actions::after {
+    content: "" !important;
+    display: table !important;
+    clear: both !important;
+}
+
+/* ===== CART TOTALS ===== */
+.woocommerce-cart .cart-collaterals {
+    width: 100% !important;
+    margin-top: 2rem !important;
+}
+
+.woocommerce-cart .cart-collaterals .cart_totals {
+    background: var(--bg-card) !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: 12px !important;
+    padding: 24px !important;
+    width: 100% !important;
+}
+
+/* Proceed to checkout button */
+.woocommerce-cart .wc-proceed-to-checkout .checkout-button {
+    background: linear-gradient(135deg, var(--brand-micro), var(--brand-dos)) !important;
+    color: #000 !important;
+    font-weight: 700 !important;
+    border: none !important;
+    border-radius: 8px !important;
+    padding: 14px 24px !important;
+    font-size: 1.1rem !important;
+    display: block !important;
+    text-align: center !important;
+    text-decoration: none !important;
+    width: 100% !important;
+}
+
+/* Shipping text */
+.woocommerce-cart .cart_totals .woocommerce-shipping-totals td {
+    color: var(--text-primary) !important;
+}
+
+.woocommerce-cart .cart_totals .woocommerce-shipping-totals td a {
+    color: var(--brand-dos) !important;
+}
