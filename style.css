@@ -1615,3 +1615,29 @@ input::placeholder, textarea::placeholder {
 /* ============================================
    END WOOCOMMERCE OVERRIDES
    ============================================ */
+
+
+/* ============================================
+   BUTTON SPACING FIX
+   ============================================ */
+
+/* Add margin below cart forms to prevent overlap with toggle buttons */
+form.cart {
+    margin-bottom: 1.5rem;
+}
+
+/* Ensure the pricing card sections have proper spacing */
+.pricing-card form.cart:last-child {
+    margin-bottom: 0;
+}
+
+/* Toggle button container spacing */
+#content-protocol,
+#content-onetime {
+    margin-top: 1rem;
+}
+
+/* Add some breathing room between the trial pack Add to Cart and the toggle */
+.pricing-card > div:last-child {
+    margin-top: 1rem;
+}
