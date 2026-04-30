@@ -6,7 +6,27 @@
  */
 
 get_header();
+
+<?php
+// Look up WooCommerce product IDs by SKU
+$woo_products = array();
+if (class_exists('WooCommerce')) {
+    $sku_map = array(
+        'trial'       => 'MD2-TRIAL',
+        'protocol_10' => 'MD2-PROTO-10',
+        'protocol_30' => 'MD2-PROTO-30',
+        'protocol_60' => 'MD2-PROTO-60',
+        'onetime_10'  => 'MD2-1TIME-10',
+        'onetime_30'  => 'MD2-1TIME-30',
+        'onetime_60'  => 'MD2-1TIME-60',
+    );
+    foreach ($sku_map as $key => $sku) {
+        $pid = wc_get_product_id_by_sku($sku);
+        $woo_products[$key] = $pid ? $pid : 0;
+    }
+}
 ?>
+
 <style>
 /* ===== Critical Hero Video Styles (inline backup) ===== */
 #video-container {
@@ -191,13 +211,19 @@ get_header();
                     <li class="flex items-center"><svg class="w-5 h-5 mr-2 text-green-400" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"></path></svg>Free Shipping</li>
                 </ul>
                 <div class="mt-auto">
-                    <div class="flex items-center justify-center gap-2 mb-4">
-                        <span class="text-slate-400 text-sm mr-2">Quantity:</span>
-                        <button class="quantity-btn" onclick="adjustQuantity('trial', -1)">-</button>
-                        <input type="text" id="qty-trial" class="quantity-input" value="1" readonly>
-                        <button class="quantity-btn" onclick="adjustQuantity('trial', 1)">+</button>
-                    </div>
-                    <button onclick="addToCart('trial')" class="w-full btn-primary text-white font-semibold py-4 rounded-lg text-center block">Add to Cart</button>
+                    <?php if (!empty($woo_products['trial'])) : ?>
+                    <form class="cart" action="<?php echo esc_url(wc_get_cart_url()); ?>" method="post" enctype="multipart/form-data">
+                        <div class="flex items-center justify-center gap-2 mb-4">
+                            <span class="text-slate-400 text-sm mr-2">Quantity:</span>
+                            <button type="button" class="quantity-btn" onclick="adjustQuantity('trial', -1)">-</button>
+                            <input type="number" id="qty-trial" name="quantity" class="quantity-input" value="1" min="1" readonly>
+                            <button type="button" class="quantity-btn" onclick="adjustQuantity('trial', 1)">+</button>
+                        </div>
+                        <button type="submit" name="add-to-cart" value="<?php echo esc_attr($woo_products['trial']); ?>" class="w-full btn-primary text-white font-semibold py-4 rounded-lg text-center block">Add to Cart</button>
+                    </form>
+                    <?php else : ?>
+                    <p class="text-red-400 text-center text-sm">Product unavailable</p>
+                    <?php endif; ?>
                 </div>
             </div>
 
@@ -219,39 +245,45 @@ get_header();
                     <p class="text-slate-400 mb-6">A guided Monthly Wellness Protocol.</p>
                     <div class="space-y-4 mt-auto">
                         <!-- Protocol 10 -->
-                        <div class="p-4 rounded-lg border border-sky-500/20" style="background-color: #1a1329 !important;">
+                        <?php if (!empty($woo_products['protocol_10'])) : ?>
+                        <form class="cart p-4 rounded-lg border border-sky-500/20" style="background-color: #1a1329 !important;" action="<?php echo esc_url(wc_get_cart_url()); ?>" method="post" enctype="multipart/form-data">
                             <p class="font-bold text-white">Explorer Box <span class="text-xs text-slate-400 font-normal ml-1">(10 Pills)</span></p>
                             <p class="mb-3"><span class="text-2xl font-bold text-white">$47.56</span> <span class="text-slate-400 text-sm">/ mo ($4.76/pill)</span></p>
                             <div class="flex items-center gap-2">
-                                <button class="quantity-btn" onclick="adjustQuantity('protocol_10', -1)">-</button>
-                                <input type="text" id="qty-protocol_10" class="quantity-input" value="1" readonly>
-                                <button class="quantity-btn" onclick="adjustQuantity('protocol_10', 1)">+</button>
-                                <button onclick="addToCart('protocol_10')" class="flex-1 btn-primary text-white text-sm font-semibold rounded-lg py-2">Add</button>
+                                <button type="button" class="quantity-btn" onclick="adjustQuantity('protocol_10', -1)">-</button>
+                                <input type="number" name="quantity" id="qty-protocol_10" class="quantity-input" value="1" min="1" readonly>
+                                <button type="button" class="quantity-btn" onclick="adjustQuantity('protocol_10', 1)">+</button>
+                                <button type="submit" name="add-to-cart" value="<?php echo esc_attr($woo_products['protocol_10']); ?>" class="flex-1 btn-primary text-white text-sm font-semibold rounded-lg py-2">Add</button>
                             </div>
-                        </div>
+                        </form>
+                        <?php endif; ?>
                         <!-- Protocol 30 -->
-                        <div class="p-4 rounded-lg border border-sky-500/20 relative overflow-hidden" style="background-color: #1a1329 !important;">
+                        <?php if (!empty($woo_products['protocol_30'])) : ?>
+                        <form class="cart p-4 rounded-lg border border-sky-500/20 relative overflow-hidden" style="background-color: #1a1329 !important;" action="<?php echo esc_url(wc_get_cart_url()); ?>" method="post" enctype="multipart/form-data">
                             <div class="absolute top-0 right-0 bg-sky-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-bl">RECOMMENDED</div>
                             <p class="font-bold text-white">Optimizer Box <span class="text-xs text-slate-400 font-normal ml-1">(30 Pills)</span></p>
                             <p class="mb-3"><span class="text-2xl font-bold text-white">$128.31</span> <span class="text-slate-400 text-sm">/ mo ($4.28/pill)</span></p>
                             <div class="flex items-center gap-2">
-                                <button class="quantity-btn" onclick="adjustQuantity('protocol_30', -1)">-</button>
-                                <input type="text" id="qty-protocol_30" class="quantity-input" value="1" readonly>
-                                <button class="quantity-btn" onclick="adjustQuantity('protocol_30', 1)">+</button>
-                                <button onclick="addToCart('protocol_30')" class="flex-1 btn-primary text-white text-sm font-semibold rounded-lg py-2">Add</button>
+                                <button type="button" class="quantity-btn" onclick="adjustQuantity('protocol_30', -1)">-</button>
+                                <input type="number" name="quantity" id="qty-protocol_30" class="quantity-input" value="1" min="1" readonly>
+                                <button type="button" class="quantity-btn" onclick="adjustQuantity('protocol_30', 1)">+</button>
+                                <button type="submit" name="add-to-cart" value="<?php echo esc_attr($woo_products['protocol_30']); ?>" class="flex-1 btn-primary text-white text-sm font-semibold rounded-lg py-2">Add</button>
                             </div>
-                        </div>
+                        </form>
+                        <?php endif; ?>
                         <!-- Protocol 60 -->
-                        <div class="p-4 rounded-lg border border-sky-500/20" style="background-color: #1a1329 !important;">
+                        <?php if (!empty($woo_products['protocol_60'])) : ?>
+                        <form class="cart p-4 rounded-lg border border-sky-500/20" style="background-color: #1a1329 !important;" action="<?php echo esc_url(wc_get_cart_url()); ?>" method="post" enctype="multipart/form-data">
                             <p class="font-bold text-white">Master Box <span class="text-xs text-slate-400 font-normal ml-1">(60 Pills)</span></p>
                             <p class="mb-3"><span class="text-2xl font-bold text-white">$217.56</span> <span class="text-slate-400 text-sm">/ mo ($3.63/pill)</span></p>
                             <div class="flex items-center gap-2">
-                                <button class="quantity-btn" onclick="adjustQuantity('protocol_60', -1)">-</button>
-                                <input type="text" id="qty-protocol_60" class="quantity-input" value="1" readonly>
-                                <button class="quantity-btn" onclick="adjustQuantity('protocol_60', 1)">+</button>
-                                <button onclick="addToCart('protocol_60')" class="flex-1 btn-primary text-white text-sm font-semibold rounded-lg py-2">Add</button>
+                                <button type="button" class="quantity-btn" onclick="adjustQuantity('protocol_60', -1)">-</button>
+                                <input type="number" name="quantity" id="qty-protocol_60" class="quantity-input" value="1" min="1" readonly>
+                                <button type="button" class="quantity-btn" onclick="adjustQuantity('protocol_60', 1)">+</button>
+                                <button type="submit" name="add-to-cart" value="<?php echo esc_attr($woo_products['protocol_60']); ?>" class="flex-1 btn-primary text-white text-sm font-semibold rounded-lg py-2">Add</button>
                             </div>
-                        </div>
+                        </form>
+                        <?php endif; ?>
                     </div>
                 </div>
 
@@ -262,39 +294,45 @@ get_header();
                     <p class="text-slate-400 mb-6">Buy once, no subscription.</p>
                     <div class="space-y-4 mt-auto">
                         <!-- One-Time 10 -->
-                        <div class="p-4 rounded-lg border border-sky-500/20" style="background-color: #1a1329 !important;">
+                        <?php if (!empty($woo_products['onetime_10'])) : ?>
+                        <form class="cart p-4 rounded-lg border border-sky-500/20" style="background-color: #1a1329 !important;" action="<?php echo esc_url(wc_get_cart_url()); ?>" method="post" enctype="multipart/form-data">
                             <p class="font-bold text-white">10 Pills <span class="text-xs text-slate-400 font-normal ml-1">(One-Time)</span></p>
                             <p class="mb-3"><span class="text-2xl font-bold text-white">$55.95</span> <span class="text-slate-400 text-sm">($5.60/pill)</span></p>
                             <div class="flex items-center gap-2">
-                                <button class="quantity-btn" onclick="adjustQuantity('onetime_10', -1)">-</button>
-                                <input type="text" id="qty-onetime_10" class="quantity-input" value="1" readonly>
-                                <button class="quantity-btn" onclick="adjustQuantity('onetime_10', 1)">+</button>
-                                <button onclick="addToCart('onetime_10')" class="flex-1 btn-primary text-white text-sm font-semibold rounded-lg py-2">Add</button>
+                                <button type="button" class="quantity-btn" onclick="adjustQuantity('onetime_10', -1)">-</button>
+                                <input type="number" name="quantity" id="qty-onetime_10" class="quantity-input" value="1" min="1" readonly>
+                                <button type="button" class="quantity-btn" onclick="adjustQuantity('onetime_10', 1)">+</button>
+                                <button type="submit" name="add-to-cart" value="<?php echo esc_attr($woo_products['onetime_10']); ?>" class="flex-1 btn-primary text-white text-sm font-semibold rounded-lg py-2">Add</button>
                             </div>
-                        </div>
+                        </form>
+                        <?php endif; ?>
                         <!-- One-Time 30 -->
-                        <div class="p-4 rounded-lg border border-sky-500/20 relative overflow-hidden" style="background-color: #1a1329 !important;">
+                        <?php if (!empty($woo_products['onetime_30'])) : ?>
+                        <form class="cart p-4 rounded-lg border border-sky-500/20 relative overflow-hidden" style="background-color: #1a1329 !important;" action="<?php echo esc_url(wc_get_cart_url()); ?>" method="post" enctype="multipart/form-data">
                             <div class="absolute top-0 right-0 bg-sky-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-bl">POPULAR</div>
                             <p class="font-bold text-white">30 Pills <span class="text-xs text-slate-400 font-normal ml-1">(One-Time)</span></p>
                             <p class="mb-3"><span class="text-2xl font-bold text-white">$150.95</span> <span class="text-slate-400 text-sm">($5.03/pill)</span></p>
                             <div class="flex items-center gap-2">
-                                <button class="quantity-btn" onclick="adjustQuantity('onetime_30', -1)">-</button>
-                                <input type="text" id="qty-onetime_30" class="quantity-input" value="1" readonly>
-                                <button class="quantity-btn" onclick="adjustQuantity('onetime_30', 1)">+</button>
-                                <button onclick="addToCart('onetime_30')" class="flex-1 btn-primary text-white text-sm font-semibold rounded-lg py-2">Add</button>
+                                <button type="button" class="quantity-btn" onclick="adjustQuantity('onetime_30', -1)">-</button>
+                                <input type="number" name="quantity" id="qty-onetime_30" class="quantity-input" value="1" min="1" readonly>
+                                <button type="button" class="quantity-btn" onclick="adjustQuantity('onetime_30', 1)">+</button>
+                                <button type="submit" name="add-to-cart" value="<?php echo esc_attr($woo_products['onetime_30']); ?>" class="flex-1 btn-primary text-white text-sm font-semibold rounded-lg py-2">Add</button>
                             </div>
-                        </div>
+                        </form>
+                        <?php endif; ?>
                         <!-- One-Time 60 -->
-                        <div class="p-4 rounded-lg border border-sky-500/20" style="background-color: #1a1329 !important;">
+                        <?php if (!empty($woo_products['onetime_60'])) : ?>
+                        <form class="cart p-4 rounded-lg border border-sky-500/20" style="background-color: #1a1329 !important;" action="<?php echo esc_url(wc_get_cart_url()); ?>" method="post" enctype="multipart/form-data">
                             <p class="font-bold text-white">60 Pills <span class="text-xs text-slate-400 font-normal ml-1">(One-Time)</span></p>
                             <p class="mb-3"><span class="text-2xl font-bold text-white">$255.95</span> <span class="text-slate-400 text-sm">($4.27/pill)</span></p>
                             <div class="flex items-center gap-2">
-                                <button class="quantity-btn" onclick="adjustQuantity('onetime_60', -1)">-</button>
-                                <input type="text" id="qty-onetime_60" class="quantity-input" value="1" readonly>
-                                <button class="quantity-btn" onclick="adjustQuantity('onetime_60', 1)">+</button>
-                                <button onclick="addToCart('onetime_60')" class="flex-1 btn-primary text-white text-sm font-semibold rounded-lg py-2">Add</button>
+                                <button type="button" class="quantity-btn" onclick="adjustQuantity('onetime_60', -1)">-</button>
+                                <input type="number" name="quantity" id="qty-onetime_60" class="quantity-input" value="1" min="1" readonly>
+                                <button type="button" class="quantity-btn" onclick="adjustQuantity('onetime_60', 1)">+</button>
+                                <button type="submit" name="add-to-cart" value="<?php echo esc_attr($woo_products['onetime_60']); ?>" class="flex-1 btn-primary text-white text-sm font-semibold rounded-lg py-2">Add</button>
                             </div>
-                        </div>
+                        </form>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>
@@ -302,254 +340,17 @@ get_header();
     </div>
 </section>
 
-<!-- Checkout Section -->
-<section id="checkout" class="py-20 hidden" style="background-color: rgba(10, 5, 20, 0.7) !important;">
+<!-- Checkout Section - Powered by WooCommerce -->
+<section id="checkout" class="py-20" style="background-color: rgba(10, 5, 20, 0.7) !important;">
     <div class="container mx-auto px-4 sm:px-6">
-        <div id="checkout-container" class="max-w-4xl mx-auto">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl font-bold text-white">Secure Checkout</h2>
-            </div>
-
-            <!-- Step Indicator -->
-            <div class="flex justify-center border-b border-slate-800 mb-12">
-                <div id="step-1-indicator" class="step-active py-4 px-6 text-sm font-semibold border-b-2">1. Shipping</div>
-                <div id="step-2-indicator" class="step-inactive py-4 px-6 text-sm font-semibold border-b-2">2. Payment</div>
-                <div id="step-3-indicator" class="step-inactive py-4 px-6 text-sm font-semibold border-b-2">3. Confirm</div>
-            </div>
-
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
-                <!-- Form Section -->
-                <div class="lg:col-span-1">
-                    <form id="checkout-form" novalidate>
-                        <!-- Step 1: Shipping -->
-                        <div id="step-1">
-                            <h3 class="text-xl font-bold text-white mb-6">Shipping Details</h3>
-                            <div class="space-y-4">
-                                <input type="email" id="email" class="w-full input-field" placeholder="Email Address" required>
-                                <div class="grid grid-cols-2 gap-4">
-                                    <input type="text" id="first-name" class="w-full input-field" placeholder="First Name" required>
-                                    <input type="text" id="last-name" class="w-full input-field" placeholder="Last Name" required>
-                                </div>
-                                <input type="text" id="address" class="w-full input-field" placeholder="Street Address" required>
-                                <div class="grid grid-cols-3 gap-4">
-                                    <input type="text" id="city" class="w-full input-field col-span-1" placeholder="City" required>
-                                    <select id="state" class="w-full input-field" required>
-                                        <option value="">State</option>
-                                        <option value="AL">Alabama</option>
-                                        <option value="AK">Alaska</option>
-                                        <option value="AZ">Arizona</option>
-                                        <option value="AR">Arkansas</option>
-                                        <option value="CA">California</option>
-                                        <option value="CO">Colorado</option>
-                                        <option value="CT">Connecticut</option>
-                                        <option value="DE">Delaware</option>
-                                        <option value="FL">Florida</option>
-                                        <option value="GA">Georgia</option>
-                                        <option value="HI">Hawaii</option>
-                                        <option value="ID">Idaho</option>
-                                        <option value="IL">Illinois</option>
-                                        <option value="IN">Indiana</option>
-                                        <option value="IA">Iowa</option>
-                                        <option value="KS">Kansas</option>
-                                        <option value="KY">Kentucky</option>
-                                        <option value="LA">Louisiana</option>
-                                        <option value="ME">Maine</option>
-                                        <option value="MD">Maryland</option>
-                                        <option value="MA">Massachusetts</option>
-                                        <option value="MI">Michigan</option>
-                                        <option value="MN">Minnesota</option>
-                                        <option value="MS">Mississippi</option>
-                                        <option value="MO">Missouri</option>
-                                        <option value="MT">Montana</option>
-                                        <option value="NE">Nebraska</option>
-                                        <option value="NV">Nevada</option>
-                                        <option value="NH">New Hampshire</option>
-                                        <option value="NJ">New Jersey</option>
-                                        <option value="NM">New Mexico</option>
-                                        <option value="NY">New York</option>
-                                        <option value="NC">North Carolina</option>
-                                        <option value="ND">North Dakota</option>
-                                        <option value="OH">Ohio</option>
-                                        <option value="OK">Oklahoma</option>
-                                        <option value="OR">Oregon</option>
-                                        <option value="PA">Pennsylvania</option>
-                                        <option value="RI">Rhode Island</option>
-                                        <option value="SC">South Carolina</option>
-                                        <option value="SD">South Dakota</option>
-                                        <option value="TN">Tennessee</option>
-                                        <option value="TX">Texas</option>
-                                        <option value="UT">Utah</option>
-                                        <option value="VT">Vermont</option>
-                                        <option value="VA">Virginia</option>
-                                        <option value="WA">Washington</option>
-                                        <option value="WV">West Virginia</option>
-                                        <option value="WI">Wisconsin</option>
-                                        <option value="WY">Wyoming</option>
-                                        <option value="DC">Washington DC</option>
-                                    </select>
-                                    <input type="text" id="zip" class="w-full input-field" placeholder="ZIP" required maxlength="5">
-                                </div>
-                            </div>
-                            <button type="button" id="to-step-2" class="w-full mt-8 btn-primary text-white font-bold py-3 rounded-lg">Continue to Payment</button>
-                        </div>
-
-                        <!-- Step 2: Payment -->
-                        <div id="step-2" class="hidden">
-                            <h3 class="text-xl font-bold text-white mb-6">Payment Method</h3>
-                            <div class="space-y-4">
-                                <input type="text" id="card-number" class="w-full input-field" placeholder="0000 0000 0000 0000" required>
-                                <input type="text" id="card-name" class="w-full input-field" placeholder="Name on Card" required>
-                                <div class="grid grid-cols-2 gap-4">
-                                    <input type="text" id="expiry-date" class="w-full input-field" placeholder="MM / YY" required>
-                                    <input type="text" id="cvc" class="w-full input-field" placeholder="CVC" required>
-                                </div>
-                            </div>
-                            
-                            <!-- Billing Address Toggle -->
-                            <div class="mt-6">
-                                <label class="flex items-center cursor-pointer">
-                                    <input type="checkbox" id="same-billing" class="mr-3" checked onchange="toggleBillingAddress()">
-                                    <span class="text-slate-300">Billing address is the same as shipping address</span>
-                                </label>
-                            </div>
-                            
-                            <!-- Billing Address Section (hidden by default) -->
-                            <div id="billing-address-section" class="hidden mt-6 space-y-4">
-                                <h4 class="text-lg font-semibold text-white">Billing Address</h4>
-                                <input type="text" id="billing-name" class="w-full input-field" placeholder="Cardholder Name">
-                                <input type="text" id="billing-address" class="w-full input-field" placeholder="Street Address">
-                                <div class="grid grid-cols-3 gap-4">
-                                    <input type="text" id="billing-city" class="w-full input-field" placeholder="City">
-                                    <select id="billing-state" class="w-full input-field">
-                                        <option value="">State</option>
-                                        <option value="AL">Alabama</option>
-                                        <option value="AK">Alaska</option>
-                                        <option value="AZ">Arizona</option>
-                                        <option value="AR">Arkansas</option>
-                                        <option value="CA">California</option>
-                                        <option value="CO">Colorado</option>
-                                        <option value="CT">Connecticut</option>
-                                        <option value="DE">Delaware</option>
-                                        <option value="FL">Florida</option>
-                                        <option value="GA">Georgia</option>
-                                        <option value="HI">Hawaii</option>
-                                        <option value="ID">Idaho</option>
-                                        <option value="IL">Illinois</option>
-                                        <option value="IN">Indiana</option>
-                                        <option value="IA">Iowa</option>
-                                        <option value="KS">Kansas</option>
-                                        <option value="KY">Kentucky</option>
-                                        <option value="LA">Louisiana</option>
-                                        <option value="ME">Maine</option>
-                                        <option value="MD">Maryland</option>
-                                        <option value="MA">Massachusetts</option>
-                                        <option value="MI">Michigan</option>
-                                        <option value="MN">Minnesota</option>
-                                        <option value="MS">Mississippi</option>
-                                        <option value="MO">Missouri</option>
-                                        <option value="MT">Montana</option>
-                                        <option value="NE">Nebraska</option>
-                                        <option value="NV">Nevada</option>
-                                        <option value="NH">New Hampshire</option>
-                                        <option value="NJ">New Jersey</option>
-                                        <option value="NM">New Mexico</option>
-                                        <option value="NY">New York</option>
-                                        <option value="NC">North Carolina</option>
-                                        <option value="ND">North Dakota</option>
-                                        <option value="OH">Ohio</option>
-                                        <option value="OK">Oklahoma</option>
-                                        <option value="OR">Oregon</option>
-                                        <option value="PA">Pennsylvania</option>
-                                        <option value="RI">Rhode Island</option>
-                                    <option value="SC">South Carolina</option>
-                                        <option value="SD">South Dakota</option>
-                                        <option value="TN">Tennessee</option>
-                                        <option value="TX">Texas</option>
-                                        <option value="UT">Utah</option>
-                                        <option value="VT">Vermont</option>
-                                        <option value="VA">Virginia</option>
-                                        <option value="WA">Washington</option>
-                                        <option value="WV">West Virginia</option>
-                                        <option value="WI">Wisconsin</option>
-                                        <option value="WY">Wyoming</option>
-                                        <option value="DC">Washington DC</option>
-                                    </select>
-                                    <input type="text" id="billing-zip" class="w-full input-field" placeholder="ZIP" maxlength="5">
-                                </div>
-                            </div>
-                            
-                            <div class="mt-8 flex gap-4">
-                                <button type="button" id="back-to-step-1" class="w-1/3 text-slate-400 hover:text-white">Back</button>
-                                <button type="button" id="to-step-3" class="w-2/3 btn-primary text-white font-bold py-3 rounded-lg">Review Order</button>
-                            </div>
-                        </div>
-                        
-                        <!-- Step 3: Confirmation -->
-                        <div id="step-3" class="hidden">
-                            <h3 class="text-xl font-bold text-white mb-6">Confirm Order</h3>
-                            <div class="card-bg border border-slate-700 rounded-lg p-6 space-y-4 text-slate-300">
-                                <div id="confirm-summary-text"></div>
-                                <div id="confirm-shipping-address" class="text-sm border-t border-slate-700 pt-4 mt-4"></div>
-                                <div id="confirm-billing-address" class="text-sm border-t border-slate-700 pt-4 hidden"></div>
-                                <label class="flex items-center cursor-pointer">
-                                    <input type="checkbox" id="ageVerified" class="mr-3"> I am 21 or older.
-                                </label>
-                                <label class="flex items-center cursor-pointer">
-                                    <input type="checkbox" id="legalAccepted" class="mr-3"> I agree to terms.
-                                </label>
-                            </div>
-                            <div class="mt-8 flex gap-4">
-                                <button type="button" id="back-to-step-2" class="w-1/3 text-slate-400 hover:text-white">Back</button>
-                                <button type="submit" id="confirm-purchase" class="w-2/3 btn-primary text-white font-bold py-3 rounded-lg flex items-center justify-center">
-                                    <span class="btn-text">Confirm Purchase</span>
-                                    <span class="spinner hidden"></span>
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-
-                <!-- Sidebar Summary -->
-                <div class="lg:col-span-1">
-                    <div class="card-bg rounded-lg p-6 border border-slate-800 sticky top-28 shadow-xl">
-                        <h3 class="text-lg font-bold text-white mb-4">Your Order</h3>
-                        <div id="order-summary-content" class="text-slate-300 space-y-2"></div>
-                        <div class="border-t border-slate-700 mt-4 pt-4 space-y-2">
-                            <div class="flex justify-between text-slate-400">
-                                <span>Subtotal</span>
-                                <span id="summary-subtotal">$0.00</span>
-                            </div>
-                            <div class="flex justify-between text-slate-400">
-                                <span>Tax</span>
-                                <span id="summary-tax">$0.00</span>
-                            </div>
-                            <div class="flex justify-between text-slate-400">
-                                <span>Shipping</span>
-                                <span class="text-green-400">FREE</span>
-                            </div>
-                            <div class="flex justify-between text-white font-bold text-lg pt-2 border-t border-slate-700">
-                                <span>Total</span>
-                                <span id="summary-total">$0.00</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-white">Secure Checkout</h2>
         </div>
-
-        <!-- Success -->
-        <div id="success-message" class="hidden text-center card-bg border border-green-500 rounded-lg p-8 max-w-lg mx-auto shadow-2xl">
-            <div class="w-16 h-16 bg-green-500/20 text-green-500 rounded-full flex items-center justify-center mx-auto mb-6">
-                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
-            </div>
-            <h2 class="text-2xl font-bold text-white mb-4">Order Received!</h2>
-            <p class="text-slate-300 mb-8">Your journey to clarity begins soon. A confirmation email has been sent to your address.</p>
-            <button id="reset-checkout-btn" class="w-full btn-secondary text-white font-bold py-3 rounded-lg">Back to Store</button>
-        </div>
+        <?php echo do_shortcode('[woocommerce_checkout]'); ?>
     </div>
 </section>
 
-<!-- FAQ Section -->
+<!-- FAQ Section --><!-- FAQ Section -->
 <section id="faq" class="py-20 bg-slate-900" style="background-color: #0a0514 !important;">
     <div class="container mx-auto px-6 max-w-3xl">
         <h2 class="text-3xl font-bold text-white text-center mb-12">Frequently Asked Questions</h2>
