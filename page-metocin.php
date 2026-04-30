@@ -312,7 +312,7 @@
         <section class="section" id="dose" style="padding-top: 32px; padding-bottom: 32px;">
             <div class="container">
                 <div class="card" style="margin-bottom: 18px; text-align: center;">
-                    <h3 style="margin-bottom: 6px;">Dosage Guide</h3>
+                    <h3 style="margin-bottom: 6px;"><a href="<?php echo esc_url(home_url('/dosage-guide')); ?>" style="color: #fff; text-decoration: none;">Dosage Guide →</a></h3>
                     <p style="color: var(--slate-300);">Effects begin around <strong style="color: #fff;">1–2 mg</strong>. Each <span style="color: #44f80c;">micro</span><span style="color: #9a02d0;">DOS</span><span style="color: #ff66c4;">(2)</span> tablet contains <strong style="color: #fff;">2 mg</strong> of Metocin (≈ the experience of <strong style="color: #fff;">½ gram</strong> of dried mushrooms). Start low and assess.</p>
                 </div>
 
