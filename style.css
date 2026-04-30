@@ -2604,3 +2604,124 @@ form.cart {
     object-fit: cover !important;
     display: block !important;
 }
+
+
+/* ============================================
+   CART SHIPMENT ADDRESS - FIX LINE WRAPPING
+   ============================================ */
+
+.woocommerce-cart .cart_totals .woocommerce-shipping-totals td,
+.woocommerce-cart .cart_totals .woocommerce-shipping-destination {
+    text-align: left !important;
+    white-space: normal !important;
+    line-height: 1.5 !important;
+}
+
+.woocommerce-cart .cart_totals .woocommerce-shipping-destination strong,
+.woocommerce-cart .cart_totals .woocommerce-shipping-calculator {
+    display: inline !important;
+}
+
+.woocommerce-cart .cart_totals .woocommerce-shipping-calculator a {
+    color: var(--brand-dos) !important;
+    text-decoration: none !important;
+    font-size: 0.9rem !important;
+}
+
+/* ============================================
+   PRODUCT CATEGORY - SMALLER ADD TO CART BUTTONS
+   ============================================ */
+
+.woocommerce ul.products li.product .button,
+.woocommerce ul.products li.product a.button,
+.woocommerce ul.products li.product button.button {
+    background: linear-gradient(135deg, var(--brand-micro), var(--brand-dos)) !important;
+    color: #000 !important;
+    font-weight: 700 !important;
+    border: none !important;
+    border-radius: 8px !important;
+    padding: 8px 16px !important;
+    font-size: 0.85rem !important;
+    cursor: pointer !important;
+    transition: opacity 0.2s !important;
+    display: inline-block !important;
+    text-align: center !important;
+    text-decoration: none !important;
+    min-width: auto !important;
+    width: auto !important;
+}
+
+.woocommerce ul.products li.product .button:hover {
+    opacity: 0.9 !important;
+}
+
+/* ============================================
+   CHECKOUT - HIDE SHIPPING WHEN NOT CHECKED
+   ============================================ */
+
+/* Hide shipping fields by default when checkbox is unchecked */
+.woocommerce-checkout .woocommerce-shipping-fields .shipping_address {
+    display: none !important;
+}
+
+/* Show shipping fields when checkbox IS checked */
+.woocommerce-checkout .woocommerce-shipping-fields #ship-to-different-address-checkbox:checked ~ .shipping_address,
+.woocommerce-checkout .woocommerce-shipping-fields input[id*=ship-to-different-address]:checked ~ .shipping_address,
+.woocommerce-checkout .woocommerce-shipping-fields #ship-to-different-address-checkbox:checked + label + .shipping_address {
+    display: block !important;
+}
+
+/* Alternative: use the .shipping_address class that WooCommerce toggles */
+.woocommerce-checkout .woocommerce-shipping-fields .shipping_address[style*="display: block"],
+.woocommerce-checkout .woocommerce-shipping-fields .shipping_address:target {
+    display: block !important;
+}
+
+/* The checkbox itself */
+.woocommerce-checkout #ship-to-different-address {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    margin: 1rem 0 !important;
+    cursor: pointer !important;
+}
+
+.woocommerce-checkout #ship-to-different-address input[type=checkbox] {
+    width: 18px !important;
+    height: 18px !important;
+    cursor: pointer !important;
+    accent-color: var(--brand-micro) !important;
+}
+
+/* ============================================
+   CHECKOUT FORM STYLING
+   ============================================ */
+
+/* Better spacing for checkout fields */
+.woocommerce-checkout .woocommerce form .form-row {
+    margin-bottom: 12px !important;
+    padding: 0 !important;
+}
+
+/* Two-column layout for name fields */
+.woocommerce-checkout .woocommerce .form-row-first,
+.woocommerce-checkout .woocommerce .form-row-last {
+    width: 48% !important;
+    float: left !important;
+}
+
+.woocommerce-checkout .woocommerce .form-row-last {
+    float: right !important;
+}
+
+.woocommerce-checkout .woocommerce .form-row-wide {
+    clear: both !important;
+    width: 100% !important;
+}
+
+/* Clear floats after row pairs */
+.woocommerce-checkout .woocommerce .form-row::after {
+    content: "" !important;
+    display: table !important;
+    clear: both !important;
+}
