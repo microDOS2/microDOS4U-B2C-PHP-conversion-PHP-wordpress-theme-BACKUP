@@ -2528,3 +2528,79 @@ form.cart {
     margin: 0 auto !important;
     display: block !important;
 }
+
+
+/* ============================================
+   ULTRA-AGGRESSIVE CART FIXES
+   ============================================ */
+
+/* Force buttons to never overlap */
+.woocommerce-cart table.cart td.actions .coupon,
+.woocommerce-cart .cart .coupon,
+.woocommerce .cart .coupon {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 12px !important;
+    align-items: center !important;
+    margin-bottom: 20px !important;
+    float: none !important;
+    width: 100% !important;
+    clear: both !important;
+}
+
+.woocommerce-cart table.cart td.actions .coupon input,
+.woocommerce-cart .cart .coupon input,
+.woocommerce .cart .coupon input {
+    flex: 1 1 200px !important;
+    min-width: 150px !important;
+    max-width: 300px !important;
+}
+
+.woocommerce-cart table.cart td.actions .coupon .button,
+.woocommerce-cart .cart .coupon .button,
+.woocommerce .cart .coupon .button {
+    flex: 0 0 auto !important;
+    margin: 0 !important;
+}
+
+/* Force update cart button on its own line */
+.woocommerce-cart table.cart td.actions .button[name="update_cart"],
+.woocommerce-cart .cart .button[name="update_cart"],
+.woocommerce .cart .button[name="update_cart"] {
+    display: block !important;
+    clear: both !important;
+    margin-top: 12px !important;
+    float: none !important;
+}
+
+/* Force thumbnail tiny */
+.woocommerce-cart table.shop_table td.product-thumbnail,
+.woocommerce table.shop_table.cart td.product-thumbnail,
+.woocommerce-cart .cart_item .product-thumbnail {
+    width: 80px !important;
+    max-width: 80px !important;
+    min-width: 80px !important;
+    padding: 8px !important;
+}
+
+.woocommerce-cart table.shop_table td.product-thumbnail a,
+.woocommerce table.shop_table.cart td.product-thumbnail a {
+    display: block !important;
+    width: 60px !important;
+    height: 60px !important;
+    overflow: hidden !important;
+    border-radius: 8px !important;
+}
+
+.woocommerce-cart table.shop_table td.product-thumbnail img,
+.woocommerce table.shop_table.cart td.product-thumbnail img,
+.woocommerce-cart .cart_item .product-thumbnail img {
+    width: 60px !important;
+    height: 60px !important;
+    max-width: 60px !important;
+    max-height: 60px !important;
+    min-width: 60px !important;
+    min-height: 60px !important;
+    object-fit: cover !important;
+    display: block !important;
+}
