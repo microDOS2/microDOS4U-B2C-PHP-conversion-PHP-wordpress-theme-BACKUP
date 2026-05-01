@@ -339,16 +339,6 @@ if (function_exists('wc_get_product_id_by_sku')) {
     </div>
 </section>
 
-<!-- Checkout Section - Powered by WooCommerce -->
-<section id="checkout" class="py-20" style="background-color: rgba(10, 5, 20, 0.7) !important;">
-    <div class="container mx-auto px-4 sm:px-6">
-        <div class="text-center mb-12">
-            <h2 class="text-3xl font-bold text-white">Secure Checkout</h2>
-        </div>
-        <?php echo do_shortcode('[woocommerce_checkout]'); ?>
-    </div>
-</section>
-
 <!-- FAQ Section --><!-- FAQ Section -->
 <section id="faq" class="py-20 bg-slate-900" style="background-color: #0a0514 !important;">
     <div class="container mx-auto px-6 max-w-3xl">
