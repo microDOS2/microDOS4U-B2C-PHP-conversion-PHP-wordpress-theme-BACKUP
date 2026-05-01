@@ -19,6 +19,13 @@ get_header();
         <div class="space-y-8 text-slate-300">
             
             <div class="card p-6 rounded-lg" style="background-color: #150f24 !important; border: 1px solid #1f2b47;">
+                <h2 class="text-xl font-bold text-white mb-3">Product Warnings</h2>
+                <p class="text-amber-400 font-semibold mb-2">⚠️ RESPECT THIS COMPOUND</p>
+                <p class="mt-2">Overconsumption of Metocin will result in temporary intense psychedelic visuals and hallucinations.</p>
+                <p class="mt-2">Treat this the way you would magic mushrooms — be careful of supplements and medications that impact serotonin (avoid mixing with SAMe or MAOIs), and be aware that SSRIs can often make Metocin less effective. Metocin is cross-tolerant with other psychedelics. Please consume responsibly & carefully.</p>
+            </div>
+
+            <div class="card p-6 rounded-lg" style="background-color: #150f24 !important; border: 1px solid #1f2b47;">
                 <h2 class="text-xl font-bold text-white mb-3">Age Requirement</h2>
                 <p>You must be <strong class="text-white">21 years of age or older</strong> to purchase products from this website. By using this site and making a purchase, you confirm that you meet the minimum age requirement for purchasing psychoactive research compounds in your jurisdiction.</p>
             </div>
