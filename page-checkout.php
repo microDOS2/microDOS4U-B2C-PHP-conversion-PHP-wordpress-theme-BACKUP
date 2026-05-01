@@ -24,32 +24,49 @@ get_header();
 </section>
 
 <script>
-// Fix duplicate order review table on checkout
+// Fix duplicate order review table on checkout using MutationObserver
 (function() {
-    function removeDuplicateOrderTable() {
+    function removeDuplicates() {
+        // Remove extra tables - keep only the FIRST one
         var tables = document.querySelectorAll('.woocommerce-checkout-review-order-table');
-        if (tables.length > 1) {
-            // Hide all but the first table
-            for (var i = 1; i < tables.length; i++) {
-                tables[i].style.display = 'none';
-            }
+        for (var i = 1; i < tables.length; i++) {
+            tables[i].style.display = 'none';
+            tables[i].style.visibility = 'hidden';
+            tables[i].style.height = '0';
+            tables[i].style.overflow = 'hidden';
         }
-        // Also hide duplicate order review sections
-        var sections = document.querySelectorAll('#order_review');
-        if (sections.length > 1) {
-            for (var j = 1; j < sections.length; j++) {
-                sections[j].style.display = 'none';
-            }
+        // Remove extra #order_review sections
+        var reviews = document.querySelectorAll('#order_review');
+        for (var j = 1; j < reviews.length; j++) {
+            reviews[j].style.display = 'none';
+            reviews[j].style.visibility = 'hidden';
+            reviews[j].style.height = '0';
+            reviews[j].style.overflow = 'hidden';
+        }
+        // Remove extra order review headings
+        var headings = document.querySelectorAll('h3#order_review_heading');
+        for (var k = 1; k < headings.length; k++) {
+            headings[k].style.display = 'none';
         }
     }
-    // Run after page loads
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', removeDuplicateOrderTable);
-    } else {
-        removeDuplicateOrderTable();
+
+    // Run immediately
+    removeDuplicates();
+
+    // Watch for DOM changes and remove duplicates as they appear
+    var observer = new MutationObserver(function(mutations) {
+        removeDuplicates();
+    });
+
+    observer.observe(document.body, {
+        childList: true,
+        subtree: true
+    });
+
+    // Also run on WooCommerce checkout update
+    if (typeof jQuery !== 'undefined') {
+        jQuery(document.body).on('updated_checkout', removeDuplicates);
     }
-    // Also run after WooCommerce updates the checkout
-    jQuery(document.body).on('updated_checkout', removeDuplicateOrderTable);
 })();
 </script>
 
