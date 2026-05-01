@@ -102,4 +102,67 @@
     </div>
 </header>
 
+<!-- Age Verification Modal -->
+<div id="age-verification-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(10,5,20,0.95); z-index:99999; align-items:center; justify-content:center;">
+    <div style="background:#150f24; border:1px solid #1f2b47; border-radius:16px; padding:40px; max-width:480px; width:90%; text-align:center; box-shadow:0 20px 60px rgba(0,0,0,0.5);">
+        <div style="font-size:3rem; margin-bottom:16px;">🔞</div>
+        <h2 style="color:#fff; font-size:1.75rem; font-weight:800; margin-bottom:12px;">Age Verification Required</h2>
+        <p style="color:#94a3b8; font-size:1rem; line-height:1.6; margin-bottom:24px;">
+            This website contains products intended for adults <strong style="color:#fff;">21 years of age or older</strong>. 
+            By entering, you confirm that you meet the minimum age requirement.
+        </p>
+        <div style="display:flex; flex-direction:column; gap:12px;">
+            <button onclick="verifyAge(true)" style="background:linear-gradient(135deg, #44f80c, #9a02d0); color:#000; font-weight:700; border:none; border-radius:10px; padding:14px 24px; font-size:1.1rem; cursor:pointer; transition:opacity 0.2s;" onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'">
+                I am 21 or older — Enter Site
+            </button>
+            <button onclick="verifyAge(false)" style="background:transparent; color:#94a3b8; font-weight:600; border:1px solid #1f2b47; border-radius:10px; padding:12px 24px; font-size:1rem; cursor:pointer; transition:all 0.2s;" onmouseover="this.style.borderColor='#ef4444'; this.style.color='#ef4444'" onmouseout="this.style.borderColor='#1f2b47'; this.style.color='#94a3b8'">
+                I am under 21 — Leave
+            </button>
+        </div>
+        <p style="color:#64748b; font-size:0.75rem; margin-top:20px;">
+            By clicking "Enter Site," you agree that you are of legal age to purchase products from this website in your jurisdiction.
+        </p>
+    </div>
+</div>
+
+<script>
+(function() {
+    function getCookie(name) {
+        var value = "; " + document.cookie;
+        var parts = value.split("; " + name + "=");
+        if (parts.length === 2) return parts.pop().split(";").shift();
+        return null;
+    }
+    function setCookie(name, value, days) {
+        var expires = "";
+        if (days) {
+            var date = new Date();
+            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+            expires = "; expires=" + date.toUTCString();
+        }
+        document.cookie = name + "=" + (value || "") + expires + "; path=/; SameSite=Lax";
+    }
+
+    window.verifyAge = function(isOfAge) {
+        if (isOfAge) {
+            setCookie('microdos_age_verified', 'yes', 30);
+            document.getElementById('age-verification-modal').style.display = 'none';
+            document.body.style.overflow = '';
+        } else {
+            window.location.href = 'https://www.google.com';
+        }
+    };
+
+    var verified = getCookie('microdos_age_verified');
+    if (verified !== 'yes') {
+        var modal = document.getElementById('age-verification-modal');
+        if (modal) {
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+    }
+})();
+</script>
+
+
 <main id="main" class="site-main">
