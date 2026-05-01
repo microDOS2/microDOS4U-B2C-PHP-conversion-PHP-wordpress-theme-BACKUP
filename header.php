@@ -52,6 +52,7 @@
                 <a href="<?php echo esc_url(home_url('/articles-studies')); ?>" class="text-slate-300 hover:text-white transition">Articles & Studies</a>
                 <a href="<?php echo esc_url(home_url('/metocin-info')); ?>" class="text-slate-300 hover:text-white transition">Metocin Info</a>
                 <a href="<?php echo esc_url(home_url('/dosage-guide')); ?>" class="text-slate-300 hover:text-white transition">Dosage Guide</a>
+                <a href="<?php echo esc_url(home_url('/affiliate-area')); ?>" class="text-slate-300 hover:text-white transition">Affiliates</a>
             <?php endif; ?>
         </nav>
         <?php endif; ?>
@@ -93,6 +94,7 @@
         <a href="#how-it-works" class="block text-slate-300 hover:text-white py-2">How It Works</a>
         <a href="#reviews" class="block text-slate-300 hover:text-white py-2">Reviews</a>
         <a href="#faq" class="block text-slate-300 hover:text-white py-2">FAQ</a>
+        <a href="<?php echo esc_url(home_url('/affiliate-area')); ?>" class="block text-slate-300 hover:text-white py-2">Affiliates</a>
         <a href="<?php echo esc_url(home_url('/contact')); ?>" class="block text-slate-300 hover:text-white py-2">Contact</a>
         <a href="#pricing" class="block mt-4 w-full text-center px-6 py-3 text-white font-semibold rounded-lg shadow-md btn-primary">
             Get Started
