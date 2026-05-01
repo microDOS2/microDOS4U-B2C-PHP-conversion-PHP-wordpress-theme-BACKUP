@@ -23,5 +23,35 @@ get_header();
     </div>
 </section>
 
+<script>
+// Fix duplicate order review table on checkout
+(function() {
+    function removeDuplicateOrderTable() {
+        var tables = document.querySelectorAll('.woocommerce-checkout-review-order-table');
+        if (tables.length > 1) {
+            // Hide all but the first table
+            for (var i = 1; i < tables.length; i++) {
+                tables[i].style.display = 'none';
+            }
+        }
+        // Also hide duplicate order review sections
+        var sections = document.querySelectorAll('#order_review');
+        if (sections.length > 1) {
+            for (var j = 1; j < sections.length; j++) {
+                sections[j].style.display = 'none';
+            }
+        }
+    }
+    // Run after page loads
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', removeDuplicateOrderTable);
+    } else {
+        removeDuplicateOrderTable();
+    }
+    // Also run after WooCommerce updates the checkout
+    jQuery(document.body).on('updated_checkout', removeDuplicateOrderTable);
+})();
+</script>
+
 <?php
 get_footer();
