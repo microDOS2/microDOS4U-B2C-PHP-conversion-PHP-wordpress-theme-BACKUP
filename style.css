@@ -2912,3 +2912,31 @@ form.cart {
         min-width: 320px !important;
     }
 }
+
+
+/* ============================================
+   CHECKOUT - HIDE DUPLICATE ORDER REVIEW TABLE
+   ============================================ */
+
+/* Hide ANY second occurrence of the order review table */
+.woocommerce-checkout #order_review ~ #order_review,
+.woocommerce-checkout .woocommerce-checkout-review-order ~ .woocommerce-checkout-review-order,
+.woocommerce-checkout .woocommerce-checkout-review-order-table:nth-of-type(2),
+.woocommerce-checkout table.shop_table.woocommerce-checkout-review-order-table + table.shop_table.woocommerce-checkout-review-order-table {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    height: 0 !important;
+    overflow: hidden !important;
+}
+
+/* Also hide duplicate headings */
+.woocommerce-checkout h3#order_review_heading ~ h3#order_review_heading {
+    display: none !important;
+}
+
+/* Ensure only the FIRST order review table shows */
+.woocommerce-checkout #order_review:first-of-type,
+.woocommerce-checkout .woocommerce-checkout-review-order:first-of-type {
+    display: block !important;
+}
