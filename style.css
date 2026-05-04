@@ -2940,3 +2940,143 @@ form.cart {
 .woocommerce-checkout .woocommerce-checkout-review-order:first-of-type {
     display: block !important;
 }
+
+
+/* ============================================
+   AFFILIATEWP FORM STYLING
+   ============================================ */
+
+/* Form container */
+.affwp-form,
+form[id^="affwp-register-form"],
+form[id^="affwp-login-form"] {
+    background: transparent !important;
+    color: #d1d5db !important;
+}
+
+/* Labels */
+.affwp-form label,
+form[id^="affwp-register-form"] label,
+form[id^="affwp-login-form"] label {
+    color: #d1d5db !important;
+    font-weight: 500 !important;
+    display: block !important;
+    margin-bottom: 4px !important;
+}
+
+/* Input fields */
+.affwp-form input[type="text"],
+.affwp-form input[type="email"],
+.affwp-form input[type="password"],
+.affwp-form input[type="url"],
+.affwp-form textarea,
+form[id^="affwp-register-form"] input,
+form[id^="affwp-login-form"] input {
+    background: #0a0514 !important;
+    color: #fff !important;
+    border: 1px solid #1f2b47 !important;
+    border-radius: 8px !important;
+    padding: 10px 12px !important;
+    width: 100% !important;
+    margin-bottom: 12px !important;
+    font-size: 1rem !important;
+}
+
+.affwp-form input:focus,
+form[id^="affwp-register-form"] input:focus,
+form[id^="affwp-login-form"] input:focus {
+    border-color: #38bdf8 !important;
+    outline: none !important;
+    box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.15) !important;
+}
+
+/* Submit button */
+.affwp-form input[type="submit"],
+.affwp-form button[type="submit"],
+form[id^="affwp-register-form"] input[type="submit"],
+form[id^="affwp-login-form"] input[type="submit"] {
+    background: linear-gradient(135deg, #44f80c, #9a02d0) !important;
+    color: #000 !important;
+    font-weight: 700 !important;
+    border: none !important;
+    border-radius: 8px !important;
+    padding: 12px 24px !important;
+    cursor: pointer !important;
+    font-size: 1rem !important;
+    margin-top: 12px !important;
+    transition: opacity 0.2s !important;
+}
+
+.affwp-form input[type="submit"]:hover,
+form[id^="affwp-register-form"] input[type="submit"]:hover {
+    opacity: 0.9 !important;
+}
+
+/* Error messages */
+.affwp-errors,
+.affwp-form .affwp-errors {
+    background: #ef4444 !important;
+    color: #fff !important;
+    padding: 12px !important;
+    border-radius: 8px !important;
+    margin-bottom: 16px !important;
+}
+
+/* Success messages */
+.affwp-success {
+    background: #44f80c !important;
+    color: #000 !important;
+    padding: 12px !important;
+    border-radius: 8px !important;
+    margin-bottom: 16px !important;
+    font-weight: 600 !important;
+}
+
+/* Links */
+.affwp-form a,
+.affwp-login-form a,
+.affwp-register-form a {
+    color: #38bdf8 !important;
+    text-decoration: none !important;
+}
+
+.affwp-form a:hover {
+    text-decoration: underline !important;
+}
+
+/* Checkbox styling */
+.affwp-form input[type="checkbox"] {
+    accent-color: #44f80c !important;
+    width: 18px !important;
+    height: 18px !important;
+    margin-right: 8px !important;
+}
+
+/* Terms checkbox label */
+.affwp-form .affwp-terms-agreement label {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    color: #d1d5db !important;
+}
+
+/* Paragraph text in forms */
+.affwp-form p,
+form[id^="affwp-register-form"] p,
+form[id^="affwp-login-form"] p {
+    color: #d1d5db !important;
+    margin-bottom: 12px !important;
+}
+
+/* Required field indicator */
+.affwp-form .required,
+form[id^="affwp-register-form"] .required {
+    color: #ef4444 !important;
+}
+
+/* Form rows/spacing */
+.affwp-form .affwp-form-row,
+form[id^="affwp-register-form"] .form-row,
+form[id^="affwp-login-form"] .form-row {
+    margin-bottom: 16px !important;
+}
