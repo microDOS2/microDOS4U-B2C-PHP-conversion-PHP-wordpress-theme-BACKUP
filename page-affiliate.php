@@ -40,21 +40,12 @@ get_header();
             if (function_exists('affwp_is_affiliate') && affwp_is_affiliate()) {
                 // User IS an affiliate - show dashboard
                 echo do_shortcode('[affiliate_dashboard]');
-            } elseif (is_user_logged_in()) {
-                // User is logged in but NOT an affiliate - show registration form
+            } else {
+                // Show registration form for EVERYONE (logged in or not)
+                // AffiliateWP handles account creation automatically
                 echo '<h2 class="text-2xl font-bold text-white text-center mb-6">Become an Affiliate</h2>';
                 echo '<p class="text-slate-400 text-center mb-6">Complete the form below to apply for our affiliate program. Applications are reviewed within 24-48 hours.</p>';
                 echo do_shortcode('[affiliate_registration]');
-            } else {
-                // Not logged in - show login/register prompt
-                echo '<div class="text-center">';
-                echo '<h2 class="text-2xl font-bold text-white mb-4">Get Started</h2>';
-                echo '<p class="text-slate-400 mb-6">Log in or create an account to apply as an affiliate.</p>';
-                echo '<div class="flex flex-col sm:flex-row gap-4 justify-center">';
-                echo '<a href="' . esc_url(wp_login_url(get_permalink())) . '" class="px-6 py-3 rounded-lg font-semibold text-black" style="background: linear-gradient(135deg, #44f80c, #9a02d0);">Log In</a>';
-                echo '<a href="' . esc_url(wp_registration_url()) . '" class="px-6 py-3 rounded-lg font-semibold text-white border border-slate-600 hover:border-purple-500 transition">Create Account</a>';
-                echo '</div>';
-                echo '</div>';
             }
             ?>
         </div>
