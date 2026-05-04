@@ -35,14 +35,13 @@ get_header();
         </div>
 
         <!-- AffiliateWP Content Area -->
-        <!-- Uses the_content() to properly render AffiliateWP's block with form processing -->
+        <!-- Uses [affiliate_area] shortcode directly — renders registration, login, or dashboard based on user state -->
         <div class="card p-8 rounded-lg mb-8" style="background-color: #150f24 !important; border: 1px solid #1f2b47;">
             <?php
-            if (have_posts()) {
-                while (have_posts()) {
-                    the_post();
-                    the_content();
-                }
+            if (function_exists('affiliate_wp')) {
+                echo do_shortcode('[affiliate_area]');
+            } else {
+                echo '<p class="text-white text-center">AffiliateWP is not active. Please install and activate AffiliateWP.</p>';
             }
             ?>
         </div>
