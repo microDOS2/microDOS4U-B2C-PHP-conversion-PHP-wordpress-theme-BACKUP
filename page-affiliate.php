@@ -35,13 +35,12 @@ get_header();
         </div>
 
         <!-- AffiliateWP Content Area -->
+        <!-- Uses the_content() to properly render AffiliateWP's block with form processing -->
         <div class="card p-8 rounded-lg mb-8" style="background-color: #150f24 !important; border: 1px solid #1f2b47;">
             <?php
-            // Run WordPress loop so AffiliateWP can process form submissions properly
             if (have_posts()) {
                 while (have_posts()) {
                     the_post();
-                    // Output the page content - this renders AffiliateWP's block with proper form handling
                     the_content();
                 }
             }
