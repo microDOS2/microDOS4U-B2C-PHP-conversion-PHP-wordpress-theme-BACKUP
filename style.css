@@ -2940,3 +2940,182 @@ form.cart {
 .woocommerce-checkout .woocommerce-checkout-review-order:first-of-type {
     display: block !important;
 }
+
+
+/* ============================================
+   AFFILIATEWP DARK THEME STYLING
+   ============================================ */
+
+/* Affiliate forms - dark background */
+.affwp-form,
+.affiliate-wp-form,
+#affwp-register-form,
+#affwp-login-form,
+.affwp-login-form,
+.affwp-register-form {
+    background: var(--bg-card) !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: 12px !important;
+    padding: 24px !important;
+    color: var(--text-primary) !important;
+}
+
+/* Form headings */
+.affwp-form h3,
+.affwp-form h2,
+.affiliate-wp-form h3,
+.affiliate-wp-form h2 {
+    color: var(--text-heading) !important;
+    font-size: 1.25rem !important;
+    margin-bottom: 1rem !important;
+}
+
+/* Labels */
+.affwp-form label,
+.affiliate-wp-form label {
+    color: var(--text-primary) !important;
+    font-weight: 500 !important;
+    display: block !important;
+    margin-bottom: 4px !important;
+}
+
+/* Input fields */
+.affwp-form input[type="text"],
+.affwp-form input[type="email"],
+.affwp-form input[type="password"],
+.affwp-form input[type="url"],
+.affwp-form textarea,
+.affiliate-wp-form input[type="text"],
+.affiliate-wp-form input[type="email"],
+.affiliate-wp-form input[type="password"],
+.affiliate-wp-form input[type="url"],
+.affiliate-wp-form textarea {
+    background: var(--bg-dark) !important;
+    color: var(--text-heading) !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: 8px !important;
+    padding: 10px 12px !important;
+    width: 100% !important;
+    margin-bottom: 12px !important;
+}
+
+.affwp-form input:focus,
+.affiliate-wp-form input:focus {
+    border-color: var(--accent-blue) !important;
+    outline: none !important;
+}
+
+/* Submit buttons */
+.affwp-form input[type="submit"],
+.affwp-form button,
+.affiliate-wp-form input[type="submit"],
+.affiliate-wp-form button {
+    background: linear-gradient(135deg, var(--brand-micro), var(--brand-dos)) !important;
+    color: #000 !important;
+    font-weight: 700 !important;
+    border: none !important;
+    border-radius: 8px !important;
+    padding: 12px 24px !important;
+    cursor: pointer !important;
+    transition: opacity 0.2s !important;
+    margin-top: 12px !important;
+}
+
+.affwp-form input[type="submit"]:hover,
+.affiliate-wp-form input[type="submit"]:hover {
+    opacity: 0.9 !important;
+}
+
+/* Login/register links */
+.affwp-form a,
+.affiliate-wp-form a {
+    color: var(--brand-dos) !important;
+    text-decoration: none !important;
+}
+
+.affwp-form a:hover,
+.affiliate-wp-form a:hover {
+    text-decoration: underline !important;
+}
+
+/* Dashboard tables */
+.affwp-table,
+.affiliate-wp-table {
+    background: var(--bg-card) !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: 8px !important;
+    overflow: hidden !important;
+    width: 100% !important;
+}
+
+.affwp-table th,
+.affiliate-wp-table th {
+    background: var(--bg-dark) !important;
+    color: var(--text-heading) !important;
+    padding: 12px !important;
+    border-bottom: 1px solid var(--border-color) !important;
+}
+
+.affwp-table td,
+.affiliate-wp-table td {
+    color: var(--text-primary) !important;
+    padding: 12px !important;
+    border-bottom: 1px solid var(--border-color) !important;
+}
+
+/* Referral URL box */
+.affwp-referral-url,
+.affiliate-wp-referral-url {
+    background: var(--bg-dark) !important;
+    border: 1px solid var(--brand-micro) !important;
+    border-radius: 8px !important;
+    padding: 16px !important;
+    color: var(--brand-micro) !important;
+    font-family: monospace !important;
+    font-size: 0.9rem !important;
+    word-break: break-all !important;
+}
+
+/* Error/success messages */
+.affwp-errors,
+.affiliate-wp-errors {
+    background: #ef4444 !important;
+    color: #fff !important;
+    padding: 12px !important;
+    border-radius: 8px !important;
+    margin-bottom: 16px !important;
+}
+
+.affwp-success,
+.affiliate-wp-success {
+    background: var(--brand-micro) !important;
+    color: #000 !important;
+    padding: 12px !important;
+    border-radius: 8px !important;
+    margin-bottom: 16px !important;
+}
+
+/* Graphs/stats */
+.affwp-graph,
+.affiliate-wp-graph {
+    background: var(--bg-card) !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: 12px !important;
+    padding: 20px !important;
+}
+
+/* Hide any default white backgrounds from AffiliateWP */
+#affwp-affiliate-dashboard,
+#affwp-register-wrap,
+#affwp-login-wrap,
+.affwp-wrap,
+.affiliate-wp-wrap {
+    background: transparent !important;
+}
+
+/* Make sure text is readable */
+#affwp-affiliate-dashboard p,
+#affwp-register-wrap p,
+#affwp-login-wrap p {
+    color: var(--text-primary) !important;
+}
