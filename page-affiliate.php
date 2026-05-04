@@ -46,6 +46,21 @@ get_header();
             ?>
         </div>
 
+<!-- Clear AffiliateWP auto-prefilled fields -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var form = document.querySelector('.affwp-form');
+    if (form) {
+        var inputs = form.querySelectorAll('input[type="text"], input[type="email"], input[type="url"], textarea');
+        inputs.forEach(function(input) {
+            input.value = '';
+            input.removeAttribute('readonly');
+            input.removeAttribute('disabled');
+        });
+    }
+});
+</script>
+
         <!-- FAQ -->
         <div class="mt-12">
             <h2 class="text-2xl font-bold text-white text-center mb-8">Affiliate FAQ</h2>
