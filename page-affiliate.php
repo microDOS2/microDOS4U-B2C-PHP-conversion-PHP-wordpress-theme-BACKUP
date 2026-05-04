@@ -34,18 +34,16 @@ get_header();
             </div>
         </div>
 
-        <!-- AffiliateWP Content -->
+        <!-- AffiliateWP Content Area -->
         <div class="card p-8 rounded-lg mb-8" style="background-color: #150f24 !important; border: 1px solid #1f2b47;">
             <?php
-            if (function_exists('affwp_is_affiliate') && affwp_is_affiliate()) {
-                // User IS an affiliate - show dashboard
-                echo do_shortcode('[affiliate_dashboard]');
-            } else {
-                // Show registration form for EVERYONE (logged in or not)
-                // AffiliateWP handles account creation automatically
-                echo '<h2 class="text-2xl font-bold text-white text-center mb-6">Become an Affiliate</h2>';
-                echo '<p class="text-slate-400 text-center mb-6">Complete the form below to apply for our affiliate program. Applications are reviewed within 24-48 hours.</p>';
-                echo do_shortcode('[affiliate_registration]');
+            // Run WordPress loop so AffiliateWP can process form submissions properly
+            if (have_posts()) {
+                while (have_posts()) {
+                    the_post();
+                    // Output the page content - this renders AffiliateWP's block with proper form handling
+                    the_content();
+                }
             }
             ?>
         </div>
