@@ -45,6 +45,34 @@ get_header();
             ?>
         </div>
 
+
+<!-- Password Eye Toggle -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var pwdFields = document.querySelectorAll('input[type="password"]');
+    pwdFields.forEach(function(field) {
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.innerHTML = '👁️';
+        btn.title = 'Show/Hide';
+        btn.style.cssText = 'position:absolute;right:8px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;font-size:18px;z-index:5;';
+        btn.onclick = function(e) {
+            e.preventDefault();
+            if (field.type === 'password') {
+                field.type = 'text';
+                btn.innerHTML = '🙈';
+            } else {
+                field.type = 'password';
+                btn.innerHTML = '👁️';
+            }
+        };
+        if (field.parentNode) {
+            field.parentNode.style.position = 'relative';
+            field.parentNode.appendChild(btn);
+        }
+    });
+});
+</script>
         <!-- FAQ -->
         <div class="mt-12">
             <h2 class="text-2xl font-bold text-white text-center mb-8">Affiliate FAQ</h2>
