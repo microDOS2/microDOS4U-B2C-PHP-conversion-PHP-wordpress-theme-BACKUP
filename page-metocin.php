@@ -403,19 +403,25 @@
             </div>
         </section>
 
-        <!-- Safety -->
+        <!-- Safety & Use Notes -->
         <section class="section" id="safety" style="padding-top: 32px; padding-bottom: 32px;">
             <div class="container">
                 <div class="card">
                     <h3>Safety &amp; Use Notes</h3>
                     <ul style="color: var(--slate-300);">
-                        <li><strong style="color: #fff;">Legal:</strong> 4‑HO‑MET is not federally scheduled in the U.S.; verify local laws.</li>
-                        <li><strong style="color: #fff;">Set &amp; setting:</strong> Comfortable, safe environment; avoid driving or operating machinery.</li>
-                        <li><strong style="color: #fff;">Plan your window:</strong> Allocate ~4 hours (onset ~15 min; peak 1.5‑2 hrs).</li>
-                        <li><strong style="color: #fff;">Hydration:</strong> Drink water; avoid alcohol mixing.</li>
-                        <li><strong style="color: #fff;">Adults only:</strong> Intended for 21+; consult a healthcare professional if you have medical conditions or take medications.</li>
+                        <li><strong style="color: #fff;">Start Low (Titration):</strong> If you are new to Metocin, begin with a light microdose (1/4 tab) to assess your individual sensitivity before increasing the amount.</li>
+                        <li><strong style="color: #fff;">Plan your day:</strong> Allocate a window of at least 4 hours. Expect onset within ~15 minutes, with peak effects occurring between 1.5–2 hours.</li>
+                        <li><strong style="color: #fff;">Set &amp; Setting:</strong> Ensure a comfortable, safe environment. While microdosing is intended to be sub-perceptual, be mindful of your surroundings. Do not drive or operate heavy machinery until you have fully assessed how the substance affects your cognitive and motor functions.</li>
+                        <li><strong style="color: #fff;">Hydration &amp; Interactions:</strong> Maintain adequate water intake. Avoid mixing with alcohol or other substances, as interactions can alter the experience or safety profile.</li>
+                        <li><strong style="color: #fff;">Legal Status:</strong> 4‑HO‑MET is not federally scheduled in the U.S.; always verify your local laws.</li>
+                        <li><strong style="color: #fff;">Requirements &amp; Consultation:</strong> Intended for adults 21+ only. Consult a healthcare professional prior to use if you have underlying medical conditions or are currently taking other medications.</li>
                     </ul>
-                    <p class="muted">These statements have not been evaluated by the FDA. This content is informational and not medical advice.</p>
+                    <div class="muted" style="margin-top: 16px; line-height: 1.6;">
+                        <p style="margin-bottom: 8px;"><strong>Disclaimers:</strong></p>
+                        <p style="margin-bottom: 8px;">Products sold on this website are not intended for human or animal use, clinical purposes, diagnostic procedures, or any form of consumption or application.</p>
+                        <p style="margin-bottom: 8px;">This content is for informational purposes only and does not constitute medical advice.</p>
+                        <p>These statements have not been evaluated by the FDA. This product is not intended to diagnose, treat, cure, or prevent any disease.</p>
+                    </div>
                 </div>
             </div>
         </section>
