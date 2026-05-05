@@ -35,7 +35,6 @@ get_header();
         </div>
 
         <!-- AffiliateWP Content Area -->
-        <!-- Renders AffiliateWP area via WordPress content loop for proper form POST handling -->
         <div class="card p-8 rounded-lg mb-8" style="background-color: #150f24 !important; border: 1px solid #1f2b47;">
             <?php
             if (function_exists('affiliate_wp')) {
@@ -45,21 +44,6 @@ get_header();
             }
             ?>
         </div>
-
-<!-- Clear AffiliateWP auto-prefilled fields -->
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    var form = document.querySelector('.affwp-form');
-    if (form) {
-        var inputs = form.querySelectorAll('input[type="text"], input[type="email"], input[type="url"], textarea');
-        inputs.forEach(function(input) {
-            input.value = '';
-            input.removeAttribute('readonly');
-            input.removeAttribute('disabled');
-        });
-    }
-});
-</script>
 
         <!-- FAQ -->
         <div class="mt-12">
@@ -75,7 +59,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 </details>
                 <details class="card rounded-lg" style="background-color: #150f24 !important; border: 1px solid #1f2b47;">
                     <summary class="p-4 cursor-pointer text-white font-semibold">Can I promote on social media?</summary>
-                    <div class="px-4 pb-4 text-slate-400">Yes! You can share your referral link on any platform — Instagram, TikTok, Twitter, Facebook, blogs, email newsletters, and more.</div>
+                    <div class="px-4 pb-4 text-slate-400">Yes! You can share your referral link on any platform &mdash; Instagram, TikTok, Twitter, Facebook, blogs, email newsletters, and more.</div>
                 </details>
                 <details class="card rounded-lg" style="background-color: #150f24 !important; border: 1px solid #1f2b47;">
                     <summary class="p-4 cursor-pointer text-white font-semibold">Is there a minimum payout?</summary>
