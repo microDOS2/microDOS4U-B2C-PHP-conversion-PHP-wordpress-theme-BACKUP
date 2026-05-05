@@ -381,7 +381,15 @@ function initCheckout() {
     if (expiryDateEl && typeof IMask !== 'undefined') IMask(expiryDateEl, { mask: 'MM / YY' });
     if (cvcEl && typeof IMask !== 'undefined') IMask(cvcEl, { mask: '0000' });
 
-    document.getElementById('to-step-2').onclick = () => {
+    const toStep2 = document.getElementById('to-step-2');
+    const toStep3 = document.getElementById('to-step-3');
+    const backToStep1 = document.getElementById('back-to-step-1');
+    const backToStep2 = document.getElementById('back-to-step-2');
+
+    // Return early if checkout elements don't exist (e.g. on affiliate page)
+    if (!toStep2 || !toStep3 || !backToStep1 || !backToStep2) return;
+
+    toStep2.onclick = () => {
         const requiredFields = document.getElementById('step-1').querySelectorAll('[required]');
         let valid = true;
         requiredFields.forEach(f => {
@@ -401,7 +409,7 @@ function initCheckout() {
         updateSteps();
     };
 
-    document.getElementById('to-step-3').onclick = () => {
+    toStep3.onclick = () => {
         const requiredFields = document.getElementById('step-2').querySelectorAll('[required]');
         let valid = true;
         requiredFields.forEach(f => {
@@ -423,14 +431,14 @@ function initCheckout() {
         updateSteps();
     };
 
-    document.getElementById('back-to-step-1').onclick = () => {
+    backToStep1.onclick = () => {
         document.getElementById('step-2').classList.add('hidden');
         document.getElementById('step-1').classList.remove('hidden');
         currentStep = 1;
         updateSteps();
     };
 
-    document.getElementById('back-to-step-2').onclick = () => {
+    backToStep2.onclick = () => {
         document.getElementById('step-3').classList.add('hidden');
         document.getElementById('step-2').classList.remove('hidden');
         currentStep = 2;
