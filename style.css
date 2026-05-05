@@ -3080,3 +3080,26 @@ form[id^="affwp-register-form"] .form-row,
 form[id^="affwp-login-form"] .form-row {
     margin-bottom: 16px !important;
 }
+
+
+/* ============================================
+   HIDE REWARDS FLOATING WIDGET
+   ============================================ */
+
+/* Hide common rewards widget selectors */
+.rewards-widget,
+.rewards-button,
+.rewards-fab,
+.floating-rewards,
+.loyalty-widget,
+.rewards-popup,
+.gift-rewards,
+#rewards-widget,
+#rewards-button,
+.rewards-launcher,
+.rewards-trigger {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+}
