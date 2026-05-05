@@ -102,16 +102,55 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <!-- Hide Rewards floating button -->
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Find and hide any button/link containing "Rewards" text
-    var allElements = document.querySelectorAll('button, a, div, span');
-    allElements.forEach(function(el) {
-        if (el.textContent.trim() === 'Rewards' || el.innerHTML.trim() === 'Rewards') {
-            el.style.display = 'none';
-            el.style.visibility = 'hidden';
-        }
+(function() {
+    function hideRewards() {
+        var allElements = document.querySelectorAll('button, a, div, span, iframe');
+        allElements.forEach(function(el) {
+            if (el.textContent && el.textContent.trim() === 'Rewards') {
+                el.style.display = 'none !important';
+                el.style.visibility = 'hidden !important';
+                el.style.opacity = '0 !important';
+                el.style.pointerEvents = 'none !important';
+            }
+        });
+    }
+
+    // Hide immediately on load
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', hideRewards);
+    } else {
+        hideRewards();
+    }
+
+    // Also hide after a delay (for dynamically injected widgets)
+    setTimeout(hideRewards, 500);
+    setTimeout(hideRewards, 1500);
+    setTimeout(hideRewards, 3000);
+
+    // Watch for dynamically added elements
+    var observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+            mutation.addedNodes.forEach(function(node) {
+                if (node.nodeType === 1) { // Element node
+                    if (node.textContent && node.textContent.trim() === 'Rewards') {
+                        node.style.display = 'none !important';
+                        node.style.visibility = 'hidden !important';
+                    }
+                    // Also check children
+                    var children = node.querySelectorAll ? node.querySelectorAll('*') : [];
+                    children.forEach(function(child) {
+                        if (child.textContent && child.textContent.trim() === 'Rewards') {
+                            child.style.display = 'none !important';
+                            child.style.visibility = 'hidden !important';
+                        }
+                    });
+                }
+            });
+        });
     });
-});
+
+    observer.observe(document.body, { childList: true, subtree: true });
+})();
 </script>
 
 <?php
