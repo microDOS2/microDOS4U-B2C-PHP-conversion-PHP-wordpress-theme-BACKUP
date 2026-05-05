@@ -39,12 +39,7 @@ get_header();
         <div class="card p-8 rounded-lg mb-8" style="background-color: #150f24 !important; border: 1px solid #1f2b47;">
             <?php
             if (function_exists('affiliate_wp')) {
-                if (have_posts()) {
-                    while (have_posts()) {
-                        the_post();
-                        the_content();
-                    }
-                }
+                echo do_shortcode('[affiliate_area]');
             } else {
                 echo '<p class="text-white text-center">AffiliateWP is not active. Please install and activate AffiliateWP.</p>';
             }
