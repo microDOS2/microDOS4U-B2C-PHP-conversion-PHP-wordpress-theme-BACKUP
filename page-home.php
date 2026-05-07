@@ -349,7 +349,7 @@ if (function_exists('wc_get_product_id_by_sku')) {
                     <span>Is this legal?</span>
                     <svg class="faq-arrow w-5 h-5 shrink-0 transition-transform duration-200 text-slate-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
                 </button>
-                <div id="faq1-answer" class="faq-answer hidden p-6 pt-0 text-slate-300 leading-relaxed">Yes. Our active ingredient, 4-HO-MET, is not federally scheduled in the United States. We recommend checking your local regulations, but we ship to all 50 states.</div>
+                <div id="faq1-answer" class="faq-answer hidden p-6 pt-0 text-slate-300 leading-relaxed"> Our active ingredient, 4-HO-MET, is not federally scheduled in the United States. We recommend checking your local regulations.</div>
             </div>
             <div class="card-bg rounded-lg border border-slate-800">
                 <button class="faq-question flex justify-between items-center w-full p-6 text-left font-semibold text-white" aria-expanded="false" aria-controls="faq2-answer">
