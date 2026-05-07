@@ -391,3 +391,76 @@ remove_action('wp_head', 'wp_generator');
 add_filter('xmlrpc_enabled', '__return_false');
 remove_action('wp_head', 'print_emoji_detection_script', 7);
 remove_action('wp_print_styles', 'print_emoji_styles');
+
+
+// ============================================
+// CHECKOUT LEGAL ACKNOWLEDGMENT CHECKBOX
+n// ============================================
+
+/**
+ * Add mandatory legal acknowledgment checkbox to checkout
+ * Positioned before the Place Order button
+ */
+add_action('woocommerce_review_order_before_submit', 'microdos4u_legal_acknowledgment_checkbox', 10);
+
+function microdos4u_legal_acknowledgment_checkbox() {
+    echo '<div class="legal-acknowledgment-wrap" style="margin: 20px 0; padding: 16px; background: #150f24; border: 1px solid #9a02d0; border-radius: 8px;">';
+    echo '<label for="legal_acknowledgment" style="display: flex; align-items: flex-start; cursor: pointer;">';
+    echo '<input type="checkbox" name="legal_acknowledgment" id="legal_acknowledgment" style="margin-right: 12px; margin-top: 4px; min-width: 18px; min-height: 18px; cursor: pointer;" required />';
+    echo '<span style="color: #94a3b8; font-size: 14px; line-height: 1.6;">';
+    echo '<strong style="color: #fff;">Check out Acknowledgement:</strong> I certify that I am at least 21 years old and that I am purchasing products from Unique Pharming solely for lawful research, novelty, or collector purposes. I understand that all products are Research Use Only, Not for Human Consumption, not approved for human or animal use, and not intended for medical, therapeutic, dietary, recreational, or diagnostic purposes. I agree to the <a href="' . get_permalink(get_page_by_path('legal-disclaimer')) . '" target="_blank" style="color: #38bdf8; text-decoration: underline;">Terms and Conditions</a> and understand that all sales are final.';
+    echo '</span>';
+    echo '</label>';
+    echo '</div>';
+}
+
+/**
+ * Validate the legal acknowledgment checkbox on checkout
+ */
+add_action('woocommerce_checkout_process', 'microdos4u_validate_legal_acknowledgment');
+
+function microdos4u_validate_legal_acknowledgment() {
+    if (!isset($_POST['legal_acknowledgment']) || empty($_POST['legal_acknowledgment'])) {
+        wc_add_notice(__('You must acknowledge the Terms and Conditions and certify that you are purchasing products for lawful research, novelty, or collector purposes.'), 'error');
+    }
+}
+
+/**
+ * Add inline JavaScript to enforce checkbox validation
+ */
+add_action('wp_footer', 'microdos4u_checkout_checkbox_validation');
+
+function microdos4u_checkout_checkbox_validation() {
+    if (!is_checkout()) return;
+    ?>
+    <script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function() {
+        var checkbox = document.getElementById('legal_acknowledgment');
+        var form = document.querySelector('form.woocommerce-checkout');
+
+        if (checkbox && form) {
+            form.addEventListener('submit', function(e) {
+                if (!checkbox.checked) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    alert('You must check the legal acknowledgment box to proceed with your order.');
+                    checkbox.focus();
+                    checkbox.parentElement.style.border = '2px solid #ff4444';
+                    checkbox.parentElement.style.borderRadius = '8px';
+                    checkbox.parentElement.style.padding = '14px';
+                    return false;
+                }
+            });
+
+            // Remove error styling when checked
+            checkbox.addEventListener('change', function() {
+                if (this.checked) {
+                    this.parentElement.style.border = '';
+                    this.parentElement.style.padding = '';
+                }
+            });
+        }
+    });
+    </script>
+    <?php
+}
