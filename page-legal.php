@@ -100,6 +100,10 @@ get_header();
             <p style="color:#64748b;font-size:13px;margin-bottom:8px;">Effective Date: May 7, 2026</p>
             <p style="color:#64748b;font-size:13px;margin-bottom:16px;">Company: Unique Pharming | Website: www.microDOS4U.com | Email: <a href="mailto:Support@microDOS2.com" style="color:#38bdf8;">Support@microDOS2.com</a></p>
 
+            <div style="background:#9a02d0;border:2px solid #ff66c4;border-radius:12px;padding:20px;margin-bottom:24px;text-align:center;">
+                <p style="color:#fff;font-size:18px;font-weight:800;margin:0;">You must be at least 21 years old to access this website or purchase any product.</p>
+            </div>
+
             <div style="background:#150f24;border:1px solid #1a1329;border-radius:12px;padding:24px;margin-bottom:24px;">
                 <p style="color:#94a3b8;line-height:1.7;margin-bottom:16px;">Please read these Terms and Conditions carefully before accessing or using www.microDOS4U.com, placing an order, submitting information, or purchasing any product offered by Unique Pharming.</p>
                 <p style="color:#94a3b8;line-height:1.7;margin-bottom:16px;">By accessing the website, creating an account, submitting an order, purchasing any product, or otherwise interacting with Unique Pharming, you acknowledge that you have read, understood, and agree to be legally bound by these Terms and Conditions.</p>
