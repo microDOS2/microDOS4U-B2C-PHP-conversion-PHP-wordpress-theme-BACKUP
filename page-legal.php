@@ -25,7 +25,7 @@ get_header();
                 <p style="color:#94a3b8;line-height:1.7;margin-bottom:12px;">Products are not intended to diagnose, treat, cure, or prevent any disease.</p>
                 <p style="color:#94a3b8;line-height:1.7;margin-bottom:16px;">By purchasing from <span style="color:#44f80c;">micro</span><span style="color:#9a02d0;">DOS</span><span style="color:#ff66c4;">(2)</span>, you agree that:</p>
                 <ul style="color:#94a3b8;padding-left:20px;line-height:1.8;margin-bottom:16px;">
-                    <li>You are at least 18 years old (or the age of majority in your jurisdiction).</li>
+                    <li>You are at least 21 years old (or the age of majority in your jurisdiction).</li>
                     <li>You will comply with all applicable local, state, and federal laws.</li>
                     <li><span style="color:#44f80c;">micro</span><span style="color:#9a02d0;">DOS</span><span style="color:#ff66c4;">(2)</span> and its affiliates are not liable for any misuse of products.</li>
                 </ul>
