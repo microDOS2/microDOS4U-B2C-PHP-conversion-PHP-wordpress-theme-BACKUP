@@ -99,7 +99,9 @@
         <a href="#pricing" class="block mt-4 w-full text-center px-6 py-3 text-white font-semibold rounded-lg shadow-md btn-primary">
             Get Started
         </a>
-    </div>
+    
+            <a href="<?php echo esc_url(wc_get_page_permalink('myaccount')); ?>" class="block py-2 text-base font-medium text-green-400">My Account</a>
+            </div>
 </header>
 
 <!-- Age Verification Modal -->
