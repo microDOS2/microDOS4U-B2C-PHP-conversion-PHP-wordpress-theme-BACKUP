@@ -460,3 +460,99 @@ function microdos4u_checkout_checkbox_validation() {
     ";
     wp_add_inline_script('jquery', $script);
 }
+
+
+// ============================================
+// AUTO-CREATE CUSTOMER ACCOUNT ON ORDER
+n// ============================================
+
+/**
+ * Automatically create a customer account when any order is placed.
+ * Works with ALL payment methods (COD, Authorize.net, etc.)
+ */
+add_action('woocommerce_checkout_order_processed', 'microdos4u_auto_create_customer_account', 10, 3);
+
+function microdos4u_auto_create_customer_account($order_id, $posted_data, $order) {
+    $email = $order->get_billing_email();
+
+    // Skip if email is empty or user already exists
+    if (empty($email) || email_exists($email)) {
+        return;
+    }
+
+    // Generate username from email
+    $username = sanitize_user(current(explode('@', $email)), true);
+
+    // Make username unique if already taken
+    $original_username = $username;
+    $count = 1;
+    while (username_exists($username)) {
+        $username = $original_username . $count;
+        $count++;
+    }
+
+    // Generate secure password
+    $password = wp_generate_password(12, true);
+
+    // Create the user
+    $user_id = wp_create_user($username, $password, $email);
+
+    if (is_wp_error($user_id)) {
+        error_log('microDOS4U: Failed to auto-create account for ' . $email . ' - ' . $user_id->get_error_message());
+        return;
+    }
+
+    // Set user role to customer
+    $user = new WP_User($user_id);
+    $user->set_role('customer');
+
+    // Update billing info from order
+    update_user_meta($user_id, 'billing_first_name', $order->get_billing_first_name());
+    update_user_meta($user_id, 'billing_last_name', $order->get_billing_last_name());
+    update_user_meta($user_id, 'billing_address_1', $order->get_billing_address_1());
+    update_user_meta($user_id, 'billing_city', $order->get_billing_city());
+    update_user_meta($user_id, 'billing_state', $order->get_billing_state());
+    update_user_meta($user_id, 'billing_postcode', $order->get_billing_postcode());
+    update_user_meta($user_id, 'billing_phone', $order->get_billing_phone());
+
+    // Link order to user
+    $order->set_customer_id($user_id);
+    $order->save();
+
+    // Send email with login credentials
+    $site_name = get_bloginfo('name');
+    $login_url = wc_get_page_permalink('myaccount');
+
+    $subject = 'Your ' . $site_name . ' Account Has Been Created';
+
+    $message = "Hi there,\n\n";
+    $message .= "Thank you for your order! We've automatically created an account for you.\n\n";
+    $message .= "Your login details:\n";
+    $message .= "Username: " . $username . "\n";
+    $message .= "Password: " . $password . "\n\n";
+    $message .= "You can log in here: " . $login_url . "\n\n";
+    $message .= "From your account, you can view your orders, manage your subscriptions, and update your details.\n\n";
+    $message .= "If you have any questions, contact us at Support@microDOS2.com\n\n";
+    $message .= "— The " . $site_name . " Team";
+
+    wp_mail($email, $subject, $message);
+}
+
+/**
+ * Show account created notice on Thank You page
+ */
+add_action('woocommerce_before_thankyou', 'microdos4u_account_created_notice', 5);
+
+function microdos4u_account_created_notice($order_id) {
+    $order = wc_get_order($order_id);
+    if (!$order) return;
+
+    $email = $order->get_billing_email();
+    $user = get_user_by('email', $email);
+
+    if ($user) {
+        echo '<div class="woocommerce-message" style="background: #150f24; border: 1px solid #44f80c; color: #44f80c; padding: 16px; margin-bottom: 24px; border-radius: 8px;">';
+        echo '<strong>Account Created!</strong> We've created an account for you. Check your email (' . esc_html($email) . ') for your login details.';
+        echo '</div>';
+    }
+}
