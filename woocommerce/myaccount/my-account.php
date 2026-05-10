@@ -61,60 +61,151 @@ $subscriptions = function_exists('wcs_get_users_subscriptions')
         </div>
     </div>
 
-    <!-- Orders Section -->
+<!-- Orders Section -->
     <div class="mb-8">
         <h3 class="text-xl font-bold text-white mb-4 flex items-center">
-            <span style="color: #44f80c; margin-right: 8px;">📦</span> Your Orders
+            <span style="color: #44f80c; margin-right: 8px;">&#128230;</span> Your Orders
         </h3>
 
         <?php if (empty($customer_orders)) : ?>
             <div class="p-6 rounded-lg text-center" style="background-color: #150f24; border: 1px solid #1f2b47;">
-                <p class="text-slate-400">No orders yet. <a href="/shop/" style="color: #44f80c;">Start shopping →</a></p>
+                <p class="text-slate-400">No orders yet. <a href="/shop/" style="color: #44f80c;">Start shopping &rarr;</a></p>
             </div>
         <?php else : ?>
-            <div class="overflow-x-auto rounded-lg" style="background-color: #150f24; border: 1px solid #1f2b47;">
-                <table class="w-full text-left">
-                    <thead>
-                        <tr style="border-bottom: 2px solid #1f2b47;">
-                            <th class="py-3 px-4" style="color: #fff;">Order #</th>
-                            <th class="py-3 px-4" style="color: #fff;">Date</th>
-                            <th class="py-3 px-4" style="color: #fff;">Status</th>
-                            <th class="py-3 px-4" style="color: #fff;">Total</th>
-                            <th class="py-3 px-4" style="color: #fff;">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php foreach (array_slice($customer_orders, 0, 5) as $order) : ?>
-                            <tr style="border-bottom: 1px solid #1a1329;">
-                                <td class="py-3 px-4">
-                                    <a href="<?php echo esc_url($order->get_view_order_url()); ?>" style="color: #38bdf8; font-weight: 600;">
-                                        #<?php echo esc_html($order->get_order_number()); ?>
-                                    </a>
-                                </td>
-                                <td class="py-3 px-4"><?php echo esc_html(date_i18n('M j, Y', strtotime($order->get_date_created()))); ?></td>
-                                <td class="py-3 px-4">
-                                    <span class="px-2 py-1 rounded text-xs font-medium" 
-                                          style="background-color: <?php echo $order->get_status() === 'completed' ? '#44f80c20' : ($order->get_status() === 'processing' ? '#f59e0b20' : '#94a3b820'); ?>; 
-                                                 color: <?php echo $order->get_status() === 'completed' ? '#44f80c' : ($order->get_status() === 'processing' ? '#f59e0b' : '#94a3b8'); ?>;">
-                                        <?php echo esc_html(ucfirst($order->get_status())); ?>
-                                    </span>
-                                </td>
-                                <td class="py-3 px-4" style="color: #fff;"><?php echo wp_kses_post($order->get_formatted_order_total()); ?></td>
-                                <td class="py-3 px-4">
-                                    <a href="<?php echo esc_url($order->get_view_order_url()); ?>" style="color: #38bdf8; font-size: 13px;">View →</a>
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
-                <?php if (count($customer_orders) > 5) : ?>
-                    <div class="p-4 text-center" style="border-top: 1px solid #1f2b47;">
-                        <a href="<?php echo esc_url(wc_get_account_endpoint_url('orders')); ?>" style="color: #44f80c;">View all <?php echo count($customer_orders); ?> orders →</a>
+            <div class="rounded-lg" style="background-color: #150f24; border: 1px solid #1f2b47;">
+                <?php foreach ($customer_orders as $order) :
+                    $order_id = $order->get_id();
+                    $status = $order->get_status();
+                    $status_color = ($status === 'completed') ? '#44f80c' : (($status === 'processing') ? '#f59e0b' : '#94a3b8');
+                    $status_bg = ($status === 'completed') ? '#44f80c20' : (($status === 'processing') ? '#f59e0b20' : '#94a3b820');
+                ?>
+                <!-- Order Row -->
+                <div style="border-bottom: 1px solid #1a1329;">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between p-4 cursor-pointer hover:bg-opacity-50"
+                         style="transition: background 0.2s;"
+                         onclick="toggleOrder('order-details-<?php echo $order_id; ?>', this)">
+                        <div class="flex flex-col md:flex-row md:items-center gap-2 md:gap-6 flex-1">
+                            <span style="color: #38bdf8; font-weight: 600; min-width: 70px;">
+                                #<?php echo esc_html($order->get_order_number()); ?>
+                            </span>
+                            <span class="text-slate-400 text-sm" style="min-width: 100px;">
+                                <?php echo esc_html(date_i18n('M j, Y', strtotime($order->get_date_created()))); ?>
+                            </span>
+                            <span class="px-2 py-1 rounded text-xs font-medium inline-block" style="background-color: <?php echo $status_bg; ?>; color: <?php echo $status_color; ?>; width: fit-content;">
+                                <?php echo esc_html(ucfirst($status)); ?>
+                            </span>
+                            <span class="text-white font-medium" style="min-width: 80px;">
+                                <?php echo wp_kses_post($order->get_formatted_order_total()); ?>
+                            </span>
+                        </div>
+                        <div class="mt-2 md:mt-0 flex items-center gap-4">
+                            <a href="<?php echo esc_url($order->get_view_order_url()); ?>" 
+                               class="text-sm" style="color: #38bdf8;"
+                               onclick="event.stopPropagation();">
+                               Full Details &rarr;
+                            </a>
+                            <span class="order-chevron" style="color: #94a3b8; font-size: 12px; transition: transform 0.3s;">&#9660;</span>
+                        </div>
                     </div>
+
+                    <!-- Expandable Order Details -->
+                    <div id="order-details-<?php echo $order_id; ?>" style="display: none; border-top: 1px solid #1a1329; background: #0f0a1a;">
+                        <div class="p-4 md:p-6">
+                            <!-- Products -->
+                            <h4 style="color: #fff; font-size: 14px; font-weight: 600; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px;">Items Ordered</h4>
+                            <div class="mb-4">
+                                <?php foreach ($order->get_items() as $item_id => $item) : 
+                                    $product = $item->get_product();
+                                    $product_image = $product ? wp_get_attachment_image_url($product->get_image_id(), 'thumbnail') : '';
+                                ?>
+                                <div class="flex items-center gap-3 py-3" style="border-bottom: 1px solid #1a1329;">
+                                    <?php if ($product_image) : ?>
+                                        <img src="<?php echo esc_url($product_image); ?>" alt="" style="width: 48px; height: 48px; object-fit: cover; border-radius: 6px; border: 1px solid #1f2b47;">
+                                    <?php else : ?>
+                                        <div style="width: 48px; height: 48px; background: #1a1329; border-radius: 6px; display: flex; align-items: center; justify-content: center; color: #94a3b8; font-size: 20px;">&#128230;</div>
+                                    <?php endif; ?>
+                                    <div class="flex-1">
+                                        <p style="color: #fff; font-weight: 500; margin: 0;"><?php echo esc_html($item->get_name()); ?></p>
+                                        <p style="color: #94a3b8; font-size: 13px; margin: 2px 0 0;">Qty: <?php echo esc_html($item->get_quantity()); ?></p>
+                                    </div>
+                                    <div style="color: #44f80c; font-weight: 500;">
+                                        <?php echo wp_kses_post($order->get_formatted_line_subtotal($item)); ?>
+                                    </div>
+                                </div>
+                                <?php endforeach; ?>
+                            </div>
+
+                            <!-- Two Column Layout: Shipping + Totals -->
+                            <div class="flex flex-col md:flex-row gap-6 mt-4">
+                                <!-- Shipping Address -->
+                                <div class="flex-1">
+                                    <h4 style="color: #fff; font-size: 14px; font-weight: 600; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;">Shipping Address</h4>
+                                    <address style="color: #94a3b8; font-size: 13px; line-height: 1.7; font-style: normal;">
+                                        <?php echo wp_kses_post($order->get_formatted_shipping_address() ?: $order->get_formatted_billing_address()); ?>
+                                    </address>
+                                    <p style="color: #94a3b8; font-size: 13px; margin-top: 8px;">
+                                        <strong style="color: #64748b;">Method:</strong> <?php echo esc_html($order->get_shipping_method()); ?>
+                                    </p>
+                                    <p style="color: #94a3b8; font-size: 13px; margin-top: 4px;">
+                                        <strong style="color: #64748b;">Payment:</strong> <?php echo esc_html($order->get_payment_method_title()); ?>
+                                    </p>
+                                </div>
+
+                                <!-- Order Totals -->
+                                <div style="min-width: 200px;">
+                                    <h4 style="color: #fff; font-size: 14px; font-weight: 600; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;">Order Summary</h4>
+                                    <div style="font-size: 13px;">
+                                        <div class="flex justify-between py-1" style="color: #94a3b8;">
+                                            <span>Subtotal</span>
+                                            <span><?php echo wp_kses_post($order->get_subtotal_to_display()); ?></span>
+                                        </div>
+                                        <div class="flex justify-between py-1" style="color: #94a3b8;">
+                                            <span>Shipping</span>
+                                            <span><?php echo wp_kses_post($order->get_shipping_to_display()); ?></span>
+                                        </div>
+                                        <?php if ($order->get_total_tax() > 0) : ?>
+                                        <div class="flex justify-between py-1" style="color: #94a3b8;">
+                                            <span>Tax</span>
+                                            <span><?php echo wp_kses_post($order->get_total_tax()); ?></span>
+                                        </div>
+                                        <?php endif; ?>
+                                        <div class="flex justify-between py-2 mt-1" style="border-top: 1px solid #1f2b47; color: #fff; font-weight: 700; font-size: 14px;">
+                                            <span>Total</span>
+                                            <span><?php echo wp_kses_post($order->get_formatted_order_total()); ?></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <?php endforeach; ?>
+
+                <?php if (count($customer_orders) > 5) : ?>
+                <div class="p-4 text-center" style="border-top: 1px solid #1f2b47;">
+                    <a href="<?php echo esc_url(wc_get_account_endpoint_url('orders')); ?>" style="color: #44f80c;">View all <?php echo count($customer_orders); ?> orders &rarr;</a>
+                </div>
                 <?php endif; ?>
             </div>
         <?php endif; ?>
     </div>
+
+    <!-- Expand/Collapse Script -->
+    <script>
+    function toggleOrder(detailsId, headerEl) {
+        var details = document.getElementById(detailsId);
+        var chevron = headerEl.querySelector('.order-chevron');
+        if (details.style.display === 'none') {
+            details.style.display = 'block';
+            chevron.style.transform = 'rotate(180deg)';
+            headerEl.style.backgroundColor = 'rgba(255,255,255,0.03)';
+        } else {
+            details.style.display = 'none';
+            chevron.style.transform = 'rotate(0deg)';
+            headerEl.style.backgroundColor = '';
+        }
+    }
+    </script>
 
     <!-- Subscriptions Section -->
     <div class="mb-8">
