@@ -1,0 +1,370 @@
+<?php
+/**
+ * Template Name: Home Page
+ *
+ * @package microDOS4U
+ */
+
+get_header();
+
+// Look up WooCommerce product IDs by SKU
+$woo_products = array();
+if (function_exists('wc_get_product_id_by_sku')) {
+    $sku_map = array(
+        'trial'       => 'MD2-TRIAL',
+        'protocol_10' => 'MD2-PROTO-10',
+        'protocol_30' => 'MD2-PROTO-30',
+        'protocol_60' => 'MD2-PROTO-60',
+        'onetime_10'  => 'MD2-1TIME-10',
+        'onetime_30'  => 'MD2-1TIME-30',
+        'onetime_60'  => 'MD2-1TIME-60',
+    );
+    foreach ($sku_map as $key => $sku) {
+        $pid = wc_get_product_id_by_sku($sku);
+        $woo_products[$key] = $pid ? $pid : 0;
+    }
+}
+?>
+
+<style>
+/* ===== Critical Hero Video Styles (inline backup) ===== */
+#video-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-color: #150f24 !important;
+    border-radius: 0.75rem;
+    overflow: hidden;
+}
+.video-player {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 0.75rem;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: opacity 1s ease;
+}
+.video-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    z-index: 1;
+}
+.video-slide.active {
+    opacity: 1;
+    z-index: 2;
+}</style>
+
+<!-- Hero Section -->
+<section class="hero-bg py-20 md:py-28">
+    <div class="container mx-auto px-6 text-center">
+        <h1 id="hero-title" class="text-4xl md:text-6xl font-extrabold tracking-tighter text-white mb-4 transition-opacity duration-500 min-h-[4rem]"></h1>
+        <p id="hero-subtitle" class="text-lg md:text-xl text-slate-300 max-w-3xl mx-auto mb-8 transition-opacity duration-500 min-h-[3rem]"></p>
+        <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
+            <a href="#pricing" class="w-full sm:w-auto px-8 py-4 text-lg text-white font-bold rounded-lg shadow-lg btn-primary transform hover:scale-105">
+                Start Your $12.95 Trial
+            </a>
+            <a href="#how-it-works" class="w-full sm:w-auto px-8 py-4 text-lg font-semibold text-white bg-slate-700 border border-slate-600 rounded-lg shadow-md hover:bg-slate-600 transition-colors" style="background-color: #1f1a2e !important;">
+                Learn More
+            </a>
+        </div>
+        <div class="mt-16 max-w-sm mx-auto aspect-square relative">
+            <div id="video-container" class="w-full h-full bg-slate-800 rounded-xl overflow-hidden shadow-2xl ring-1 ring-slate-700" style="background-color: #150f24 !important;"></div>
+        </div>
+        <div id="video-dots" class="text-center mt-6"></div>
+    </div>
+</section>
+
+<!-- Benefits Section -->
+<section id="benefits" class="py-20" style="background-color: rgba(10, 5, 20, 0.7) !important;">
+    <div class="container mx-auto px-6">
+        <div class="text-center mb-16">
+            <span class="text-sky-400 font-semibold">THE MICRODOS ADVANTAGE</span>
+            <h2 class="text-3xl md:text-4xl font-bold text-white mt-2">A Cleaner, Clearer Experience</h2>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div class="text-center p-6 card-bg rounded-xl border border-slate-800">
+                <div class="inline-flex feature-icon mb-4">
+                    <svg class="w-8 h-8 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                </div>
+                <h3 class="text-xl font-semibold text-white mb-2">Rapid Onset</h3>
+                <p class="text-slate-400">Effects begin in ~10 minutes for a predictable, manageable session.</p>
+            </div>
+            <div class="text-center p-6 card-bg rounded-xl border border-slate-800">
+                <div class="inline-flex feature-icon mb-4">
+                    <svg class="w-8 h-8 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.085a2 2 0 00-1.736.97l-2.714 4.224a2 2 0 00.174 2.573V10h4z"></path></svg>
+                </div>
+                <h3 class="text-xl font-semibold text-white mb-2">No Nausea</h3>
+                <p class="text-slate-400">A clean formula designed to avoid the discomfort of traditional mushrooms.</p>
+            </div>
+            <div class="text-center p-6 card-bg rounded-xl border border-slate-800">
+                <div class="inline-flex feature-icon mb-4">
+                    <svg class="w-8 h-8 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                </div>
+                <h3 class="text-xl font-semibold text-white mb-2">Precision Dose</h3>
+                <p class="text-slate-400">Each 2mg scored pill ensures a consistent, reliable microdose every time.</p>
+            </div>
+            <div class="text-center p-6 card-bg rounded-xl border border-slate-800">
+                <div class="inline-flex feature-icon mb-4">
+                    <svg class="w-8 h-8 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                </div>
+                <h3 class="text-xl font-semibold text-white mb-2">Legal &amp; Safe</h3>
+                <p class="text-slate-400">Not federally scheduled. Shipped discreetly and reliably to your door.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Product Specs -->
+<section class="py-10" style="background-color: rgba(21, 15, 36, 0.5) !important;">
+    <div class="container mx-auto px-6 text-center">
+        <h2 class="text-2xl font-bold text-white mb-8">Product Specifications</h2>
+        <div class="flex flex-col md:flex-row justify-center gap-8 md:gap-16">
+            <div>
+                <p class="text-slate-400 font-semibold uppercase tracking-wider text-sm">Active Compound</p>
+                <p class="text-lg font-bold text-white">2mg Metocin (4-HO-MET)</p>
+            </div>
+            <div>
+                <p class="text-slate-400 font-semibold uppercase tracking-wider text-sm">Form</p>
+                <p class="text-lg font-bold text-white">Scored, Non-Chewable Pill</p>
+            </div>
+            <div>
+                <p class="text-slate-400 font-semibold uppercase tracking-wider text-sm">Shipping</p>
+                <p class="text-lg font-bold text-white">Discreet, within 48 hours</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Reviews Section -->
+<section id="reviews" class="py-20 overflow-hidden" style="background-color: rgba(10, 5, 20, 0.7) !important;">
+    <div class="container mx-auto px-6">
+        <h2 class="text-3xl font-bold text-white text-center mb-12">Trusted by thousands for focus and clarity</h2>
+        <div class="relative">
+            <div id="testimonial-carousel" class="testimonial-carousel"></div>
+            <div class="absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-slate-900 to-transparent pointer-events-none"></div>
+            <div class="absolute inset-y-0 right-0 w-20 bg-gradient-to-l from-slate-900 to-transparent pointer-events-none"></div>
+        </div>
+    </div>
+</section>
+
+<!-- How It Works Section -->
+<section id="how-it-works" class="py-20" style="background-color: rgba(10, 5, 20, 0.5) !important;">
+    <div class="container mx-auto px-6 max-w-5xl">
+        <h2 class="text-3xl md:text-4xl font-bold text-white text-center mb-16">Get Started in 3 Simple Steps</h2>
+        <div class="relative">
+            <div class="hidden md:block absolute top-10 left-[16.66%] right-[16.66%] h-0.5 bg-slate-700 z-0" style="background-color: #1a1329 !important;"></div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 text-center relative z-10">
+                <div>
+                    <div class="w-20 h-20 mx-auto bg-slate-800 border-4 border-slate-700 rounded-full flex items-center justify-center text-3xl font-bold text-sky-400 mb-6 shadow-inner" style="background-color: #150f24 !important;">1</div>
+                    <h3 class="text-xl font-bold text-white mb-3">Choose Your Plan</h3>
+                    <p class="text-slate-400 leading-relaxed">Start with our risk-free trial or choose your favorite quantity.</p>
+                </div>
+                <div>
+                    <div class="w-20 h-20 mx-auto bg-slate-800 border-4 border-slate-700 rounded-full flex items-center justify-center text-3xl font-bold text-sky-400 mb-6 shadow-inner" style="background-color: #150f24 !important;">2</div>
+                    <h3 class="text-xl font-bold text-white mb-3">Fast, Discreet Shipping</h3>
+                    <p class="text-slate-400 leading-relaxed">We ship your order in plain packaging within 48 hours. Your privacy is guaranteed.</p>
+                </div>
+                <div>
+                    <div class="w-20 h-20 mx-auto bg-slate-800 border-4 border-slate-700 rounded-full flex items-center justify-center text-3xl font-bold text-sky-400 mb-6 shadow-inner" style="background-color: #150f24 !important;">3</div>
+                    <h3 class="text-xl font-bold text-white mb-3">Experience Clarity</h3>
+                    <p class="text-slate-400 leading-relaxed">Take one pill for one consistent microdose.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Pricing Section -->
+<section id="pricing" class="py-20 bg-slate-900" style="background-color: #0a0514 !important;">
+    <div class="container mx-auto px-6">
+        <h2 class="text-3xl md:text-4xl font-bold text-white text-center mb-12">Find Your Flow State</h2>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-5xl mx-auto items-stretch">
+            
+            <!-- Trial Pack -->
+            <div class="pricing-card card-bg rounded-xl p-8 border border-slate-800 flex flex-col shadow-lg relative overflow-hidden">
+                <div class="absolute top-0 right-0 py-1.5 px-4 bg-sky-400 text-white text-xs font-bold rounded-bl-lg">GREAT VALUE</div>
+                <h3 class="text-2xl font-bold text-white mb-2">Trial Pack</h3>
+                <p class="text-slate-400 mb-2">A low-risk introduction.</p>
+                <img src="<?php echo get_template_directory_uri(); ?>/assets/microDOS2.jpg" alt="microDOS(2) logo" class="w-40 mx-auto mb-4 rounded-lg" onerror="this.style.display='none'">
+                <div class="my-4 text-center">
+                    <span class="text-5xl font-extrabold text-white">$12.95</span>
+                    <span class="text-slate-400">/ one-time</span>
+                </div>
+                <ul class="space-y-3 text-slate-300 text-left mb-8">
+                    <li class="flex items-center"><svg class="w-5 h-5 mr-2 text-green-400" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"></path></svg>2 Pills</li>
+                    <li class="flex items-center"><svg class="w-5 h-5 mr-2 text-green-400" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"></path></svg>Free Shipping</li>
+                </ul>
+                <div class="mt-auto">
+                    <?php if (!empty($woo_products['trial'])) : ?>
+                    <form class="cart" action="<?php echo esc_url(wc_get_cart_url()); ?>" method="post" enctype="multipart/form-data">
+                        <div class="flex items-center justify-center gap-2 mb-4">
+                            <span class="text-slate-400 text-sm mr-2">Quantity:</span>
+                            <button type="button" class="quantity-btn" onclick="adjustQuantity('trial', -1)">-</button>
+                            <input type="number" id="qty-trial" name="quantity" class="quantity-input" value="1" min="1" readonly>
+                            <button type="button" class="quantity-btn" onclick="adjustQuantity('trial', 1)">+</button>
+                        </div>
+                        <button type="submit" name="add-to-cart" value="<?php echo esc_attr($woo_products['trial']); ?>" class="w-full btn-primary text-white font-semibold py-4 rounded-lg text-center block">Add to Cart</button>
+                    </form>
+                    <?php else : ?>
+                    <p class="text-red-400 text-center text-sm">Product unavailable</p>
+                    <?php endif; ?>
+                </div>
+            </div>
+
+            <!-- Dynamic Purchase Card (Protocol & One-Time) -->
+            <div class="pricing-card card-bg rounded-xl p-8 border border-slate-800 flex flex-col shadow-lg">
+                
+                <!-- Toggle Switch -->
+                <div class="flex justify-center mb-8">
+                    <div class="bg-slate-900 p-1 rounded-full inline-flex relative w-64 border border-slate-700" style="background-color: #0a0514 !important;">
+                        <div id="toggle-bg" class="absolute top-1 bottom-1 left-1 w-[calc(50%-4px)] bg-slate-700 rounded-full transition-transform duration-300 ease-in-out translate-x-0" style="background-color: #1a1329 !important;"></div>
+                        <button id="btn-protocol" class="relative z-10 w-1/2 py-2 text-sm font-bold text-white transition-colors">Subscriptions</button>
+                        <button id="btn-onetime" class="relative z-10 w-1/2 py-2 text-sm font-bold text-slate-400 hover:text-white transition-colors">One-Time</button>
+                    </div>
+                </div>
+
+                <!-- Protocol Container -->
+                <div id="content-protocol" class="flex flex-col flex-grow transition-opacity duration-300">
+                    <h3 class="text-2xl font-bold text-white mb-2">Subscriptions <span class="text-xs font-bold text-sky-400 bg-sky-400/10 px-2 py-1 rounded ml-2 align-middle">SAVE 15%</span></h3>
+                    <p class="text-slate-400 mb-6">A guided Monthly Wellness Protocol.</p>
+                    <div class="space-y-4 mt-auto">
+                        <!-- Protocol 10 -->
+                        <?php if (!empty($woo_products['protocol_10'])) : ?>
+                        <form class="cart p-4 rounded-lg border border-sky-500/20" style="background-color: #1a1329 !important;" action="<?php echo esc_url(wc_get_cart_url()); ?>" method="post" enctype="multipart/form-data">
+                            <p class="font-bold text-white">Explorer Box <span class="text-xs text-slate-400 font-normal ml-1">(10 Pills)</span></p>
+                            <p class="mb-3"><span class="text-2xl font-bold text-white">$47.56</span> <span class="text-slate-400 text-sm">/ mo ($4.76/pill)</span></p>
+                            <div class="flex items-center gap-2">
+                                <button type="button" class="quantity-btn" onclick="adjustQuantity('protocol_10', -1)">-</button>
+                                <input type="number" name="quantity" id="qty-protocol_10" class="quantity-input" value="1" min="1" readonly>
+                                <button type="button" class="quantity-btn" onclick="adjustQuantity('protocol_10', 1)">+</button>
+                                <button type="submit" name="add-to-cart" value="<?php echo esc_attr($woo_products['protocol_10']); ?>" class="flex-1 btn-primary text-white text-sm font-semibold rounded-lg py-2">Add</button>
+                            </div>
+                        </form>
+                        <?php endif; ?>
+                        <!-- Protocol 30 -->
+                        <?php if (!empty($woo_products['protocol_30'])) : ?>
+                        <form class="cart p-4 rounded-lg border border-sky-500/20 relative overflow-hidden" style="background-color: #1a1329 !important;" action="<?php echo esc_url(wc_get_cart_url()); ?>" method="post" enctype="multipart/form-data">
+                            <div class="absolute top-0 right-0 bg-sky-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-bl">RECOMMENDED</div>
+                            <p class="font-bold text-white">Optimizer Box <span class="text-xs text-slate-400 font-normal ml-1">(30 Pills)</span></p>
+                            <p class="mb-3"><span class="text-2xl font-bold text-white">$128.31</span> <span class="text-slate-400 text-sm">/ mo ($4.28/pill)</span></p>
+                            <div class="flex items-center gap-2">
+                                <button type="button" class="quantity-btn" onclick="adjustQuantity('protocol_30', -1)">-</button>
+                                <input type="number" name="quantity" id="qty-protocol_30" class="quantity-input" value="1" min="1" readonly>
+                                <button type="button" class="quantity-btn" onclick="adjustQuantity('protocol_30', 1)">+</button>
+                                <button type="submit" name="add-to-cart" value="<?php echo esc_attr($woo_products['protocol_30']); ?>" class="flex-1 btn-primary text-white text-sm font-semibold rounded-lg py-2">Add</button>
+                            </div>
+                        </form>
+                        <?php endif; ?>
+                        <!-- Protocol 60 -->
+                        <?php if (!empty($woo_products['protocol_60'])) : ?>
+                        <form class="cart p-4 rounded-lg border border-sky-500/20" style="background-color: #1a1329 !important;" action="<?php echo esc_url(wc_get_cart_url()); ?>" method="post" enctype="multipart/form-data">
+                            <p class="font-bold text-white">Master Box <span class="text-xs text-slate-400 font-normal ml-1">(60 Pills)</span></p>
+                            <p class="mb-3"><span class="text-2xl font-bold text-white">$217.56</span> <span class="text-slate-400 text-sm">/ mo ($3.63/pill)</span></p>
+                            <div class="flex items-center gap-2">
+                                <button type="button" class="quantity-btn" onclick="adjustQuantity('protocol_60', -1)">-</button>
+                                <input type="number" name="quantity" id="qty-protocol_60" class="quantity-input" value="1" min="1" readonly>
+                                <button type="button" class="quantity-btn" onclick="adjustQuantity('protocol_60', 1)">+</button>
+                                <button type="submit" name="add-to-cart" value="<?php echo esc_attr($woo_products['protocol_60']); ?>" class="flex-1 btn-primary text-white text-sm font-semibold rounded-lg py-2">Add</button>
+                            </div>
+                        </form>
+                        <?php endif; ?>
+                    </div>
+                </div>
+
+                <!-- One-Time Container -->
+                <div id="content-onetime" class="hidden flex-col flex-grow transition-opacity duration-300">
+                    <h3 class="text-2xl font-bold text-white mb-2">One-Time Purchase</h3>
+                    <p class="text-slate-400 mb-6">No commitment. Pay as you go.</p>
+                    <p class="text-slate-400 mb-6">Buy once, no subscription.</p>
+                    <div class="space-y-4 mt-auto">
+                        <!-- One-Time 10 -->
+                        <?php if (!empty($woo_products['onetime_10'])) : ?>
+                        <form class="cart p-4 rounded-lg border border-sky-500/20" style="background-color: #1a1329 !important;" action="<?php echo esc_url(wc_get_cart_url()); ?>" method="post" enctype="multipart/form-data">
+                            <p class="font-bold text-white">10 Pills <span class="text-xs text-slate-400 font-normal ml-1">(One-Time)</span></p>
+                            <p class="mb-3"><span class="text-2xl font-bold text-white">$55.95</span> <span class="text-slate-400 text-sm">($5.60/pill)</span></p>
+                            <div class="flex items-center gap-2">
+                                <button type="button" class="quantity-btn" onclick="adjustQuantity('onetime_10', -1)">-</button>
+                                <input type="number" name="quantity" id="qty-onetime_10" class="quantity-input" value="1" min="1" readonly>
+                                <button type="button" class="quantity-btn" onclick="adjustQuantity('onetime_10', 1)">+</button>
+                                <button type="submit" name="add-to-cart" value="<?php echo esc_attr($woo_products['onetime_10']); ?>" class="flex-1 btn-primary text-white text-sm font-semibold rounded-lg py-2">Add</button>
+                            </div>
+                        </form>
+                        <?php endif; ?>
+                        <!-- One-Time 30 -->
+                        <?php if (!empty($woo_products['onetime_30'])) : ?>
+                        <form class="cart p-4 rounded-lg border border-sky-500/20 relative overflow-hidden" style="background-color: #1a1329 !important;" action="<?php echo esc_url(wc_get_cart_url()); ?>" method="post" enctype="multipart/form-data">
+                            <div class="absolute top-0 right-0 bg-sky-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-bl">POPULAR</div>
+                            <p class="font-bold text-white">30 Pills <span class="text-xs text-slate-400 font-normal ml-1">(One-Time)</span></p>
+                            <p class="mb-3"><span class="text-2xl font-bold text-white">$150.95</span> <span class="text-slate-400 text-sm">($5.03/pill)</span></p>
+                            <div class="flex items-center gap-2">
+                                <button type="button" class="quantity-btn" onclick="adjustQuantity('onetime_30', -1)">-</button>
+                                <input type="number" name="quantity" id="qty-onetime_30" class="quantity-input" value="1" min="1" readonly>
+                                <button type="button" class="quantity-btn" onclick="adjustQuantity('onetime_30', 1)">+</button>
+                                <button type="submit" name="add-to-cart" value="<?php echo esc_attr($woo_products['onetime_30']); ?>" class="flex-1 btn-primary text-white text-sm font-semibold rounded-lg py-2">Add</button>
+                            </div>
+                        </form>
+                        <?php endif; ?>
+                        <!-- One-Time 60 -->
+                        <?php if (!empty($woo_products['onetime_60'])) : ?>
+                        <form class="cart p-4 rounded-lg border border-sky-500/20" style="background-color: #1a1329 !important;" action="<?php echo esc_url(wc_get_cart_url()); ?>" method="post" enctype="multipart/form-data">
+                            <p class="font-bold text-white">60 Pills <span class="text-xs text-slate-400 font-normal ml-1">(One-Time)</span></p>
+                            <p class="mb-3"><span class="text-2xl font-bold text-white">$255.95</span> <span class="text-slate-400 text-sm">($4.27/pill)</span></p>
+                            <div class="flex items-center gap-2">
+                                <button type="button" class="quantity-btn" onclick="adjustQuantity('onetime_60', -1)">-</button>
+                                <input type="number" name="quantity" id="qty-onetime_60" class="quantity-input" value="1" min="1" readonly>
+                                <button type="button" class="quantity-btn" onclick="adjustQuantity('onetime_60', 1)">+</button>
+                                <button type="submit" name="add-to-cart" value="<?php echo esc_attr($woo_products['onetime_60']); ?>" class="flex-1 btn-primary text-white text-sm font-semibold rounded-lg py-2">Add</button>
+                            </div>
+                        </form>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FAQ Section --><!-- FAQ Section -->
+<section id="faq" class="py-20 bg-slate-900" style="background-color: #0a0514 !important;">
+    <div class="container mx-auto px-6 max-w-3xl">
+        <h2 class="text-3xl font-bold text-white text-center mb-12">Frequently Asked Questions</h2>
+        <div class="space-y-4" id="faq-container">
+            <div class="card-bg rounded-lg border border-slate-800">
+                <button class="faq-question flex justify-between items-center w-full p-6 text-left font-semibold text-white" aria-expanded="false" aria-controls="faq1-answer">
+                    <span>Is this legal?</span>
+                    <svg class="faq-arrow w-5 h-5 shrink-0 transition-transform duration-200 text-slate-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                </button>
+                <div id="faq1-answer" class="faq-answer hidden p-6 pt-0 text-slate-300 leading-relaxed"> Our active ingredient, 4-HO-MET, is not federally scheduled in the United States. We recommend checking your local regulations.</div>
+            </div>
+            <div class="card-bg rounded-lg border border-slate-800">
+                <button class="faq-question flex justify-between items-center w-full p-6 text-left font-semibold text-white" aria-expanded="false" aria-controls="faq2-answer">
+                    <span>What does a microdose feel like?</span>
+                    <svg class="faq-arrow w-5 h-5 shrink-0 transition-transform duration-200 text-slate-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                </button>
+                <div id="faq2-answer" class="faq-answer hidden p-6 pt-0 text-slate-300 leading-relaxed">
+                    <p>Effects are subtle and non-intrusive. Users commonly report enhanced focus, increased creativity, a more positive mood, and a feeling of being more present and engaged. It is not a "trip" but a gentle cognitive and emotional lift.</p>
+                </div>
+            </div>
+            <div class="card-bg rounded-lg border border-slate-800">
+                <button class="faq-question flex justify-between items-center w-full p-6 text-left font-semibold text-white" aria-expanded="false" aria-controls="faq3-answer">
+                    <span>Is it safe?</span>
+                    <svg class="faq-arrow w-5 h-5 shrink-0 transition-transform duration-200 text-slate-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                </button>
+                <div id="faq3-answer" class="faq-answer hidden p-6 pt-0 text-slate-300 leading-relaxed">
+                    <p>Yes. Our product is formulated for safety and consistency.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<?php
+get_footer();
+?>
