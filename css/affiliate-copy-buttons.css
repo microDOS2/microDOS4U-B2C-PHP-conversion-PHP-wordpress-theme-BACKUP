@@ -1,0 +1,93 @@
+/**
+ * microDOS Affiliate Copy Buttons Styles
+ *
+ * Styles the easy copy buttons on creative cards.
+ * Dark theme: #0a0514 background, #44f80c green accents.
+ */
+
+/* Container for the copy buttons */
+.microdos-copy-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+    margin-bottom: 12px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(68, 248, 12, 0.15);
+    align-items: center;
+}
+
+/* Individual copy button */
+.microdos-copy-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    background: linear-gradient(135deg, #1a1030 0%, #0d0818 100%);
+    border: 1px solid rgba(68, 248, 12, 0.35);
+    border-radius: 6px;
+    color: #e2e8f0;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    line-height: 1;
+    white-space: nowrap;
+}
+
+.microdos-copy-btn:hover {
+    background: linear-gradient(135deg, #44f80c 0%, #3adf0b 100%);
+    border-color: #44f80c;
+    color: #0a0514;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(68, 248, 12, 0.25);
+}
+
+.microdos-copy-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 6px rgba(68, 248, 12, 0.15);
+}
+
+.microdos-copy-btn svg {
+    flex-shrink: 0;
+}
+
+/* Special styling for email button */
+.microdos-copy-email {
+    border-color: rgba(100, 180, 255, 0.4);
+}
+
+.microdos-copy-email:hover {
+    background: linear-gradient(135deg, #64b4ff 0%, #44f80c 100%);
+    border-color: #64b4ff;
+}
+
+/* Feedback message ("Copied!") */
+.microdos-copy-feedback {
+    display: none;
+    align-items: center;
+    gap: 4px;
+    margin-left: 4px;
+    padding: 6px 10px;
+    background: rgba(68, 248, 12, 0.1);
+    border: 1px solid rgba(68, 248, 12, 0.3);
+    border-radius: 4px;
+    color: #44f80c;
+    font-size: 12px;
+    font-weight: 600;
+    transition: opacity 0.3s ease;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .microdos-copy-buttons {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .microdos-copy-btn {
+        justify-content: center;
+        width: 100%;
+    }
+}
