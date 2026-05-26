@@ -44,9 +44,6 @@ get_header();
                         ]);
                     }
                     ?>
-                    <p class="text-center mt-3">
-                        <a href="<?php echo esc_url(wp_lostpassword_url(get_permalink())); ?>" style="color: #38bdf8; font-size: 13px;">Lost your password?</a>
-                    </p>
                     <p class="text-center mt-4" style="border-top: 1px solid #1f2b47; padding-top: 16px;">
                         <a href="/dashboard-guide/<?php echo !empty($_GET['v']) ? '?v=' . esc_attr($_GET['v']) : ''; ?>" style="color: #44f80c; font-size: 20px; font-weight: 700; display: block; padding: 8px 0;">&#128214; Dashboard Guide</a>
                     </p>
