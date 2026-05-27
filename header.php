@@ -29,7 +29,7 @@
         $is_story = (strpos($template, 'story') !== false);
         ?>
         <?php if (!$is_story) : ?>
-        <nav class="main-navigation hidden md:flex items-center space-x-8">
+        <nav class="main-navigation !hidden md:flex items-center space-x-8">
             <?php if (is_front_page() || is_page_template('page-home.php') || (!is_page() && !is_singular())) : ?>
                 <a href="#benefits" class="text-slate-300 hover:text-white transition">Benefits</a>
                 <a href="#reviews" class="text-slate-300 hover:text-white transition">Reviews</a>
