@@ -3749,101 +3749,7 @@ body .gform_wrapper .gfield .ginput_container_name label {
 }
 /* Build: 20260515-125953 */
 
-/* ============================================
-   MOBILE OPTIMIZATION - v1.4.0
-   Adds responsive fixes for phone screens
-   Desktop unchanged
-   ============================================ */
 
-@media screen and (max-width: 768px) {
-
-    /* Prevent horizontal scroll */
-    html, body {
-        overflow-x: hidden;
-        max-width: 100vw;
-    }
-
-    /* Minimum 16px font on ALL inputs - prevents iOS zoom */
-    input, textarea, select {
-        font-size: 16px !important;
-    }
-
-    /* Ensure images don't overflow */
-    img, video, iframe {
-        max-width: 100% !important;
-        height: auto !important;
-    }
-
-    /* Minimum tap target size - 44px */
-    button, .button, a {
-        min-height: 44px;
-        min-width: 44px;
-    }
-
-    /* Better spacing on affiliate login form */
-    #affiliate-login input[type="text"],
-    #affiliate-login input[type="password"] {
-        padding: 12px !important;
-        font-size: 16px !important;
-    }
-
-    #affiliate-login input[type="submit"] {
-        padding: 14px !important;
-        font-size: 16px !important;
-    }
-
-    /* Form labels bigger */
-    #affiliate-login label {
-        font-size: 15px !important;
-    }
-
-    /* Container padding for small screens */
-    .container {
-        padding-left: 12px !important;
-        padding-right: 12px !important;
-    }
-
-    /* Make sure text is readable */
-    body {
-        font-size: 15px;
-        line-height: 1.6;
-    }
-
-    /* Headings slightly smaller on mobile */
-    h1 { font-size: 28px; }
-    h2 { font-size: 22px; }
-    h3 { font-size: 18px; }
-
-    /* Commission structure grid - stack on mobile */
-    .grid.md\\:grid-cols-2 {
-        grid-template-columns: 1fr !important;
-    }
-
-    /* FAQ and content spacing */
-    .mcd-guide__container,
-    .affiliate-content .container {
-        padding-left: 16px;
-        padding-right: 16px;
-    }
-
-    /* Affiliate area login form width */
-    .max-w-md {
-        max-width: 100%;
-        padding: 0 8px;
-    }
-
-    /* How It Works steps - better spacing */
-    .flex.items-start.gap-4 {
-        gap: 12px;
-    }
-
-    /* Prevent tables from overflowing */
-    table {
-        display: block;
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-    }
-}
 
 /* Extra small screens - phones under 480px */
 @media screen and (max-width: 480px) {
@@ -3958,72 +3864,7 @@ body .gform_wrapper .gfield .ginput_container_name label {
     }
 }
 
-/* ============================================
-   HAMBURGER MENU FIX - v1.4.2
-   Ensures mobile menu button shows and works
-   ============================================ */
 
-/* Show hamburger button on mobile */
-@media screen and (max-width: 767px) {
-    #mobile-menu-button {
-        display: inline-flex !important;
-        align-items: center;
-        justify-content: center;
-        width: 44px;
-        height: 44px;
-        background: #1a1329;
-        border: 1px solid #2a2344;
-        border-radius: 8px;
-        cursor: pointer;
-        color: #fff;
-    }
-    
-    #mobile-menu-button svg {
-        color: #fff;
-        stroke: #fff;
-    }
-    
-    /* Mobile menu panel */
-    #mobile-menu {
-        background: #0a0514;
-        border-top: 1px solid #1f2b47;
-        padding: 16px 24px;
-    }
-    
-    #mobile-menu a {
-        display: block;
-        padding: 12px 0;
-        color: #d1d5db;
-        font-size: 16px;
-        border-bottom: 1px solid #1a1329;
-        text-decoration: none;
-    }
-    
-    #mobile-menu a:hover {
-        color: #fff;
-    }
-    
-    #mobile-menu .btn-primary {
-        background: linear-gradient(135deg, #44f80c, #9a02d0);
-        color: #000;
-        border-radius: 8px;
-        margin-top: 16px;
-        font-weight: 700;
-    }
-    
-    /* Header actions - position right */
-    .header-actions {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        margin-left: auto;
-    }
-    
-    /* Hide desktop nav on mobile */
-    .main-navigation {
-        display: none !important;
-    }
-}
 
 /* Hide hamburger on desktop */
 @media screen and (min-width: 768px) {
@@ -4041,20 +3882,16 @@ body .gform_wrapper .gfield .ginput_container_name label {
 }
 
 /* ============================================
-   FORCE HIDE DESKTOP NAV ON MOBILE - v1.4.3
+   FINAL MOBILE NAV FIX - v1.4.6
    ============================================ */
-@media screen and (max-width: 1023px) {
-    header.site-header nav.main-navigation,
+
+/* Hide desktop nav on mobile - absolute last rule */
+@media (max-width: 1023px) {
+    .main-navigation,
+    nav.main-navigation,
+    header nav.main-navigation,
     .site-header nav.main-navigation,
-    body header nav.main-navigation,
-    html body header.site-header nav.main-navigation {
+    body .site-header nav.main-navigation {
         display: none !important;
-        visibility: hidden !important;
-        opacity: 0 !important;
-        width: 0 !important;
-        height: 0 !important;
-        overflow: hidden !important;
-        position: absolute !important;
-        left: -9999px !important;
     }
 }
