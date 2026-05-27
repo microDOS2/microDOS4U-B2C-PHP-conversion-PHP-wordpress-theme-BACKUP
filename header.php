@@ -1,13 +1,6 @@
 <!DOCTYPE html>
 <html <?php language_attributes(); ?>>
 <head>
-    <script>(function(){var w=window.innerWidth||document.documentElement.clientWidth;if(w<1024){var n=document.querySelector('nav.main-navigation');if(n){n.style.display='none';n.style.visibility='hidden';n.style.width='0';n.style.height='0';n.style.overflow='hidden';n.style.position='absolute';}}})();</script>
-    <style>
-        /* FORCE HIDE DESKTOP NAV ON MOBILE */
-        @media (max-width: 1023px) {
-            .main-navigation { display: none !important; }
-        }
-    </style>
     <meta charset="<?php bloginfo('charset'); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="profile" href="https://gmpg.org/xfn/11">
