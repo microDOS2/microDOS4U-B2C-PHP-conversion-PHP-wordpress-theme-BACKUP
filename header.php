@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 <html <?php language_attributes(); ?>>
 <head>
+    <style>
+        /* FORCE HIDE DESKTOP NAV ON MOBILE */
+        @media (max-width: 1023px) {
+            .main-navigation { display: none !important; }
+        }
+    </style>
     <meta charset="<?php bloginfo('charset'); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="profile" href="https://gmpg.org/xfn/11">
