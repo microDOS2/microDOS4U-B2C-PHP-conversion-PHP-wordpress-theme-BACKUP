@@ -3876,9 +3876,7 @@ body .gform_wrapper .gfield .ginput_container_name label {
         display: none !important;
     }
     
-    .main-navigation {
-        display: flex !important;
-    }
+    /* removed: display:flex !important was overriding hidden class */
 }
 
 /* ============================================
