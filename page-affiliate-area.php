@@ -127,7 +127,7 @@ get_header();
                     <!-- LOGGED IN AS AFFILIATE: Show dashboard -->
 
                     <h2 class="text-xl font-bold text-white mb-4">Affiliate Dashboard</h2>
-                    <?php echo do_shortcode('[affiliate_area]'); ?>
+                    <?php echo do_shortcode('[affiliate_portal]'); ?>
 
                 <?php else : ?>
                     <!-- LOGGED IN BUT NOT AFFILIATE: Show registration -->
