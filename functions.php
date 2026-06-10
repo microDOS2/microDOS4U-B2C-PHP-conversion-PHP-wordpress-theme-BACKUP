@@ -96,6 +96,93 @@ function microdos_set_affiliate_role($affiliate_id, $data) {
     }
 }
 
+// ============================================
+// W-9 TAX ID ENCRYPTION (SECURITY FIX)
+// ============================================
+
+/**
+ * Encrypt a Tax ID using AES-256-CBC with WordPress salts.
+ * Returns base64-encoded ciphertext, or empty string on failure.
+ */
+function microdos_encrypt_tax_id($tax_id) {
+    if (empty($tax_id)) {
+        return '';
+    }
+    $key = substr(wp_salt('auth'), 0, 32);
+    $iv  = substr(wp_salt('secure_auth'), 0, 16);
+    $encrypted = openssl_encrypt($tax_id, 'AES-256-CBC', $key, 0, $iv);
+    return $encrypted !== false ? base64_encode($encrypted) : '';
+}
+
+/**
+ * Decrypt a Tax ID that was encrypted with microdos_encrypt_tax_id().
+ * Returns the plaintext tax_id, or empty string on failure.
+ * Auto-detects legacy plaintext values (backward compatible).
+ */
+function microdos_decrypt_tax_id($encrypted_tax_id) {
+    if (empty($encrypted_tax_id)) {
+        return '';
+    }
+    // If it does not look like base64, treat as legacy plaintext
+    if (!preg_match('/^[A-Za-z0-9+\/]+={0,2}$/', $encrypted_tax_id)) {
+        return $encrypted_tax_id;
+    }
+    $decoded = base64_decode($encrypted_tax_id, true);
+    if ($decoded === false) {
+        return $encrypted_tax_id; // Not valid base64 — legacy plaintext
+    }
+    $key = substr(wp_salt('auth'), 0, 32);
+    $iv  = substr(wp_salt('secure_auth'), 0, 16);
+    $decrypted = openssl_decrypt($decoded, 'AES-256-CBC', $key, 0, $iv);
+    return $decrypted !== false ? $decrypted : '';
+}
+
+/**
+ * Migrate legacy plaintext W-9 tax IDs to encrypted storage.
+ * Runs once on admin page load after the fix is deployed.
+ */
+add_action('admin_init', 'microdos_migrate_w9_tax_id_encryption', 1);
+function microdos_migrate_w9_tax_id_encryption() {
+    $migrated = get_option('microdos_w9_encryption_migrated', false);
+    if ($migrated) {
+        return;
+    }
+    $users = get_users(array(
+        'meta_key'     => 'microdos_w9_data',
+        'meta_value'   => '',
+        'meta_compare' => '!=',
+        'number'       => -1,
+        'fields'       => 'ID',
+    ));
+    $encrypted_count = 0;
+    foreach ($users as $user_id) {
+        $w9_data = get_user_meta($user_id, 'microdos_w9_data', true);
+        if (!is_array($w9_data) || empty($w9_data['tax_id'])) {
+            continue;
+        }
+        $tax_id = $w9_data['tax_id'];
+        // Skip if already encrypted (base64 + valid decrypt)
+        if (preg_match('/^[A-Za-z0-9+\/]+={0,2}$/', $tax_id)) {
+            $decoded = base64_decode($tax_id, true);
+            if ($decoded !== false && strlen($decoded) >= 16) {
+                $key = substr(wp_salt('auth'), 0, 32);
+                $iv  = substr(wp_salt('secure_auth'), 0, 16);
+                $test = openssl_decrypt($decoded, 'AES-256-CBC', $key, 0, $iv);
+                if ($test !== false && preg_match('/^\d{2}[-]?\d{7}$|^\d{3}[-]?\d{2}[-]?\d{4}$/', $test)) {
+                    continue; // Already encrypted and valid
+                }
+            }
+        }
+        $w9_data['tax_id'] = microdos_encrypt_tax_id($tax_id);
+        update_user_meta($user_id, 'microdos_w9_data', $w9_data);
+        $encrypted_count++;
+    }
+    update_option('microdos_w9_encryption_migrated', true);
+    if (defined('WP_DEBUG') && WP_DEBUG) {
+        error_log('[microDOS] W-9 Tax ID encryption migration complete. Encrypted ' . $encrypted_count . ' records.');
+    }
+}
+
 // 3. Block affiliates from WooCommerce checkout (cannot purchase products)
 add_action('woocommerce_checkout_process', 'microdos_block_affiliate_purchases');
 add_action('woocommerce_before_cart', 'microdos_block_affiliate_cart');
@@ -772,7 +859,7 @@ function microdos_show_w9_in_admin($affiliate) {
         <tr><th>Tax Classification</th><td><?php echo esc_html($w9_data['tax_classification'] ?? 'N/A'); ?></td></tr>
         <tr><th>Tax ID (SSN/EIN)</th><td>
             <?php
-            $tin = $w9_data['tax_id'] ?? '';
+            $tin = microdos_decrypt_tax_id($w9_data['tax_id'] ?? '');
             echo strlen($tin) >= 4 ? esc_html('***-**-' . substr($tin, -4)) : 'N/A';
             ?>
         </td></tr>
@@ -917,7 +1004,7 @@ function microdos_render_w9_form($atts) {
                     'full_name'          => sanitize_text_field($_POST['w9_full_name']),
                     'business_name'      => sanitize_text_field($_POST['w9_business_name'] ?? ''),
                     'tax_classification' => sanitize_text_field($_POST['w9_tax_classification']),
-                    'tax_id'             => sanitize_text_field($_POST['w9_tax_id']),
+                    'tax_id'             => microdos_encrypt_tax_id(sanitize_text_field($_POST['w9_tax_id'])),
                     'address'            => sanitize_text_field($_POST['w9_address']),
                     'address2'           => sanitize_text_field($_POST['w9_address2'] ?? ''),
                     'city'               => sanitize_text_field($_POST['w9_city']),
@@ -1090,7 +1177,7 @@ function microdos_save_w9_on_affiliate_register($user_id) {
         'city'               => sanitize_text_field($_POST['affwp_w9_city'] ?? ''),
         'state'              => sanitize_text_field($_POST['affwp_w9_state'] ?? ''),
         'zip'                => sanitize_text_field($_POST['affwp_w9_zip'] ?? ''),
-        'tax_id'             => sanitize_text_field($_POST['affwp_w9_tax_id'] ?? ''),
+        'tax_id'             => microdos_encrypt_tax_id(sanitize_text_field($_POST['affwp_w9_tax_id'] ?? '')),
         'certification_date' => current_time('mysql'),
         'ip_address'         => sanitize_text_field($_SERVER['REMOTE_ADDR'] ?? ''),
     );
@@ -1163,7 +1250,7 @@ function microdos_create_affiliate_from_form($entry, $form) {
         'city'               => sanitize_text_field($city),
         'state'              => sanitize_text_field($state),
         'zip'                => sanitize_text_field($zip),
-        'tax_id'             => sanitize_text_field($tax_id),
+        'tax_id'             => microdos_encrypt_tax_id(sanitize_text_field($tax_id)),
         'certification_date' => current_time('mysql'),
         'ip_address'         => sanitize_text_field($_SERVER['REMOTE_ADDR'] ?? ''),
     ));
