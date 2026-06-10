@@ -91,7 +91,7 @@ function microdos_set_affiliate_role($affiliate_id, $data) {
     if (!empty($data['user_id'])) {
         $user = get_userdata($data['user_id']);
         if ($user) {
-            $user->set_role('affiliate'); // Replace default role with Affiliate
+            $user->add_role('affiliate'); // Add Affiliate role alongside existing roles (e.g., administrator)
         }
     }
 }
@@ -1221,6 +1221,10 @@ add_filter('login_redirect', 'microdos_affiliate_login_redirect', 10, 3);
 
 function microdos_affiliate_login_redirect($redirect_to, $request, $user) {
     if (!is_a($user, 'WP_User')) return $redirect_to;
+    // Admins and editors always go to the WordPress dashboard
+    if ($user->has_cap('manage_options') || $user->has_cap('edit_pages')) {
+        return $redirect_to; // Let WordPress handle the default redirect (/wp-admin)
+    }
     if (function_exists('affwp_is_affiliate') && affwp_is_affiliate($user->ID)) {
         // Send affiliates to the main dashboard
         $affiliate_area = get_permalink(get_page_by_path('affiliate-area'));
