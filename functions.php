@@ -2497,3 +2497,216 @@ function microdos_admin_portal_notice() {
 
 
 
+
+
+// ============================================
+// CART SYNC: Custom JS Cart ↔ WooCommerce Bridge
+// ============================================
+// Replaces localStorage-based cart with WooCommerce native cart.
+// The custom cart drawer UI is preserved but now uses WooCommerce
+// as the single source of truth for cart data.
+
+/**
+ * Map custom product keys to WooCommerce product IDs.
+ * Filterable so developers or admins can customize.
+ * 
+ * @return array Associative array of key => WC product ID
+ */
+function microdos_get_product_mapping() {
+    $mapping = apply_filters('microdos_wc_product_mapping', array(
+        // Default mappings — customize via filter or these will
+        // auto-resolve by product slug on first use
+    ));
+
+    // If no hardcoded mapping, try to auto-resolve by product name/slug
+    if (empty($mapping) && class_exists('WC_Product_Query')) {
+        $resolved = get_transient('microdos_wc_product_map');
+        if (false === $resolved) {
+            $resolved = array();
+            $slugs_to_keys = array(
+                'trial-pack'        => 'trial',
+                'explorer-box'      => 'protocol_10',
+                'optimizer-box'     => 'protocol_30',
+                'master-box'        => 'protocol_60',
+                '10-pills'          => 'onetime_10',
+                '30-pills'          => 'onetime_30',
+                '60-pills'          => 'onetime_60',
+            );
+            foreach ($slugs_to_keys as $slug => $key) {
+                $product = get_page_by_path($slug, OBJECT, 'product');
+                if ($product) {
+                    $resolved[$key] = $product->ID;
+                }
+            }
+            // Also try by product title matching
+            $title_map = array(
+                'trial'       => array('trial pack'),
+                'protocol_10' => array('explorer', '10 pills/mo'),
+                'protocol_30' => array('optimizer', '30 pills/mo'),
+                'protocol_60' => array('master', '60 pills/mo'),
+                'onetime_10'  => array('10 pills', 'one-time'),
+                'onetime_30'  => array('30 pills', 'one-time'),
+                'onetime_60'  => array('60 pills', 'one-time'),
+            );
+            $query = new WC_Product_Query(array(
+                'limit'   => 100,
+                'status'  => 'publish',
+                'return'  => 'ids',
+            ));
+            $all_ids = $query->get_products();
+            foreach ($all_ids as $pid) {
+                $product = wc_get_product($pid);
+                if (!$product) continue;
+                $title = strtolower($product->get_name());
+                foreach ($title_map as $key => $keywords) {
+                    if (isset($resolved[$key])) continue; // Already found
+                    foreach ($keywords as $kw) {
+                        if (strpos($title, $kw) !== false) {
+                            $resolved[$key] = $pid;
+                            break 2;
+                        }
+                    }
+                }
+            }
+            set_transient('microdos_wc_product_map', $resolved, DAY_IN_SECONDS);
+        }
+        $mapping = array_merge($resolved, $mapping);
+    }
+
+    return $mapping;
+}
+
+/**
+ * Enqueue cart bridge script and pass config to JS.
+ */
+add_action('wp_enqueue_scripts', 'microdos_enqueue_cart_bridge', 20);
+function microdos_enqueue_cart_bridge() {
+    if (!class_exists('WooCommerce')) return;
+
+    wp_enqueue_script(
+        'microdos-cart-bridge',
+        get_template_directory_uri() . '/js/cart-bridge.js',
+        array('jquery', 'microdos4u-scripts'),
+        MICRODOS_VERSION,
+        true
+    );
+
+    wp_localize_script('microdos-cart-bridge', 'microdosCartConfig', array(
+        'ajaxUrl'       => admin_url('admin-ajax.php'),
+        'nonce'         => wp_create_nonce('microdos_cart_nonce'),
+        'productMap'    => microdos_get_product_mapping(),
+        'checkoutUrl'   => wc_get_checkout_url(),
+        'cartUrl'       => wc_get_cart_url(),
+        'wcAjaxUrl'     => WC_AJAX::get_endpoint('%%endpoint%%'),
+        'wcNonce'       => wp_create_nonce('wc_store_nonce'),
+    ));
+}
+
+/**
+ * AJAX: Add product to WooCommerce cart.
+ */
+add_action('wp_ajax_microdos_add_to_cart', 'microdos_ajax_add_to_cart');
+add_action('wp_ajax_nopriv_microdos_add_to_cart', 'microdos_ajax_add_to_cart');
+function microdos_ajax_add_to_cart() {
+    check_ajax_referer('microdos_cart_nonce', 'nonce');
+
+    $product_key = sanitize_text_field($_POST['product_key'] ?? '');
+    $quantity    = max(1, intval($_POST['quantity'] ?? 1));
+
+    $mapping = microdos_get_product_mapping();
+    $product_id = $mapping[$product_key] ?? 0;
+
+    if (!$product_id) {
+        wp_send_json_error('Product not found for key: ' . $product_key);
+        return;
+    }
+
+    $added = WC()->cart->add_to_cart($product_id, $quantity);
+
+    if ($added) {
+        wp_send_json_success(array(
+            'cart_count'    => WC()->cart->get_cart_contents_count(),
+            'cart_subtotal' => WC()->cart->get_cart_subtotal(),
+            'fragments'     => apply_filters('woocommerce_add_to_cart_fragments', array()),
+        ));
+    } else {
+        wp_send_json_error('Could not add product to cart.');
+    }
+}
+
+/**
+ * AJAX: Remove item from WooCommerce cart.
+ */
+add_action('wp_ajax_microdos_remove_cart_item', 'microdos_ajax_remove_cart_item');
+add_action('wp_ajax_nopriv_microdos_remove_cart_item', 'microdos_ajax_remove_cart_item');
+function microdos_ajax_remove_cart_item() {
+    check_ajax_referer('microdos_cart_nonce', 'nonce');
+
+    $cart_item_key = sanitize_text_field($_POST['cart_item_key'] ?? '');
+    if (empty($cart_item_key)) {
+        wp_send_json_error('Missing cart item key.');
+        return;
+    }
+
+    WC()->cart->remove_cart_item($cart_item_key);
+
+    wp_send_json_success(array(
+        'cart_count'    => WC()->cart->get_cart_contents_count(),
+        'cart_subtotal' => WC()->cart->get_cart_subtotal(),
+    ));
+}
+
+/**
+ * AJAX: Update cart item quantity.
+ */
+add_action('wp_ajax_microdos_update_cart_qty', 'microdos_ajax_update_cart_qty');
+add_action('wp_ajax_nopriv_microdos_update_cart_qty', 'microdos_ajax_update_cart_qty');
+function microdos_ajax_update_cart_qty() {
+    check_ajax_referer('microdos_cart_nonce', 'nonce');
+
+    $cart_item_key = sanitize_text_field($_POST['cart_item_key'] ?? '');
+    $quantity      = max(0, intval($_POST['quantity'] ?? 1));
+
+    if (empty($cart_item_key)) {
+        wp_send_json_error('Missing cart item key.');
+        return;
+    }
+
+    WC()->cart->set_quantity($cart_item_key, $quantity);
+
+    wp_send_json_success(array(
+        'cart_count'    => WC()->cart->get_cart_contents_count(),
+        'cart_subtotal' => WC()->cart->get_cart_subtotal(),
+    ));
+}
+
+/**
+ * AJAX: Get current cart contents for rendering the drawer.
+ */
+add_action('wp_ajax_microdos_get_cart', 'microdos_ajax_get_cart');
+add_action('wp_ajax_nopriv_microdos_get_cart', 'microdos_ajax_get_cart');
+function microdos_ajax_get_cart() {
+    check_ajax_referer('microdos_cart_nonce', 'nonce');
+
+    $items = array();
+    foreach (WC()->cart->get_cart() as $cart_item_key => $cart_item) {
+        $product = $cart_item['data'];
+        $items[] = array(
+            'cart_item_key' => $cart_item_key,
+            'product_id'    => $product->get_id(),
+            'name'          => $product->get_name(),
+            'price'         => (float) $product->get_price(),
+            'quantity'      => $cart_item['quantity'],
+            'subtotal'      => wc_get_price_to_display($product, array('qty' => $cart_item['quantity'])),
+            'image'         => $product->get_image('thumbnail', array('class' => 'w-12 h-12 object-cover rounded')),
+        );
+    }
+
+    wp_send_json_success(array(
+        'items'         => $items,
+        'count'         => WC()->cart->get_cart_contents_count(),
+        'subtotal'      => WC()->cart->get_cart_subtotal(),
+        'total'         => WC()->cart->get_cart_total(),
+    ));
+}
+
