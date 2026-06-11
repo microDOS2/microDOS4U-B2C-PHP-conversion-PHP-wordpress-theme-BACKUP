@@ -2710,3 +2710,26 @@ function microdos_ajax_get_cart() {
     ));
 }
 
+
+// ============================================
+// AUTHORIZE.NET CLIENT KEY FIX
+// Injects the Client Key for Accept.js tokenization.
+// The "By Easy Payment" plugin lacks a Client Key input field,
+// so we inject it directly via filter.
+// ============================================
+
+add_filter('woocommerce_authorize_net_cim_credit_card_client_key', 'microdos_authorize_net_client_key');
+function microdos_authorize_net_client_key($key) {
+    return '4CYALuym6ej7ZFK5W3v7wKpDb5Bw9QLzj8nzvhms3R3x22U8kx8sk3nCMw79GA9w';
+}
+
+// Also try alternative filter names the plugin might use
+add_filter('wc_authorize_net_aim_client_key', 'microdos_authorize_net_client_key_alt');
+function microdos_authorize_net_client_key_alt($key) {
+    return '4CYALuym6ej7ZFK5W3v7wKpDb5Bw9QLzj8nzvhms3R3x22U8kx8sk3nCMw79GA9w';
+}
+
+add_filter('wc_authorize_net_cim_client_key', 'microdos_authorize_net_client_key_alt2');
+function microdos_authorize_net_client_key_alt2($key) {
+    return '4CYALuym6ej7ZFK5W3v7wKpDb5Bw9QLzj8nzvhms3R3x22U8kx8sk3nCMw79GA9w';
+}
