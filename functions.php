@@ -2714,22 +2714,43 @@ function microdos_ajax_get_cart() {
 // ============================================
 // AUTHORIZE.NET CLIENT KEY FIX
 // Injects the Client Key for Accept.js tokenization.
-// The "By Easy Payment" plugin lacks a Client Key input field,
-// so we inject it directly via filter.
+// The "By Easy Payment" plugin lacks a Client Key input field.
+// We inject the key as a JavaScript variable on the checkout page.
 // ============================================
 
-add_filter('woocommerce_authorize_net_cim_credit_card_client_key', 'microdos_authorize_net_client_key');
-function microdos_authorize_net_client_key($key) {
-    return '4CYALuym6ej7ZFK5W3v7wKpDb5Bw9QLzj8nzvhms3R3x22U8kx8sk3nCMw79GA9w';
+add_action('wp_enqueue_scripts', 'microdos_authorize_net_client_key_js', 999);
+function microdos_authorize_net_client_key_js() {
+    if (!is_checkout()) return;
+
+    $client_key = '4CYALuym6ej7ZFK5W3v7wKpDb5Bw9QLzj8nzvhms3R3x22U8kx8sk3nCMw79GA9w';
+
+    // Inject the client key as JavaScript before the plugin loads
+    wp_register_script('microdos-anet-fix', '', array(), null, false);
+    wp_enqueue_script('microdos-anet-fix');
+    wp_add_inline_script('microdos-anet-fix', "
+        // Set the client key for Authorize.Net 'By Easy Payment' plugin
+        window.authorizeNetClientKey = '" . esc_js($client_key) . "';
+        window.wcAuthorizeNetClientKey = '" . esc_js($client_key) . "';
+
+        // Override the plugin's getClientKey method if it exists
+        document.addEventListener('DOMContentLoaded', function() {
+            // Try to find and fix any existing error message
+            var errorEl = document.querySelector('.client-key-error, .authorize-net-error, .anet-error');
+            if (errorEl) errorEl.style.display = 'none';
+
+            // Patch the plugin's settings object if it exists
+            if (window.wc_authorize_net_cim_credit_card_params) {
+                window.wc_authorize_net_cim_credit_card_params.clientKey = '" . esc_js($client_key) . "';
+            }
+            if (window.authorizeNetAIMSettings) {
+                window.authorizeNetAIMSettings.clientKey = '" . esc_js($client_key) . "';
+            }
+        });
+    ");
 }
 
-// Also try alternative filter names the plugin might use
-add_filter('wc_authorize_net_aim_client_key', 'microdos_authorize_net_client_key_alt');
-function microdos_authorize_net_client_key_alt($key) {
-    return '4CYALuym6ej7ZFK5W3v7wKpDb5Bw9QLzj8nzvhms3R3x22U8kx8sk3nCMw79GA9w';
-}
-
-add_filter('wc_authorize_net_cim_client_key', 'microdos_authorize_net_client_key_alt2');
-function microdos_authorize_net_client_key_alt2($key) {
+// Also keep PHP filters as backup
+add_filter('woocommerce_authorize_net_cim_credit_card_client_key', 'microdos_anet_client_key_php');
+function microdos_anet_client_key_php($key) {
     return '4CYALuym6ej7ZFK5W3v7wKpDb5Bw9QLzj8nzvhms3R3x22U8kx8sk3nCMw79GA9w';
 }
