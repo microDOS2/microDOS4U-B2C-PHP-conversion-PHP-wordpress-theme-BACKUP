@@ -183,6 +183,29 @@ function microdos_migrate_w9_tax_id_encryption() {
     }
 }
 
+// ============================================
+// GRAVITY FORMS PASSWORD REDACTION (SECURITY FIX)
+// ============================================
+
+/**
+ * Redact password field values before saving to Gravity Forms entries.
+ * Prevents plaintext passwords from being stored in the entry database.
+ * The password still flows to AffiliateWP for user creation — just not saved in the entry.
+ */
+add_filter('gform_save_field_value', 'microdos_redact_password_field', 10, 5);
+function microdos_redact_password_field($value, $lead, $field, $form, $input_id) {
+    // Check if this is a password-type field (input type="password")
+    if ($field->type === 'password' || ($field->inputType ?? '') === 'password') {
+        return '[REDACTED FOR SECURITY]';
+    }
+    // Also check by field label as a fallback
+    $label = strtolower($field->label ?? '');
+    if (strpos($label, 'password') !== false || strpos($label, 'pass word') !== false) {
+        return '[REDACTED FOR SECURITY]';
+    }
+    return $value;
+}
+
 // 3. Block affiliates from WooCommerce checkout (cannot purchase products)
 add_action('woocommerce_checkout_process', 'microdos_block_affiliate_purchases');
 add_action('woocommerce_before_cart', 'microdos_block_affiliate_cart');
