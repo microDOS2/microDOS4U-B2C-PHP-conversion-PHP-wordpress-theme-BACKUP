@@ -48,7 +48,22 @@ get_header();
             </div>
             <?php endif; ?>
 
-<!-- Commission Structure -->
+<?php
+                // Get commission rates from AffiliateWP settings (single source of truth)
+                $affwp_settings = get_option('affwp_settings', array());
+                $initial_rate = isset($affwp_settings['referral_rate']) ? floatval($affwp_settings['referral_rate']) : 20;
+                $initial_type = isset($affwp_settings['referral_rate_type']) ? $affwp_settings['referral_rate_type'] : 'percentage';
+
+                // Get recurring rate from Recurring Referrals addon if active
+                $recurring_rate = 10; // Default fallback
+                $recurring_period = '24 months'; // Default fallback
+                if (function_exists('affwp_recurring_referrals')) {
+                    $rr_settings = get_option('affwp_recurring_referrals_settings', array());
+                    $recurring_rate = isset($rr_settings['referral_rate']) ? floatval($rr_settings['referral_rate']) : $initial_rate;
+                    $recurring_period = isset($rr_settings['recurring_limit']) ? intval($rr_settings['recurring_limit']) . ' months' : $recurring_period;
+                }
+                ?>
+            <!-- Commission Structure -->
             <div class="mb-10 p-6 rounded-lg" style="background-color: #0a0514; border: 1px solid #1f2b47;">
                 <h2 class="text-2xl font-bold text-white mb-6 flex items-center gap-2">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#44f80c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
@@ -57,13 +72,13 @@ get_header();
                 <div class="grid md:grid-cols-2 gap-6">
                     <div class="p-4 rounded" style="background-color: #150f24;">
                         <h3 class="text-lg font-semibold mb-2" style="color: #44f80c;">Initial Purchase</h3>
-                        <p class="text-3xl font-bold text-white mb-1">20%</p>
+                        <p class="text-3xl font-bold text-white mb-1"><?php echo esc_html($initial_rate . ($initial_type === 'percentage' ? '%' : '')); ?></p>
                         <p class="text-slate-400 text-sm">Commission on every first-time purchase made by your referral.</p>
                     </div>
                     <div class="p-4 rounded" style="background-color: #150f24;">
                         <h3 class="text-lg font-semibold mb-2" style="color: #9a02d0;">Subscription Renewals</h3>
-                        <p class="text-3xl font-bold text-white mb-1">10%</p>
-                        <p class="text-slate-400 text-sm">Recurring commission on every monthly subscription renewal for 24 months.</p>
+                        <p class="text-3xl font-bold text-white mb-1"><?php echo esc_html($recurring_rate . '%'); ?></p>
+                        <p class="text-slate-400 text-sm">Recurring commission on every monthly subscription renewal for <?php echo esc_html($recurring_period); ?>.</p>
                     </div>
                 </div>
             </div>
