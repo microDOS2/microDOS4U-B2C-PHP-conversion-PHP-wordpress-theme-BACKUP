@@ -344,7 +344,7 @@
 
                 <!-- Detail cards -->
                 <div class="pillrow">
-                    <a href="<?php echo esc_url(home_url('/dosage-guide')); ?>" class="hyperlinked-item">
+                    <a href="<?php echo esc_url(home_url('/dosage-guide')); ?>" class="hyperlinked-item" title="click me">
                         <div class="pill">
                             <div class="tag">1 tab • 2 mg</div>
                             <div class="name">Light</div>
