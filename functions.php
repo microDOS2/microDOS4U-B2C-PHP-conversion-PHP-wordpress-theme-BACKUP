@@ -1659,11 +1659,13 @@ function microdos_create_shipping_portal_page() {
 // ============================================
 
 function microdos_get_getting_started_content() {
+    $affwp_settings = get_option('affwp_settings', array());
+    $initial_rate = isset($affwp_settings['referral_rate']) ? floatval($affwp_settings['referral_rate']) : 30;
     return '<!-- wp:html -->
 <div style="max-width:800px;">
 <div style="background:linear-gradient(135deg,#1e3a5f,#0f1d3a);border:1px solid #3b82f6;border-radius:8px;padding:20px;margin-bottom:24px;">
 <strong style="color:#60a5fa;font-size:13px;text-transform:uppercase;letter-spacing:0.05em;">Your Unique Referral Link</strong>
-<p style="color:#c7d2e8;font-size:14px;margin:8px 0;">Copy this link and share it everywhere. When someone clicks and buys, you earn 20%.</p>
+<p style="color:#c7d2e8;font-size:14px;margin:8px 0;">Copy this link and share it everywhere. When someone clicks and buys, you earn {$initial_rate}%.</p>
 <p style="background:rgba(59,130,246,0.15);color:#93bbfc;padding:10px 14px;border-radius:6px;font-size:14px;word-break:break-all;margin:8px 0;">[affiliate_referral_url]</p>
 </div>
 <!-- Content truncated for brevity -->
@@ -1747,6 +1749,10 @@ function microdos_enqueue_affiliate_assets() {
     }
 
     wp_add_inline_script('shepherd-js', 'window.microDOSPortalData = {"guideUrl":"' . esc_url($guide_page ? get_permalink($guide_page) : '') . '","mgUrl":"' . esc_url($mg_page ? get_permalink($mg_page) : '') . '","referralUrl":"' . esc_url($referral_url) . '"};', 'before');
+
+    // Dynamic commission rate for inline JS
+    $affwp_settings = get_option('affwp_settings', array());
+    $initial_rate = isset($affwp_settings['referral_rate']) ? floatval($affwp_settings['referral_rate']) : 30;
 
     // Tour JS - embedded directly
     wp_add_inline_script('shepherd-js', <<<'MICRODOS_TOUR'
@@ -1881,7 +1887,7 @@ buttons: [
 {
 id: 'step-referral-url',
 title: 'Your Referral Link',
-text: '<p>This is your money link. Copy it and share it anywhere — social media, email, blog, QR code. When someone clicks and buys within 45 days, you earn <strong>20% commission</strong>.</p>',
+text: '<p>This is your money link. Copy it and share it anywhere — social media, email, blog, QR code. When someone clicks and buys within 45 days, you earn <strong>{$initial_rate}% commission</strong>.</p>',
 attachTo: { element: sel('.affwp-portal-content .affwp-referral-url, .affwp-portal-content .affwp-url', '.affwp-referral-url, .affwp-url'), on: 'bottom' },
 buttons: [
 { text: '← Back', action: function() { Shepherd.activeTour.back(); }, classes: 'shepherd-button-secondary' },
@@ -2244,7 +2250,7 @@ return '<button id="mcd-dismiss" title="Hide" style="position:absolute;top:12px;
 '<h3 style="margin:0 0 16px;font-size:18px;font-weight:700;color:#0f172a;">Getting Started as a microDOS(2) Affiliate</h3>' +
 '<div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:14px 18px;margin-bottom:20px;">' +
 '<strong style="color:#44f80c;font-size:12px;text-transform:uppercase;letter-spacing:0.05em;">Your Referral Link</strong>' +
-'<p style="color:#64748b;font-size:13px;margin:6px 0 10px;">Share this link everywhere. When someone clicks and buys, you earn 20%.</p>' +
+'<p style="color:#64748b;font-size:13px;margin:6px 0 10px;">Share this link everywhere. When someone clicks and buys, you earn {$initial_rate}%.</p>' +
 '<code id="mcd-ref-url" style="display:block;background:#f1f5f9;color:#0f172a;padding:10px 14px;border-radius:6px;font-size:13px;word-break:break-all;margin:0 0 10px;font-family:monospace;">' + escapeHtml(refDisplay) + '</code>' +
 '<button onclick="copyMcdRef(this)" style="padding:8px 18px;background:#44f80c;color:#0a0514;border:none;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer;">Copy Link</button>' +
 '</div>' +
@@ -2252,7 +2258,7 @@ return '<button id="mcd-dismiss" title="Hide" style="position:absolute;top:12px;
 '<div style="background:#f8fafc;padding:12px;border-radius:6px;">' +
 '<strong style="color:#0f172a;font-size:13px;">How It Works</strong>' +
 '<ol style="color:#64748b;font-size:12px;line-height:1.6;padding-left:16px;margin:8px 0 0;">' +
-'<li>Share your link</li><li>Someone clicks</li><li>They buy within 45 days</li><li>You earn 20%</li>' +
+'<li>Share your link</li><li>Someone clicks</li><li>They buy within 45 days</li><li>You earn {$initial_rate}%</li>' +
 '</ol>' +
 '</div>' +
 '<div style="background:#f8fafc;padding:12px;border-radius:6px;">' +
