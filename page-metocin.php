@@ -320,7 +320,7 @@
                 <!-- Neon-style badges -->
                 <div class="grid grid-4" style="align-items: start; text-align: center; margin-bottom: 12px;">
                     <div>
-                        <a href="<?php echo esc_url(home_url('/dosage-guide')); ?>" class="hyperlinked-item">
+                        <a href="<?php echo esc_url(home_url('/dosage-guide')); ?>" class="hyperlinked-item" title="click me">
                             <span class="badge b-green">LIGHT</span>
                             <div style="margin-top: 8px; color: var(--slate-300);">1 tab</div>
                         </a>
