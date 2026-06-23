@@ -2796,11 +2796,13 @@ function microdos_anet_client_key_php($key) {
  * Removes the /wp/v2/users endpoint so hackers cannot discover admin usernames
  */
 add_filter('rest_endpoints', function($endpoints) {
-    if (isset($endpoints['/wp/v2/users'])) {
-        unset($endpoints['/wp/v2/users']);
-    }
-    if (isset($endpoints['/wp/v2/users/(?P<id>[\d]+)'])) {
-        unset($endpoints['/wp/v2/users/(?P<id>[\d]+)']);
+    if (!is_user_logged_in()) {
+        if (isset($endpoints['/wp/v2/users'])) {
+            unset($endpoints['/wp/v2/users']);
+        }
+        if (isset($endpoints['/wp/v2/users/(?P<id>[\d]+)'])) {
+            unset($endpoints['/wp/v2/users/(?P<id>[\d]+)']);
+        }
     }
     return $endpoints;
 });
@@ -2817,7 +2819,7 @@ add_filter('rest_authentication_errors', function($result) {
     $uri = $_SERVER['REQUEST_URI'] ?? '';
 
     // Allow AffiliateWP endpoints (registration, portal, auth, legacy)
-    $allowed = array('affwp/', 'wc/store', 'oembed', 'wp/v2/namespaces', 'gravityforms');
+    $allowed = array('affwp/v1', 'affwp/v2', 'wc/store', 'oembed', 'wp/v2/namespaces', 'gravityforms');
     foreach ($allowed as $path) {
         if (strpos($uri, $path) !== false) return $result;
     }
