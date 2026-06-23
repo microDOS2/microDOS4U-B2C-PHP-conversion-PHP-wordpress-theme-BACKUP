@@ -2905,19 +2905,6 @@ add_filter('wp_cookie_options', function($options) {
  * Reads live rate from AffiliateWP settings so the page always shows the correct percentage
  * Usage: [affiliate_commission_rate] on the Getting Started page
  */
-add_shortcode('affiliate_commission_rate', function($atts) {
-    // Try to get rate from AffiliateWP
-    if (function_exists('affwp_get_settings')) {
-        $settings = affwp_get_settings();
-        $rate = isset($settings['referral_rate']) ? $settings['referral_rate'] : 30;
-    } else {
-        $rate = 30; // Default fallback
-    }
-    // Clean the output — strip decimals if whole number
-    $rate = floatval($rate);
-    return ($rate == intval($rate)) ? intval($rate) : number_format($rate, 1);
-});
-
 /**
  * #10 - Trust badges shortcode for checkout page
  * Usage: [trust_badges] on the checkout page
@@ -3071,17 +3058,6 @@ add_action('wp_footer', function() {
  * [affiliate_rate] shortcode — returns the live commission rate from AffiliateWP
  * Usage: [affiliate_rate] on the Getting Started page
  */
-add_shortcode('affiliate_rate', function() {
-    $rate = 30;
-    if (function_exists('affiliate_wp')) {
-        $settings = affiliate_wp()->settings;
-        if ($settings && method_exists($settings, 'get')) {
-            $rate = floatval($settings->get('referral_rate', 30));
-        }
-    }
-    return ($rate == intval($rate)) ? intval($rate) : number_format($rate, 1);
-});
-
 /**
  * Auto-create the Getting Started page if it doesn't exist
  * Runs on admin_init to ensure it only executes in wp-admin
@@ -3301,4 +3277,27 @@ Best Practices
         'post_author'   => 1,
         'page_template' => 'page-getting-started.php',
     ));
+});
+
+
+/**
+ * #14 - Dynamic commission rate shortcode
+ * Reads live rate from AffiliateWP settings
+ * Usage: [affiliate_rate] or [affiliate_commission_rate]
+ */
+add_shortcode('affiliate_commission_rate', function($atts) {
+    $rate = 30; // fallback
+    if (function_exists('affiliate_wp')) {
+        $affwp = affiliate_wp();
+        if ($affwp && isset($affwp->settings) && method_exists($affwp->settings, 'get')) {
+            $rate = floatval($affwp->settings->get('referral_rate', 30));
+        }
+    }
+    // Strip decimals for whole numbers
+    return ($rate == intval($rate)) ? intval($rate) : number_format($rate, 1);
+});
+
+// Alias for compatibility
+add_shortcode('affiliate_rate', function($atts) {
+    return do_shortcode('[affiliate_commission_rate]');
 });
