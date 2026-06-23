@@ -3004,8 +3004,16 @@ add_action('woocommerce_before_checkout_form', function() {
  * Auto-corrects content on the Getting Started page
  */
 add_filter('the_content', function($content) {
-    // Only on the Getting Started page
-    if (!is_page('getting-started') && !is_page(409)) {
+    // Detect Getting Started page by URL (more reliable than is_page)
+    $request_uri = $_SERVER['REQUEST_URI'] ?? '';
+    $is_getting_started = (strpos($request_uri, 'getting-started') !== false);
+
+    // Also try is_page as backup
+    if (!$is_getting_started && function_exists('is_page')) {
+        $is_getting_started = is_page('getting-started') || is_page(409) || is_page(408) || is_page(407);
+    }
+
+    if (!$is_getting_started) {
         return $content;
     }
 
@@ -3024,11 +3032,14 @@ add_filter('the_content', function($content) {
     // Clean display: strip decimals for whole numbers
     $rate_display = ($live_rate == intval($live_rate)) ? intval($live_rate) : number_format($live_rate, 1);
 
+    // DEBUG: Uncomment to see the detected rate
+    // $content = '<!-- DEBUG: Rate=' . $rate_display . ' -->' . $content;
+
     // Replace hardcoded commission rates with live rate
-    // Handles: "you earn X%", "earn X%", "X% commission", etc.
+    // Pattern: any number followed by % near commission-related words
     $content = preg_replace('/you earn\s+\d+(?:\.\d+)?\s*(?:%|percent)/i', 'you earn ' . $rate_display . '%', $content);
     $content = preg_replace('/(\d+(?:\.\d+)?)\s*(%|percent)\s*commission/i', $rate_display . '$2 commission', $content);
-    $content = preg_replace('/commission\s*(?:of|is|:)?\s*(?:\$)?\d+(?:\.\d+)?\s*(%|percent)?/i', 'commission', $content); // clean up first
+    $content = preg_replace('/(\d+(?:\.\d+)?)\s*(%|percent)\s*—/i', $rate_display . '$2 —', $content);
 
     // Fix payout text
     $content = str_replace(
