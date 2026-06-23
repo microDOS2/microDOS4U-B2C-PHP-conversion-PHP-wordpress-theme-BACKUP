@@ -2997,3 +2997,30 @@ add_action('woocommerce_before_checkout_form', function() {
     
     echo '</div>';
 }, 5);
+
+
+/**
+ * Getting Started page text fixes
+ * Auto-corrects content on the Getting Started page
+ */
+add_filter('the_content', function($content) {
+    // Only on the Getting Started page
+    if (!is_page('getting-started') && !is_page(409)) {
+        return $content;
+    }
+
+    // Fix payout text: remove "we pay you on the 1st of each month"
+    $content = str_replace(
+        'Once you hit $50, we pay you on the 1st of each month',
+        'Once you hit $50',
+        $content
+    );
+    // Also catch variations
+    $content = str_replace(
+        'Once you hit $50, we pay you on the 1st of each month.',
+        'Once you hit $50.',
+        $content
+    );
+
+    return $content;
+}, 21);  // Priority 21 runs after commission rate filter (priority 20)
