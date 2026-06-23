@@ -3009,18 +3009,56 @@ add_filter('the_content', function($content) {
         return $content;
     }
 
-    // Fix payout text: remove "we pay you on the 1st of each month"
+    // Get the LIVE commission rate from AffiliateWP
+    $live_rate = 30; // default fallback
+    if (function_exists('affiliate_wp')) {
+        $affwp = affiliate_wp();
+        if ($affwp && method_exists($affwp, 'settings')) {
+            $settings = $affwp->settings;
+            if ($settings && method_exists($settings, 'get')) {
+                $rate = $settings->get('referral_rate', 30);
+                $live_rate = floatval($rate) > 0 ? floatval($rate) : 30;
+            }
+        }
+    }
+    // Clean display: strip decimals for whole numbers
+    $rate_display = ($live_rate == intval($live_rate)) ? intval($live_rate) : number_format($live_rate, 1);
+
+    // Replace hardcoded commission rates with live rate
+    // Handles: "you earn X%", "earn X%", "X% commission", etc.
+    $content = preg_replace('/you earn\s+\d+(?:\.\d+)?\s*(?:%|percent)/i', 'you earn ' . $rate_display . '%', $content);
+    $content = preg_replace('/(\d+(?:\.\d+)?)\s*(%|percent)\s*commission/i', $rate_display . '$2 commission', $content);
+    $content = preg_replace('/commission\s*(?:of|is|:)?\s*(?:\$)?\d+(?:\.\d+)?\s*(%|percent)?/i', 'commission', $content); // clean up first
+
+    // Fix payout text
     $content = str_replace(
-        'Once you hit $50, we pay you on the 1st of each month',
-        'Once you hit $50',
+        array(
+            'Once you hit $50, we pay you on the 1st of each month',
+            'Once you hit $50, we pay you on the 1st of each month.',
+        ),
+        array(
+            'Once you hit $50',
+            'Once you hit $50.',
+        ),
         $content
     );
-    // Also catch variations
+
+    // Fix payment date: 1st → 15th
     $content = str_replace(
-        'Once you hit $50, we pay you on the 1st of each month.',
-        'Once you hit $50.',
+        array(
+            'Paid on the 1st of each month',
+            'Paid on the 1st of each month.',
+            'on the 1st of each month',
+            'on the 1st of each month.',
+        ),
+        array(
+            'Paid on the 15th of each month',
+            'Paid on the 15th of each month.',
+            'on the 15th of each month',
+            'on the 15th of each month.',
+        ),
         $content
     );
 
     return $content;
-}, 21);  // Priority 21 runs after commission rate filter (priority 20)
+}, 21);
