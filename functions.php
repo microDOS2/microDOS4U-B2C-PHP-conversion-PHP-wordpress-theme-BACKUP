@@ -3024,10 +3024,9 @@ add_action('wp_footer', function() {
     }
     $rate_display = ($live_rate == intval($live_rate)) ? intval($live_rate) : number_format($live_rate, 1);
     ?>
-    <script>
+        <script>
     (function() {
         var rate = "<?php echo esc_js($rate_display); ?>";
-        // Walk the entire DOM and replace text
         var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false);
         var node;
         while (node = walker.nextNode()) {
@@ -3035,26 +3034,11 @@ add_action('wp_footer', function() {
             if (!text) continue;
             var changed = false;
 
-            // Fix commission rate (any number followed by % or "percent")
-            if (/\d+\s*(%|percent)/i.test(text) && text.toLowerCase().indexOf("commission") !== -1) {
-                text = text.replace(/\d+\s*(%|percent)/i, rate + "$1");
-                changed = true;
-            }
+            // Replace ANY "30%" or "0%" on this page (we're on Getting Started page)
+            text = text.replace(/\b(30|0)\s*%\b/g, rate + "%");
+            if (text !== node.nodeValue) changed = true;
 
-            // Fix "you earn X%" 
-            if (/you earn/i.test(text)) {
-                text = text.replace(/\d+\s*(%|percent)/i, rate + "$1");
-                changed = true;
-            }
-
-            // Fix standalone "0%" or "30%" near affiliate text
-            if ((/\b0\s*%\b/.test(text) || /\b30\s*%\b/.test(text)) && 
-                (text.toLowerCase().indexOf("sale") !== -1 || text.toLowerCase().indexOf("earn") !== -1)) {
-                text = text.replace(/\b(0|30)\s*%\b/, rate + "%");
-                changed = true;
-            }
-
-            // Fix payment date
+            // Fix payment date: 1st → 15th
             if (/1st of each month/i.test(text)) {
                 text = text.replace(/1st of each month/gi, "15th of each month");
                 changed = true;
