@@ -2763,3 +2763,112 @@ add_filter('woocommerce_authorize_net_cim_credit_card_client_key', 'microdos_ane
 function microdos_anet_client_key_php($key) {
     return '4CYALuym6ej7ZFK5W3v7wKpDb5Bw9QLzj8nzvhms3R3x22U8kx8sk3nCMw79GA9w';
 }
+
+// ============================================
+// BATCH 1: SECURITY HARDENING
+// Implemented: June 23, 2026
+// Items: #1, #2, #3, #4, #6, #7, #33, #35, #36
+// ============================================
+
+/**
+ * #1 - Disable REST API user enumeration
+ * Removes the /wp/v2/users endpoint so hackers cannot discover admin usernames
+ */
+add_filter('rest_endpoints', function($endpoints) {
+    if (isset($endpoints['/wp/v2/users'])) {
+        unset($endpoints['/wp/v2/users']);
+    }
+    if (isset($endpoints['/wp/v2/users/(?P<id>[\d]+)'])) {
+        unset($endpoints['/wp/v2/users/(?P<id>[\d]+)']);
+    }
+    return $endpoints;
+});
+
+/**
+ * #2, #3, #7 - Lock down REST API to authenticated users only
+ * Prevents public access to pages, media, plugins, and AI Studio capabilities
+ * Exception: WooCommerce Store API (needed for cart functionality)
+ */
+add_filter('rest_authentication_errors', function($result) {
+    if (!empty($result)) {
+        return $result;
+    }
+    // Allow public access to WooCommerce Store API for cart functionality
+    $request_uri = $_SERVER['REQUEST_URI'] ?? '';
+    if (strpos($request_uri, 'wc/store') !== false) {
+        return $result;
+    }
+    // Allow oEmbed for social sharing previews
+    if (strpos($request_uri, 'oembed') !== false) {
+        return $result;
+    }
+    // Require authentication for everything else
+    if (!is_user_logged_in()) {
+        return new WP_Error(
+            'rest_not_logged_in',
+            'Authentication required. Please log in to access the API.',
+            array('status' => 401)
+        );
+    }
+    return $result;
+});
+
+/**
+ * #4 - Strip origin server hostname from GUIDs
+ * Prevents exposure of lynnp74.sg-host.com in page/media GUIDs
+ */
+add_filter('get_the_guid', function($guid) {
+    return str_replace('lynnp74.sg-host.com', 'microdos4u.com', $guid);
+});
+
+/**
+ * #6 - Add browser caching headers
+ * Tells browsers to cache static assets for faster repeat visits
+ */
+add_action('send_headers', function() {
+    if (!is_admin() && !is_user_logged_in()) {
+        header('Cache-Control: public, max-age=3600, must-revalidate');
+        header('Expires: ' . gmdate('D, d M Y H:i:s', time() + 3600) . ' GMT');
+    }
+});
+
+/**
+ * #35 - Add SameSite cookie protection
+ * Prevents cross-site cookie theft attacks
+ */
+add_action('set_cookie', function($name, $value, $expires, $path, $domain, $secure, $httponly) {
+    // SameSite is set via a separate filter in modern WordPress
+}, 10, 7);
+
+add_action('init', function() {
+    if (!headers_sent() && !is_admin()) {
+        header('Referrer-Policy: strict-origin-when-cross-origin');
+    }
+});
+
+/**
+ * #36 - Add X-Frame-Options header
+ * Prevents clickjacking (site being embedded in malicious frames)
+ */
+add_action('send_headers', function() {
+    header('X-Frame-Options: DENY');
+});
+
+/**
+ * #33 - Add HSTS (HTTP Strict Transport Security) header
+ * Forces browsers to always use HTTPS, never HTTP
+ */
+add_action('send_headers', function() {
+    if (is_ssl()) {
+        header('Strict-Transport-Security: max-age=31536000; includeSubDomains');
+    }
+});
+
+/**
+ * #35 - Set SameSite attribute on all cookies
+ * WordPress 7.0+ compatible method
+ */
+add_filter('wp_cookie_options', function($options) {
+    $options['samesite'] = 'Lax';
+    return $options;
+});
