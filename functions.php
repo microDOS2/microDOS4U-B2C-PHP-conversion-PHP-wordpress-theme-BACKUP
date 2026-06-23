@@ -3000,67 +3000,75 @@ add_action('woocommerce_before_checkout_form', function() {
 
 
 /**
- * Getting Started page text fixes — OUTPUT BUFFERING approach
- * Captures ALL HTML output and replaces text before sending to browser
- * This catches content regardless of how it's generated (shortcodes, page builders, etc.)
+ * Getting Started page text fixes — JavaScript injection
+ * Injects a small script that replaces text after page loads
+ * This is 100% reliable because it runs in the browser
  */
-add_action('template_redirect', function() {
-    // Only run on the Getting Started page
+add_action('wp_footer', function() {
+    // Only on Getting Started page
     if (!is_page("getting-started") && !is_page(409) && !is_page(408) && !is_page(407)) {
         return;
     }
 
-    // Start output buffering
-    ob_start(function($buffer) {
-        // Get the LIVE commission rate from AffiliateWP
-        $live_rate = 30;
-        if (function_exists("affiliate_wp")) {
-            $affwp = affiliate_wp();
-            if ($affwp && method_exists($affwp, "settings")) {
-                $settings = $affwp->settings;
-                if ($settings && method_exists($settings, "get")) {
-                    $rate = $settings->get("referral_rate", 30);
-                    $live_rate = floatval($rate) > 0 ? floatval($rate) : 30;
-                }
+    // Get the LIVE commission rate from AffiliateWP
+    $live_rate = 30;
+    if (function_exists("affiliate_wp")) {
+        $affwp = affiliate_wp();
+        if ($affwp && method_exists($affwp, "settings")) {
+            $settings = $affwp->settings;
+            if ($settings && method_exists($settings, "get")) {
+                $rate = $settings->get("referral_rate", 30);
+                $live_rate = floatval($rate) > 0 ? floatval($rate) : 30;
             }
         }
-        $rate_display = ($live_rate == intval($live_rate)) ? intval($live_rate) : number_format($live_rate, 1);
+    }
+    $rate_display = ($live_rate == intval($live_rate)) ? intval($live_rate) : number_format($live_rate, 1);
+    ?>
+    <script>
+    (function() {
+        var rate = "<?php echo esc_js($rate_display); ?>";
+        // Walk the entire DOM and replace text
+        var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false);
+        var node;
+        while (node = walker.nextNode()) {
+            var text = node.nodeValue;
+            if (!text) continue;
+            var changed = false;
 
-        // Replace hardcoded "30%" with live rate (but not in CSS/JS)
-        // Only replace in visible text content
-        $buffer = str_replace(
-            array(
-                "you earn 30%",
-                "you earn 30 %",
-                "30% commission",
-                "30% —",
-                ", 30%.",
-                ">30%<",
-            ),
-            array(
-                "you earn " . $rate_display . "%",
-                "you earn " . $rate_display . "%",
-                $rate_display . "% commission",
-                $rate_display . "% —",
-                ", " . $rate_display . "%.",
-                ">" . $rate_display . "%<",
-            ),
-            $buffer
-        );
+            // Fix commission rate (any number followed by % or "percent")
+            if (/\d+\s*(%|percent)/i.test(text) && text.toLowerCase().indexOf("commission") !== -1) {
+                text = text.replace(/\d+\s*(%|percent)/i, rate + "$1");
+                changed = true;
+            }
 
-        // Fix payment date
-        $buffer = str_replace(
-            array(
-                "on the 1st of each month",
-                "on the 1st of each month.",
-            ),
-            array(
-                "on the 15th of each month",
-                "on the 15th of each month.",
-            ),
-            $buffer
-        );
+            // Fix "you earn X%" 
+            if (/you earn/i.test(text)) {
+                text = text.replace(/\d+\s*(%|percent)/i, rate + "$1");
+                changed = true;
+            }
 
-        return $buffer;
-    });
-}, 0);
+            // Fix standalone "0%" or "30%" near affiliate text
+            if ((/\b0\s*%\b/.test(text) || /\b30\s*%\b/.test(text)) && 
+                (text.toLowerCase().indexOf("sale") !== -1 || text.toLowerCase().indexOf("earn") !== -1)) {
+                text = text.replace(/\b(0|30)\s*%\b/, rate + "%");
+                changed = true;
+            }
+
+            // Fix payment date
+            if (/1st of each month/i.test(text)) {
+                text = text.replace(/1st of each month/gi, "15th of each month");
+                changed = true;
+            }
+            if (/1st of every month/i.test(text)) {
+                text = text.replace(/1st of every month/gi, "15th of every month");
+                changed = true;
+            }
+
+            if (changed) {
+                node.nodeValue = text;
+            }
+        }
+    })();
+    </script>
+    <?php
+});
