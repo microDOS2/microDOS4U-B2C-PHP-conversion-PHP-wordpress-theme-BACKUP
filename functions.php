@@ -2823,6 +2823,20 @@ add_filter('rest_authentication_errors', function($result) {
     if (strpos($request_uri, 'oembed') !== false) {
         return $result;
     }
+    // FIX: Allow AffiliateWP public endpoints for registration and portal
+    if (strpos($request_uri, 'affwp/v2/portal') !== false) {
+        return $result;
+    }
+    if (strpos($request_uri, 'affwp/v2/auth') !== false) {
+        return $result;
+    }
+    if (strpos($request_uri, 'affwp/v2/affiliate') !== false) {
+        return $result;
+    }
+    // Allow WordPress core namespace listing (needed for some plugins)
+    if ($request_uri === '/wp-json/' || $request_uri === '/wp-json') {
+        return $result;
+    }
     // Require authentication for everything else
     if (!is_user_logged_in()) {
         return new WP_Error(
