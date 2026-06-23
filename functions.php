@@ -2878,5 +2878,5 @@ add_filter('wp_cookie_options', function($options) {
  * Redirects WooCommerce's "Return to shop" button to the homepage (pricing section)
  */
 add_filter('woocommerce_return_to_shop_redirect', function() {
-    return home_url('/');
+    return home_url('/#pricing');
 });
