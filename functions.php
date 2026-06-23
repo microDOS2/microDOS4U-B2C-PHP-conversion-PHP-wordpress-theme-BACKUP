@@ -2932,3 +2932,68 @@ add_shortcode('trust_badges', function($atts) {
 add_filter('woocommerce_return_to_shop_redirect', function() {
     return home_url('/#pricing');
 });
+
+/**
+ * #14 AUTO-INJECTION: Replace hardcoded commission rate on Getting Started page
+ * Automatically finds and replaces "20%", "earn 20", etc. with the live rate from AffiliateWP
+ * Targets: /getting-started/ page
+ */
+add_filter('the_content', function($content) {
+    // Only on the Getting Started page (check by slug or page template)
+    if (!is_page('getting-started') && !is_page(409)) {
+        return $content;
+    }
+    
+    // Get live commission rate from AffiliateWP
+    if (function_exists('affwp_get_settings')) {
+        $settings = affwp_get_settings();
+        $rate = isset($settings['referral_rate']) ? $settings['referral_rate'] : 30;
+    } else {
+        $rate = 30;
+    }
+    $rate = floatval($rate);
+    $rate_display = ($rate == intval($rate)) ? intval($rate) : number_format($rate, 1);
+    
+    // Replace common hardcoded commission patterns (case-insensitive)
+    // Pattern: "you earn X%" or "earn X%" or "Commission: X%" or just "X%"
+    $patterns = array(
+        '/you earn\s+\d+(?:\.\d+)?\s*%/i',
+        '/earn\s+\d+(?:\.\d+)?\s*%/i',
+        '/Commission:\s*\d+(?:\.\d+)?\s*%/i',
+        '/commission\s+of\s+\d+(?:\.\d+)?\s*%/i',
+    );
+    
+    foreach ($patterns as $pattern) {
+        $content = preg_replace($pattern, '${1}' . $rate_display . '%', $content);
+    }
+    
+    // Also replace standalone "20%" near commission-related words
+    $content = preg_replace('/(\bcommission\b.*?)(\d{1,2})(?:\.\d+)?\s*(?:%|percent)/i', '$1' . $rate_display . '%', $content);
+    
+    return $content;
+}, 20);
+
+/**
+ * #10 AUTO-INJECTION: Trust badges on checkout page
+ * Automatically injects trust badges above the checkout form — no shortcode needed
+ */
+add_action('woocommerce_before_checkout_form', function() {
+    echo '<div style="display:flex;flex-wrap:wrap;justify-content:center;gap:16px;margin:20px 0;padding:15px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;">';
+    
+    // SSL Secure
+    echo '<span style="display:flex;align-items:center;gap:6px;color:#9ca3af;font-size:13px;font-family:system-ui,-apple-system,sans-serif;">';
+    echo '<svg width="16" height="16" fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>';
+    echo 'SSL Secure</span>';
+    
+    // Verified Payment
+    echo '<span style="display:flex;align-items:center;gap:6px;color:#9ca3af;font-size:13px;font-family:system-ui,-apple-system,sans-serif;">';
+    echo '<svg width="16" height="16" fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2"/><path d="M1 10h22"/><path d="M9 16h6"/></svg>';
+    echo 'Verified Payment</span>';
+    
+    // Satisfaction Guaranteed
+    echo '<span style="display:flex;align-items:center;gap:6px;color:#9ca3af;font-size:13px;font-family:system-ui,-apple-system,sans-serif;">';
+    echo '<svg width="16" height="16" fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg>';
+    echo 'Satisfaction Guaranteed</span>';
+    
+    echo '</div>';
+}, 5);
