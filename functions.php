@@ -109,9 +109,14 @@ function microdos_encrypt_tax_id($tax_id) {
         return '';
     }
     $key = substr(wp_salt('auth'), 0, 32);
-    $iv  = substr(wp_salt('secure_auth'), 0, 16);
+    // #11 FIX: Use random IV instead of static IV for each encryption
+    $iv = random_bytes(16);
     $encrypted = openssl_encrypt($tax_id, 'AES-256-CBC', $key, 0, $iv);
-    return $encrypted !== false ? base64_encode($encrypted) : '';
+    if ($encrypted === false) {
+        return '';
+    }
+    // Prepend IV to ciphertext so decryption can extract it (format: base64(iv + encrypted))
+    return base64_encode($iv . $encrypted);
 }
 
 /**
@@ -132,7 +137,23 @@ function microdos_decrypt_tax_id($encrypted_tax_id) {
         return $encrypted_tax_id; // Not valid base64 — legacy plaintext
     }
     $key = substr(wp_salt('auth'), 0, 32);
-    $iv  = substr(wp_salt('secure_auth'), 0, 16);
+    
+    // #11 FIX: Detect new format (IV prepended to ciphertext)
+    // New format: base64(iv(16 bytes) + ciphertext)
+    // Old format: base64(ciphertext) — used static IV from salts
+    $decoded_length = strlen($decoded);
+    if ($decoded_length > 16) {
+        // Try new format first: extract IV from first 16 bytes
+        $iv = substr($decoded, 0, 16);
+        $ciphertext = substr($decoded, 16);
+        $decrypted = openssl_decrypt($ciphertext, 'AES-256-CBC', $key, 0, $iv);
+        if ($decrypted !== false) {
+            return $decrypted;
+        }
+    }
+    
+    // Fallback: try old format with static IV (backward compatible with existing W-9s)
+    $iv = substr(wp_salt('secure_auth'), 0, 16);
     $decrypted = openssl_decrypt($decoded, 'AES-256-CBC', $key, 0, $iv);
     return $decrypted !== false ? $decrypted : '';
 }
@@ -2871,6 +2892,37 @@ add_action('send_headers', function() {
 add_filter('wp_cookie_options', function($options) {
     $options['samesite'] = 'Lax';
     return $options;
+});
+
+/**
+ * #14 - Dynamic commission rate shortcode
+ * Reads live rate from AffiliateWP settings so the page always shows the correct percentage
+ * Usage: [affiliate_commission_rate] on the Getting Started page
+ */
+add_shortcode('affiliate_commission_rate', function($atts) {
+    // Try to get rate from AffiliateWP
+    if (function_exists('affwp_get_settings')) {
+        $settings = affwp_get_settings();
+        $rate = isset($settings['referral_rate']) ? $settings['referral_rate'] : 30;
+    } else {
+        $rate = 30; // Default fallback
+    }
+    // Clean the output — strip decimals if whole number
+    $rate = floatval($rate);
+    return ($rate == intval($rate)) ? intval($rate) : number_format($rate, 1);
+});
+
+/**
+ * #10 - Trust badges shortcode for checkout page
+ * Usage: [trust_badges] on the checkout page
+ */
+add_shortcode('trust_badges', function($atts) {
+    $badges = '<div style="display:flex;flex-wrap:wrap;justify-content:center;gap:16px;margin:20px 0;padding:15px;background:rgba(255,255,255,0.05);border-radius:8px;">';
+    $badges .= '<span style="display:flex;align-items:center;gap:6px;color:#9ca3af;font-size:13px;"><svg width="16" height="16" fill="none" stroke="#22c55e" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> SSL Secure</span>';
+    $badges .= '<span style="display:flex;align-items:center;gap:6px;color:#9ca3af;font-size:13px;"><svg width="16" height="16" fill="none" stroke="#22c55e" stroke-width="2" viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2"/><path d="M1 10h22"/></svg> Verified Payment</span>';
+    $badges .= '<span style="display:flex;align-items:center;gap:6px;color:#9ca3af;font-size:13px;"><svg width="16" height="16" fill="none" stroke="#22c55e" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/></svg> Satisfaction Guaranteed</span>';
+    $badges .= '</div>';
+    return $badges;
 });
 
 /**
