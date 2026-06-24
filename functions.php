@@ -3301,38 +3301,7 @@ add_shortcode('affiliate_rate', function($atts) {
 
 
 
-/**
- * FIX #1: Copy Gravity Forms W-9 data to WooCommerce billing address
- * When a user submits the W-9 form, copy company/address/city/state/zip/phone to their profile
- */
-add_action('gform_after_submission', function($entry, $form) {
-    // Check if this is the W-9 form (adjust form ID if needed)
-    // Common W-9 field IDs: company=1, address=2, city=3, state=4, zip=5, phone=6
-    // You may need to adjust these field IDs to match your actual Gravity Form
 
-    $user_id = get_current_user_id();
-    if (!$user_id) {
-        return; // Not logged in
-    }
-
-    // Map Gravity Forms fields to WooCommerce billing fields
-    // Adjust the field IDs (the numbers) to match your actual W-9 form field IDs
-    $field_map = array(
-        'billing_company'  => rgar($entry, '1'),   // W-9 Company Name field ID
-        'billing_address_1'=> rgar($entry, '2'),   // W-9 Address field ID
-        'billing_city'     => rgar($entry, '3'),   // W-9 City field ID
-        'billing_state'    => rgar($entry, '4'),   // W-9 State field ID
-        'billing_postcode' => rgar($entry, '5'),   // W-9 ZIP field ID
-        'billing_phone'    => rgar($entry, '6'),   // W-9 Phone field ID
-    );
-
-    // Only update fields that have values
-    foreach ($field_map as $meta_key => $value) {
-        if (!empty($value)) {
-            update_user_meta($user_id, $meta_key, sanitize_text_field($value));
-        }
-    }
-}, 10, 2);
 
 /**
  * FIX #2: Affiliate users should only have "affiliate" role, not "subscriber"
@@ -3363,3 +3332,66 @@ add_action('user_register', function($user_id) {
         $user->remove_role('customer');
     }
 });
+
+
+/**
+ * FIX #1: Smart Gravity Forms W-9 → WooCommerce billing address mapping
+ * Auto-detects fields by their admin labels - no field IDs needed
+ */
+add_action('gform_after_submission', function($entry, $form) {
+    $user_id = get_current_user_id();
+    if (!$user_id) {
+        return;
+    }
+
+    // Define what to look for in field labels/admin labels
+    $field_patterns = array(
+        'billing_address_1' => array('street address', 'address line 1', 'address_1', 'billing_address'),
+        'billing_address_2' => array('apt', 'suite', 'unit', 'address line 2', 'address_2'),
+        'billing_city'      => array('city'),
+        'billing_state'     => array('state'),
+        'billing_postcode'  => array('zip', 'postal', 'postcode'),
+        'billing_phone'     => array('phone'),
+        'billing_company'   => array('company', 'business name'),
+    );
+
+    $updates = array();
+
+    // Scan all form fields
+    foreach ($form['fields'] as $field) {
+        $field_label = strtolower($field->adminLabel . ' ' . $field->label);
+        $field_id = $field->id;
+        $field_value = rgar($entry, (string)$field_id);
+
+        if (empty($field_value)) {
+            continue;
+        }
+
+        // Match field to WooCommerce billing field by label patterns
+        foreach ($field_patterns as $wc_key => $patterns) {
+            foreach ($patterns as $pattern) {
+                if (strpos($field_label, $pattern) !== false) {
+                    $updates[$wc_key] = sanitize_text_field($field_value);
+                    break 2; // Found match, move to next field
+                }
+            }
+        }
+    }
+
+    // Apply all updates
+    foreach ($updates as $meta_key => $value) {
+        update_user_meta($user_id, $meta_key, $value);
+    }
+
+    // Also save SSN/EIN if present (encrypted, same as W-9)
+    foreach ($form['fields'] as $field) {
+        $label = strtolower($field->adminLabel . ' ' . $field->label);
+        if (strpos($label, 'ssn') !== false || strpos($label, 'ein') !== false || strpos($label, 'tax') !== false) {
+            $tax_id = rgar($entry, (string)$field->id);
+            if (!empty($tax_id)) {
+                $encrypted = microdos_encrypt_tax_id($tax_id);
+                update_user_meta($user_id, 'w9_tax_id_encrypted', $encrypted);
+            }
+        }
+    }
+}, 10, 2);
