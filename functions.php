@@ -1269,7 +1269,7 @@ function microdos_create_affiliate_from_form($entry, $form) {
         'first_name'   => sanitize_text_field($first_name),
         'last_name'    => sanitize_text_field($last_name),
         'user_url'     => esc_url_raw($website),
-        'role'         => 'subscriber',
+        'role'         => 'affiliate',
     ));
 
     if (is_wp_error($user_id)) {
@@ -1298,6 +1298,16 @@ function microdos_create_affiliate_from_form($entry, $form) {
         'certification_date' => current_time('mysql'),
         'ip_address'         => sanitize_text_field($_SERVER['REMOTE_ADDR'] ?? ''),
     ));
+
+    // FIX: Copy W-9 data to WooCommerce billing address
+    update_user_meta($user_id, 'billing_company', sanitize_text_field($business));
+    update_user_meta($user_id, 'billing_address_1', sanitize_text_field($address));
+    if (!empty($address2)) {
+        update_user_meta($user_id, 'billing_address_2', sanitize_text_field($address2));
+    }
+    update_user_meta($user_id, 'billing_city', sanitize_text_field($city));
+    update_user_meta($user_id, 'billing_state', sanitize_text_field($state));
+    update_user_meta($user_id, 'billing_postcode', sanitize_text_field($zip));
     update_user_meta($user_id, 'microdos_w9_status', 'complete');
 
     microdos_send_affiliate_pending_email($user_id, $email, $first_name, $last_name);
