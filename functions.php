@@ -3580,6 +3580,9 @@ add_action('gform_after_submission', function($entry, $form) {
         update_user_meta($user_id, $meta_key, $value);
     }
 
+    // Default country to US (W-9 is US-only)
+    update_user_meta($user_id, 'billing_country', 'US');
+
     // Also save SSN/EIN if present (encrypted, same as W-9)
     foreach ($form['fields'] as $field) {
         $label = strtolower($field->adminLabel . ' ' . $field->label);
@@ -3599,8 +3602,8 @@ add_action('gform_after_submission', function($entry, $form) {
  * Add Phone field to Affiliate Application form (ID: 2) if it doesn't exist
  * Runs once on admin page load
  */
-add_action('admin_init', function() {
-    // Only run if Gravity Forms is active
+add_action('init', function() {
+    // Gravity Forms loads at init priority 10; we run at 20 to guarantee GFAPI is ready
     if (!class_exists('GFAPI')) {
         return;
     }
