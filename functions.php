@@ -2359,7 +2359,9 @@ window.launchMcdTour = function() {
 if (window.microDOSAffiliateTour && window.microDOSAffiliateTour.launch) {
 window.microDOSAffiliateTour.launch(true);
 } else {
-alert('Tour is loading... Please try again in a moment.');
+// Shepherd assets were skipped (user completed tour before).
+// Reload with restart flag to force-load Shepherd and start tour.
+window.location.href = window.location.href.replace(/[?&]restart_tour=\d/, '') + (window.location.search ? '&' : '?') + 'restart_tour=1';
 }
 };
 function init() {
@@ -2868,9 +2870,11 @@ add_action('init', function() {
 /**
  * #36 - Add X-Frame-Options header
  * Prevents clickjacking (site being embedded in malicious frames)
+ * Uses SAMEORIGIN (not DENY) to allow Gravity Forms iframe submissions
+ * while still blocking external sites from embedding microdos4u.com
  */
 add_action('send_headers', function() {
-    header('X-Frame-Options: DENY');
+    header('X-Frame-Options: SAMEORIGIN');
 });
 
 /**
