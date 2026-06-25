@@ -469,31 +469,51 @@ add_action('wp_footer', function() {
     ?>
     <script>
     (function() {
-        // Wait for WCSATT to initialize
         function setOneTimeDefault() {
-            // Method 1: Radio buttons (WCSATT standard)
-            var radios = document.querySelectorAll('input[type="radio"][name*="subscription"], input[type="radio"][name*="scheme"]');
-            for (var i = 0; i < radios.length; i++) {
-                var label = radios[i].closest('label, .wcsatt-options-prompt-label, .subscription-option');
-                var labelText = label ? label.textContent.toLowerCase() : '';
-                // Select One-Time / Non-subscription option
-                if (labelText.indexOf('one-time') !== -1 || labelText.indexOf('one time') !== -1 || radios[i].value === '0') {
-                    radios[i].checked = true;
-                    radios[i].dispatchEvent(new Event('change', { bubbles: true }));
-                    return true;
-                }
+            // Your site uses button toggles (not radio buttons)
+            var oneTimeBtn = document.getElementById('btn-onetime');
+            var protocolBtn = document.getElementById('btn-protocol');
+            var oneTimeContent = document.getElementById('content-onetime');
+            var protocolContent = document.getElementById('content-protocol');
+
+            if (!oneTimeBtn || !protocolBtn) return false;
+
+            // Check if One-Time is already active (text-white = active on your site)
+            var isOneTimeActive = oneTimeBtn.classList.contains('text-white') ||
+                                  getComputedStyle(oneTimeBtn).color === 'rgb(255, 255, 255)';
+            if (isOneTimeActive) return true; // Already set
+
+            // Click One-Time button to trigger existing handlers
+            oneTimeBtn.click();
+
+            // Manually ensure One-Time content is visible and Subscription is hidden
+            if (oneTimeContent) {
+                oneTimeContent.classList.remove('hidden');
+                oneTimeContent.style.opacity = '1';
             }
-            // Method 2: Toggle switch
-            var toggle = document.querySelector('.wcsatt-options-prompt-label[for*="0"], .one-time-label, .subscription-option:first-child input');
-            if (toggle) {
-                toggle.click();
-                return true;
+            if (protocolContent) {
+                protocolContent.classList.add('hidden');
+                protocolContent.style.opacity = '0';
             }
-            return false;
+
+            // Update button styles: One-Time = active (white), Subscriptions = inactive (slate)
+            oneTimeBtn.classList.remove('text-slate-400');
+            oneTimeBtn.classList.add('text-white');
+            protocolBtn.classList.remove('text-white');
+            protocolBtn.classList.add('text-slate-400');
+
+            // Move toggle-bg to right (One-Time position)
+            var toggleBg = document.getElementById('toggle-bg');
+            if (toggleBg) {
+                toggleBg.style.transform = 'translateX(100%)';
+            }
+
+            return true;
         }
-        // Try immediately and after delay
+        // Run immediately and retry after delays for late-loading content
         if (!setOneTimeDefault()) {
-            setTimeout(setOneTimeDefault, 500);
+            setTimeout(setOneTimeDefault, 300);
+            setTimeout(setOneTimeDefault, 800);
             setTimeout(setOneTimeDefault, 1500);
         }
     })();
