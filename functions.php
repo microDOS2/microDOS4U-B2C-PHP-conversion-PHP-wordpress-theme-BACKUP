@@ -3420,6 +3420,68 @@ add_shortcode('affiliate_rate', function($atts) {
 });
 
 /**
+ * Create Gravity Forms confirmation for affiliate application (Form ID 2)
+ * Shows styled success message inline when form is submitted via AJAX
+ * Runs once on admin page load, then sets flag to prevent re-running
+ */
+add_action('admin_init', function() {
+    // Only run once
+    if (get_option('microdos_gf_confirmation_created')) {
+        return;
+    }
+    if (!class_exists('GFAPI')) {
+        return;
+    }
+
+    $form_id = 2;
+    $form = GFAPI::get_form($form_id);
+    if (!$form || is_wp_error($form)) {
+        return;
+    }
+
+    $confirmation_name = 'Application Submitted';
+
+    // Check if already exists
+    if (!empty($form['confirmations'])) {
+        foreach ($form['confirmations'] as $conf) {
+            if ($conf['name'] === $confirmation_name) {
+                update_option('microdos_gf_confirmation_created', true);
+                return;
+            }
+        }
+    }
+
+    // Create new text confirmation - displays inline for AJAX forms
+    $new_confirmation = array(
+        'id'          => 'app_submitted_' . wp_generate_password(6, false),
+        'name'        => $confirmation_name,
+        'isDefault'   => true,
+        'type'        => 'text',
+        'message'     => '<div style="text-align:center;padding:48px 24px;background:linear-gradient(135deg,rgba(68,248,12,0.1),rgba(154,2,208,0.1));border:1px solid #44f80c40;border-radius:12px;margin:20px 0;">
+    <h2 style="color:#44f80c;margin-bottom:12px;font-size:22px;">&#10003; Application Submitted Successfully</h2>
+    <p style="color:#e2e8f0;margin-bottom:8px;font-size:15px;">Thank you for applying to the microDOS(2) Affiliate Program!</p>
+    <p style="color:#9ca3af;margin-bottom:8px;">Your application is <strong style="color:#ffaa00;">pending review</strong>.</p>
+    <p style="color:#9ca3af;margin-bottom:16px;">You will receive an email once your account is approved (usually within 24-48 hours).</p>
+    <p style="color:#64748b;font-size:13px;">If you have questions, contact us at <a href="mailto:lynn@microdos4u.com" style="color:#44f80c;">lynn@microdos4u.com</a></p>
+</div>',
+    );
+
+    // Make all other confirmations non-default
+    if (!empty($form['confirmations'])) {
+        foreach ($form['confirmations'] as $id => &$conf) {
+            $conf['isDefault'] = false;
+        }
+    }
+
+    $form['confirmations'][$new_confirmation['id']] = $new_confirmation;
+
+    $result = GFAPI::update_form($form, $form_id);
+    if (!is_wp_error($result)) {
+        update_option('microdos_gf_confirmation_created', true);
+    }
+});
+
+/**
  * FIX #2: Affiliate users should only have "affiliate" role, not "subscriber"
  * When a user is assigned the affiliate role, remove subscriber
  */
