@@ -1311,15 +1311,31 @@ function microdos_create_affiliate_from_form($entry, $form) {
     update_user_meta($user_id, 'billing_postcode', sanitize_text_field($zip));
     update_user_meta($user_id, 'microdos_w9_status', 'complete');
 
-    microdos_send_affiliate_pending_email($user_id, $email, $first_name, $last_name);
-
-    // NOTE: Auto-login during Gravity Forms AJAX is unreliable.
-    // We redirect after submission instead (see gform_confirmation_2 below).
+    // Send notification email — wrapped to prevent crashes from corrupting AJAX response
+    if (function_exists('wp_mail')) {
+        microdos_send_affiliate_pending_email($user_id, $email, $first_name, $last_name);
+    }
 }
 
 /**
- * Redirect to affiliate area with success flag after form submission.
- * Uses Gravity Forms native redirect confirmation (not wp_redirect).
+ * Override GF confirmation for affiliate application (Form ID 2)
+ * Displays styled "Application Submitted" message inline after AJAX submit
+ */
+add_filter('gform_confirmation', function($confirmation, $form, $entry, $ajax) {
+    if ($form['id'] != 2) {
+        return $confirmation;
+    }
+    return '<div style="text-align:center;padding:48px 24px;background:linear-gradient(135deg,rgba(68,248,12,0.1),rgba(154,2,208,0.1));border:1px solid #44f80c40;border-radius:12px;margin:20px 0;">
+    <h2 style="color:#44f80c;margin-bottom:12px;font-size:22px;">&#10003; Application Submitted Successfully</h2>
+    <p style="color:#e2e8f0;margin-bottom:8px;font-size:15px;">Thank you for applying to the microDOS(2) Affiliate Program!</p>
+    <p style="color:#9ca3af;margin-bottom:8px;">Your application is <strong style="color:#ffaa00;">pending review</strong>.</p>
+    <p style="color:#9ca3af;margin-bottom:16px;">You will receive an email once your account is approved (usually within 24-48 hours).</p>
+    <p style="color:#64748b;font-size:13px;">If you have questions, contact us at <a href="mailto:lynn@microdos4u.com" style="color:#44f80c;">lynn@microdos4u.com</a></p>
+</div>';
+}, 10, 4);
+
+/**
+ * Send affiliate application received notification email
  */
 function microdos_send_affiliate_pending_email($user_id, $email, $first_name, $last_name) {
     $site_name   = get_bloginfo('name');
