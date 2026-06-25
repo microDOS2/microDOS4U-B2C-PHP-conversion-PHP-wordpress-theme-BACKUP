@@ -593,7 +593,9 @@ add_action('widgets_init', 'microdos4u_widgets_init');
 
 function microdos4u_cart_fragments($fragments) {
     if (function_exists('WC') && WC()->cart) {
-        $fragments['span.cart-count'] = '<span class="cart-count">' . WC()->cart->get_cart_contents_count() . '</span>';
+        $count = WC()->cart->get_cart_contents_count();
+        $display = $count > 0 ? 'inline-flex' : 'none';
+        $fragments['span.cart-count'] = '<span class="cart-count" style="display: ' . $display . ';">' . $count . '</span>';
     }
     return $fragments;
 }
@@ -1311,9 +1313,19 @@ function microdos_create_affiliate_from_form($entry, $form) {
 
     microdos_send_affiliate_pending_email($user_id, $email, $first_name, $last_name);
 
-    wp_set_current_user($user_id);
-    wp_set_auth_cookie($user_id, true);
+    // NOTE: Auto-login during Gravity Forms AJAX is unreliable.
+    // We redirect after submission instead (see gform_confirmation_2 below).
 }
+
+/**
+ * Redirect to affiliate area with success flag after form submission.
+ * Gravity Forms handles the redirect — browser processes auth properly.
+ */
+add_filter('gform_confirmation_2', function($confirmation, $form, $entry) {
+    $affiliate_area = get_permalink(get_page_by_path('affiliate-area')) ?: home_url('/affiliate-area/');
+    wp_redirect($affiliate_area . (strpos($affiliate_area, '?') !== false ? '&' : '?') . 'registered=1');
+    exit;
+}, 10, 3);
 
 function microdos_send_affiliate_pending_email($user_id, $email, $first_name, $last_name) {
     $site_name   = get_bloginfo('name');
