@@ -179,6 +179,50 @@ add_action('init', function() {
 }, 20);
 
 // ============================================
+// P5 SEO: META DESCRIPTIONS
+// ============================================
+/**
+ * Output <meta name="description"> based on current page context.
+ * Runs on wp_head with priority 5 (before most other head output).
+ */
+add_action('wp_head', function() {
+    $desc = '';
+
+    if (is_front_page() || is_home()) {
+        $desc = 'microDOS4U - Premium research compound subscriptions. Join our affiliate program and earn 45% commission on every referral. Secure, trusted, science-backed.';
+    } elseif (is_page('affiliate-area') || is_page('affiliate')) {
+        $desc = 'Join the microDOS4U affiliate program. Earn 45% commission on initial purchases and 10% on subscription renewals. Apply today and start earning.';
+    } elseif (is_page('getting-started')) {
+        $desc = 'Getting started with the microDOS4U affiliate program. Learn how to earn commissions by sharing your unique referral link.';
+    } elseif (is_page('checkout')) {
+        $desc = 'Secure checkout for microDOS4U research compound subscriptions. SSL encrypted payment processing via Authorize.Net.';
+    } elseif (is_page('cart')) {
+        $desc = 'Your microDOS4U shopping cart. Review your items and proceed to secure checkout.';
+    } elseif (is_product()) {
+        $desc = wp_trim_words(get_the_excerpt(), 30, '...');
+        if (empty($desc)) {
+            $desc = 'Premium research compounds from microDOS4U. Science-backed quality, secure subscription delivery.';
+        }
+    } elseif (is_shop()) {
+        $desc = 'Browse microDOS4U premium research compound subscriptions. Science-backed quality with secure monthly delivery.';
+    } elseif (is_singular('post')) {
+        $desc = wp_trim_words(get_the_excerpt(), 30, '...');
+    } elseif (is_category() || is_tag() || is_archive()) {
+        $desc = wp_trim_words(get_the_archive_description(), 30, '...');
+    }
+
+    // Fallback default
+    if (empty($desc)) {
+        $desc = 'microDOS4U - Premium research compound subscriptions. Join our affiliate program and earn commissions on every referral.';
+    }
+
+    // Ensure max 160 chars for SEO
+    $desc = substr($desc, 0, 160);
+
+    echo '<meta name="description" content="' . esc_attr($desc) . '" />' . "\n";
+}, 5);
+
+// ============================================
 // AFFILIATE ROLE & ACCESS CONTROL
 // ============================================
 
