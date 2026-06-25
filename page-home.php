@@ -68,7 +68,7 @@ if (function_exists('wc_get_product_id_by_sku')) {
         <p id="hero-subtitle" class="text-lg md:text-xl text-slate-300 max-w-3xl mx-auto mb-8 transition-opacity duration-500 min-h-[3rem]"></p>
         <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
             <a href="#pricing" class="w-full sm:w-auto px-8 py-4 text-lg text-white font-bold rounded-lg shadow-lg btn-primary transform hover:scale-105">
-                Start Your $12.95 Trial
+                Start Your Trial
             </a>
             <a href="#how-it-works" class="w-full sm:w-auto px-8 py-4 text-lg font-semibold text-white bg-slate-700 border border-slate-600 rounded-lg shadow-md hover:bg-slate-600 transition-colors" style="background-color: #1f1a2e !important;">
                 Learn More
