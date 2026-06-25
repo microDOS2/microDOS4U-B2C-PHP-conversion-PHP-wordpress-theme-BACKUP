@@ -3419,17 +3419,16 @@ add_action('admin_init', function() {
 });
 
 
-
 /**
- * FIX: Remove Username field and fix Website field from Affiliate Application form
- * Runs once on admin page load
+ * FIX: Remove broken Website field and create new proper one
+ * Also removes Username field
  */
 add_action('admin_init', function() {
     if (!class_exists('GFAPI')) {
         return;
     }
 
-    $form_id = 2; // Affiliate Application form
+    $form_id = 2;
     $form = GFAPI::get_form($form_id);
 
     if (!$form || is_wp_error($form)) {
@@ -3438,38 +3437,70 @@ add_action('admin_init', function() {
 
     $modified = false;
     $new_fields = array();
+    $has_website = false;
+    $has_username = false;
+    $next_id = 0;
+
+    // Find highest field ID
+    foreach ($form['fields'] as $field) {
+        if ($field->id > $next_id) {
+            $next_id = $field->id;
+        }
+    }
+    $next_id++;
 
     foreach ($form['fields'] as $field) {
-        $field_id = $field->id;
+        $label = strtolower($field->label);
 
-        // REMOVE field 4 (Username) — auto-generated from email in processing code
-        if ($field_id == 4) {
+        // REMOVE Username field (by label or ID 4)
+        if ($field->id == 4 || strpos($label, 'username') !== false) {
+            $has_username = true;
             $modified = true;
-            continue; // Skip this field — removes it from form
+            continue; // Skip — removes field
         }
 
-        // FIX field 5 (Website / Social Media) — ensure it has proper input
-        if ($field_id == 5) {
-            // Make sure it has input type set
-            if (empty($field->type) || $field->type === 'hidden') {
-                $field->type = 'text';
-                $field->inputType = 'text';
-                $modified = true;
-            }
-            // Ensure it's visible (not admin-only)
-            $field->visibility = 'visible';
-            $field->adminOnly = false;
+        // REMOVE broken Website field (by label — any field with "website" or "social")
+        if (strpos($label, 'website') !== false || strpos($label, 'social') !== false) {
+            $has_website = true;
             $modified = true;
+            continue; // Skip — removes broken field
         }
 
         $new_fields[] = $field;
+    }
+
+    // CREATE new Website field if we removed the broken one
+    if ($has_website) {
+        $website_field = new GF_Field_Text();
+        $website_field->id = $next_id;
+        $website_field->label = 'Website / Social Media';
+        $website_field->type = 'text';
+        $website_field->inputType = 'text';
+        $website_field->isRequired = false;
+        $website_field->placeholder = 'https://instagram.com/yourname';
+        $website_field->description = 'Your website or primary social media profile';
+        $website_field->descriptionPlacement = 'below';
+        $website_field->visibility = 'visible';
+        $website_field->adminOnly = false;
+        $website_field->size = 'large';
+
+        // Insert after Password fields (before Tax section)
+        $insert_pos = count($new_fields);
+        foreach ($new_fields as $i => $f) {
+            if (strtolower($f->label) === 'confirm password' || 
+                strtolower($f->label) === 'password') {
+                $insert_pos = $i + 1;
+            }
+        }
+        array_splice($new_fields, $insert_pos, 0, array($website_field));
+        $modified = true;
     }
 
     if ($modified) {
         $form['fields'] = $new_fields;
         $result = GFAPI::update_form($form, $form_id);
         if (!is_wp_error($result)) {
-            error_log('microDOS4U: Form 2 fixed — removed Username field, fixed Website field');
+            error_log('microDOS4U: Form 2 fixed — Username removed, Website field recreated');
         }
     }
 });
