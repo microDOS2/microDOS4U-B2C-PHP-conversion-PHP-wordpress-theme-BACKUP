@@ -3504,3 +3504,59 @@ add_action('admin_init', function() {
         }
     }
 });
+
+
+
+/**
+ * Move Phone Number field to just below ZIP Code in Affiliate Application form
+ */
+add_action('admin_init', function() {
+    if (!class_exists('GFAPI')) {
+        return;
+    }
+
+    $form_id = 2;
+    $form = GFAPI::get_form($form_id);
+
+    if (!$form || is_wp_error($form)) {
+        return;
+    }
+
+    // Find Phone field (ID 20) and ZIP Code field
+    $phone_field = null;
+    $zip_index = -1;
+    $phone_index = -1;
+
+    foreach ($form['fields'] as $i => $field) {
+        if ($field->id == 20) {
+            $phone_field = $field;
+            $phone_index = $i;
+        }
+        // Find ZIP code field by label
+        $label = strtolower($field->label);
+        if (strpos($label, 'zip') !== false || strpos($label, 'postal') !== false) {
+            $zip_index = $i;
+        }
+    }
+
+    // Only reorder if we found both fields and phone is not already right after zip
+    if ($phone_field && $zip_index >= 0 && $phone_index >= 0) {
+        // Remove phone from current position
+        array_splice($form['fields'], $phone_index, 1);
+
+        // Recalculate zip index after removal
+        $new_zip_index = $zip_index;
+        if ($phone_index < $zip_index) {
+            $new_zip_index = $zip_index - 1;
+        }
+
+        // Insert phone right after zip
+        array_splice($form['fields'], $new_zip_index + 1, 0, array($phone_field));
+
+        // Update form
+        $result = GFAPI::update_form($form, $form_id);
+        if (!is_wp_error($result)) {
+            error_log('microDOS4U: Phone field moved below ZIP Code in form 2');
+        }
+    }
+});
