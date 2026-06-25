@@ -3426,11 +3426,11 @@ add_shortcode('affiliate_rate', function($atts) {
  */
 /**
  * Create GF confirmation for affiliate application (Form ID 2)
- * Uses gform_loaded hook to ensure GFAPI is available
+ * Uses init priority 20 (after GF loads) — theme runs after plugins so gform_loaded already fired
  */
-add_action('gform_loaded', function() {
-    // Only run once
-    if (get_option('microdos_gf_confirmation_created')) {
+add_action('init', function() {
+    // Only run once (delete the option to force re-run after code changes)
+    if (get_option('microdos_gf_confirmation_v2')) {
         return;
     }
 
@@ -3446,7 +3446,7 @@ add_action('gform_loaded', function() {
     if (!empty($form['confirmations'])) {
         foreach ($form['confirmations'] as $conf) {
             if ($conf['name'] === $confirmation_name) {
-                update_option('microdos_gf_confirmation_created', true);
+                update_option('microdos_gf_confirmation_v2', true);
                 return;
             }
         }
@@ -3478,7 +3478,7 @@ add_action('gform_loaded', function() {
 
     $result = GFAPI::update_form($form, $form_id);
     if (!is_wp_error($result)) {
-        update_option('microdos_gf_confirmation_created', true);
+        update_option('microdos_gf_confirmation_v2', true);
     }
 });
 
