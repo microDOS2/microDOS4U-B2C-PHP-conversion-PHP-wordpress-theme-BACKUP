@@ -69,6 +69,116 @@ function microdos4u_setup() {
 }
 
 // ============================================
+// BLOCK PATTERNS (Reusable Page Sections)
+// ============================================
+add_action('init', function() {
+    // Only register if block patterns are supported
+    if (!function_exists('register_block_pattern')) {
+        return;
+    }
+
+    // Pattern category
+    register_block_pattern_category('microdos', array(
+        'label' => __('microDOS4U Sections', 'microdos4u'),
+    ));
+
+    // 1. Dark Info Card
+    register_block_pattern('microdos/info-card', array(
+        'title'       => __('Dark Info Card', 'microdos4u'),
+        'description' => __('A dark card with heading, text, and optional button.', 'microdos4u'),
+        'categories'  => array('microdos'),
+        'content'     => '<!-- wp:group {"style":{"color":{"background":"#150f24"},"border":{"color":"#1a1329","width":"1px","radius":"12px"},"spacing":{"padding":{"top":"32px","right":"32px","bottom":"32px","left":"32px"}}},"layout":{"type":"constrained"}} -->
+<div class="wp-block-group has-background" style="border-color:#1a1329;border-width:1px;border-radius:12px;background-color:#150f24;padding-top:32px;padding-right:32px;padding-bottom:32px;padding-left:32px">
+<!-- wp:heading {"style":{"color":{"text":"#ffffff"},"typography":{"fontSize":"24px"}}} -->
+<h2 class="has-text-color" style="color:#ffffff;font-size:24px">Card Title</h2>
+<!-- /wp:heading -->
+<!-- wp:paragraph {"style":{"color":{"text":"#d1d5db"}}} -->
+<p class="has-text-color" style="color:#d1d5db">Your content here. Replace this text with your own.</p>
+<!-- /wp:paragraph -->
+</div>
+<!-- /wp:group -->',
+    ));
+
+    // 2. Commission Highlight Box
+    register_block_pattern('microdos/commission-box', array(
+        'title'       => __('Commission Box', 'microdos4u'),
+        'description' => __('Highlights commission rate with brand styling.', 'microdos4u'),
+        'categories'  => array('microdos'),
+        'content'     => '<!-- wp:columns {"style":{"color":{"background":"#150f24"},"border":{"color":"#1a1329","width":"1px","radius":"12px"},"spacing":{"padding":{"top":"24px","right":"24px","bottom":"24px","left":"24px"}}},"layout":{"type":"constrained"}} -->
+<div class="wp-block-columns has-background" style="border-color:#1a1329;border-width:1px;border-radius:12px;background-color:#150f24;padding-top:24px;padding-right:24px;padding-bottom:24px;padding-left:24px">
+<!-- wp:column -->
+<div class="wp-block-column">
+<!-- wp:heading {"level":3,"style":{"color":{"text":"#44f80c"},"typography":{"fontSize":"20px"}}} -->
+<h3 class="has-text-color" style="color:#44f80c;font-size:20px">Initial Purchase</h3>
+<!-- /wp:heading -->
+<!-- wp:paragraph {"style":{"color":{"text":"#ffffff"},"typography":{"fontSize":"36px","fontWeight":"700"}}} -->
+<p class="has-text-color" style="color:#ffffff;font-size:36px;font-weight:700">45%</p>
+<!-- /wp:paragraph -->
+<!-- wp:paragraph {"style":{"color":{"text":"#94a3b8"},"typography":{"fontSize":"14px"}}} -->
+<p class="has-text-color" style="color:#94a3b8;font-size:14px">Commission on every first-time purchase.</p>
+<!-- /wp:paragraph -->
+</div>
+<!-- /wp:column -->
+<!-- wp:column -->
+<div class="wp-block-column">
+<!-- wp:heading {"level":3,"style":{"color":{"text":"#9a02d0"},"typography":{"fontSize":"20px"}}} -->
+<h3 class="has-text-color" style="color:#9a02d0;font-size:20px">Subscription Renewals</h3>
+<!-- /wp:heading -->
+<!-- wp:paragraph {"style":{"color":{"text":"#ffffff"},"typography":{"fontSize":"36px","fontWeight":"700"}}} -->
+<p class="has-text-color" style="color:#ffffff;font-size:36px;font-weight:700">10%</p>
+<!-- /wp:paragraph -->
+<!-- wp:paragraph {"style":{"color":{"text":"#94a3b8"},"typography":{"fontSize":"14px"}}} -->
+<p class="has-text-color" style="color:#94a3b8;font-size:14px">Recurring commission on monthly renewals.</p>
+<!-- /wp:paragraph -->
+</div>
+<!-- /wp:column -->
+</div>
+<!-- /wp:columns -->',
+    ));
+
+    // 3. FAQ Item
+    register_block_pattern('microdos/faq-item', array(
+        'title'       => __('FAQ Item', 'microdos4u'),
+        'description' => __('Question and answer pair in dark theme.', 'microdos4u'),
+        'categories'  => array('microdos'),
+        'content'     => '<!-- wp:group {"style":{"color":{"background":"#150f24"},"spacing":{"padding":{"top":"16px","right":"16px","bottom":"16px","left":"16px"},"margin":{"bottom":"8px"}},"border":{"color":"#1a1329","width":"1px","radius":"8px"}},"layout":{"type":"constrained"}} -->
+<div class="wp-block-group has-background" style="border-color:#1a1329;border-width:1px;border-radius:8px;background-color:#150f24;padding-top:16px;padding-right:16px;padding-bottom:16px;padding-left:16px;margin-bottom:8px">
+<!-- wp:paragraph {"style":{"color":{"text":"#ffffff"},"typography":{"fontWeight":"600"}}} -->
+<p class="has-text-color" style="color:#ffffff;font-weight:600">Q: How do I get paid?</p>
+<!-- /wp:paragraph -->
+<!-- wp:paragraph {"style":{"color":{"text":"#94a3b8"},"typography":{"fontSize":"14px"}}} -->
+<p class="has-text-color" style="color:#94a3b8;font-size:14px">A: Commissions are paid monthly via PayPal or bank transfer once you reach the $50 minimum payout threshold.</p>
+<!-- /wp:paragraph -->
+</div>
+<!-- /wp:group -->',
+    ));
+
+    // 4. Call to Action
+    register_block_pattern('microdos/cta-section', array(
+        'title'       => __('Call to Action', 'microdos4u'),
+        'description' => __('Prominent CTA section with dark background.', 'microdos4u'),
+        'categories'  => array('microdos'),
+        'content'     => '<!-- wp:group {"style":{"color":{"background":"#0a0514"},"spacing":{"padding":{"top":"48px","right":"24px","bottom":"48px","left":"24px"}},"border":{"color":"#44f80c","width":"1px","radius":"12px"}},"layout":{"type":"constrained"}} -->
+<div class="wp-block-group has-background" style="border-color:#44f80c;border-width:1px;border-radius:12px;background-color:#0a0514;padding-top:48px;padding-right:24px;padding-bottom:48px;padding-left:24px">
+<!-- wp:heading {"textAlign":"center","style":{"color":{"text":"#ffffff"},"typography":{"fontSize":"28px"}}} -->
+<h2 class="has-text-align-center has-text-color" style="color:#ffffff;font-size:28px">Ready to Get Started?</h2>
+<!-- /wp:heading -->
+<!-- wp:paragraph {"align":"center","style":{"color":{"text":"#d1d5db"},"typography":{"fontSize":"16px"}}} -->
+<p class="has-text-align-center has-text-color" style="color:#d1d5db;font-size:16px">Apply now and start earning commissions on every referral.</p>
+<!-- /wp:paragraph -->
+<!-- wp:buttons {"layout":{"type":"flex","justifyContent":"center"}} -->
+<div class="wp-block-buttons">
+<!-- wp:button {"style":{"color":{"background":"#44f80c","text":"#0a0514"},"typography":{"fontWeight":"700"},"border":{"radius":"8px"},"spacing":{"padding":{"top":"12px","right":"32px","bottom":"12px","left":"32px"}}}} -->
+<a class="wp-block-button__link" style="background-color:#44f80c;color:#0a0514;border-radius:8px;padding-top:12px;padding-right:32px;padding-bottom:12px;padding-left:32px;font-weight:700">Apply Now</a>
+<!-- /wp:button -->
+</div>
+<!-- /wp:buttons -->
+</div>
+<!-- /wp:group -->',
+    ));
+}, 20);
+
+// ============================================
 // AFFILIATE ROLE & ACCESS CONTROL
 // ============================================
 
