@@ -222,6 +222,72 @@ add_action('wp_head', function() {
     echo '<meta name="description" content="' . esc_attr($desc) . '" />' . "\n";
 }, 5);
 
+/**
+ * P5 #29: Open Graph tags for social media sharing
+ * Controls preview cards on Facebook, LinkedIn, Twitter, etc.
+ */
+add_action('wp_head', function() {
+    // Site defaults
+    $site_name = get_bloginfo('name');
+    $og_title = $site_name;
+    $og_desc = 'microDOS4U - Premium research compound subscriptions. Join our affiliate program and earn commissions on every referral.';
+    $og_type = 'website';
+    $og_url = home_url($_SERVER['REQUEST_URI'] ?? '/');
+    $og_image = '';
+
+    // Page-specific overrides
+    if (is_front_page() || is_home()) {
+        $og_title = $site_name;
+        $og_desc = 'Premium research compound subscriptions. Join our affiliate program and earn 45% commission on every referral.';
+        $og_type = 'website';
+    } elseif (is_page('affiliate-area') || is_page('affiliate')) {
+        $og_title = 'Affiliate Program | ' . $site_name;
+        $og_desc = 'Earn 45% commission on initial purchases and 10% on subscription renewals. Apply today!';
+        $og_type = 'website';
+    } elseif (is_product()) {
+        $og_title = get_the_title() . ' | ' . $site_name;
+        $og_desc = wp_trim_words(get_the_excerpt(), 30, '...');
+        $og_type = 'product';
+        if (has_post_thumbnail()) {
+            $og_image = get_the_post_thumbnail_url(null, 'large');
+        }
+    } elseif (is_singular('post')) {
+        $og_title = get_the_title() . ' | ' . $site_name;
+        $og_desc = wp_trim_words(get_the_excerpt(), 30, '...');
+        $og_type = 'article';
+        if (has_post_thumbnail()) {
+            $og_image = get_the_post_thumbnail_url(null, 'large');
+        }
+    } elseif (is_page()) {
+        $og_title = get_the_title() . ' | ' . $site_name;
+        $og_desc = wp_trim_words(get_the_excerpt(), 30, '...');
+        $og_type = 'website';
+    }
+
+    // Fallback description if empty
+    if (empty($og_desc)) {
+        $og_desc = 'Premium research compound subscriptions. Join our affiliate program and earn commissions.';
+    }
+
+    // Output OG tags
+    echo '<meta property="og:site_name" content="' . esc_attr($site_name) . '" />' . "\n";
+    echo '<meta property="og:title" content="' . esc_attr($og_title) . '" />' . "\n";
+    echo '<meta property="og:description" content="' . esc_attr(substr($og_desc, 0, 300)) . '" />' . "\n";
+    echo '<meta property="og:type" content="' . esc_attr($og_type) . '" />' . "\n";
+    echo '<meta property="og:url" content="' . esc_url($og_url) . '" />' . "\n";
+    if (!empty($og_image)) {
+        echo '<meta property="og:image" content="' . esc_url($og_image) . '" />' . "\n";
+    }
+
+    // Twitter Card tags
+    echo '<meta name="twitter:card" content="summary_large_image" />' . "\n";
+    echo '<meta name="twitter:title" content="' . esc_attr($og_title) . '" />' . "\n";
+    echo '<meta name="twitter:description" content="' . esc_attr(substr($og_desc, 0, 200)) . '" />' . "\n";
+    if (!empty($og_image)) {
+        echo '<meta name="twitter:image" content="' . esc_url($og_image) . '" />' . "\n";
+    }
+}, 6);
+
 // ============================================
 // AFFILIATE ROLE & ACCESS CONTROL
 // ============================================
