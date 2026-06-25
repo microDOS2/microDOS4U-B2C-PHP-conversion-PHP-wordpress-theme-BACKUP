@@ -1809,6 +1809,12 @@ function microdos_enqueue_affiliate_assets() {
     if (!is_user_logged_in()) return;
     if (!function_exists('affwp_is_affiliate') || !affwp_is_affiliate()) return;
 
+    // Only load dashboard assets for ACTIVE affiliates (not pending)
+    if (function_exists('affwp_get_affiliate_status')) {
+        $status = affwp_get_affiliate_status(affwp_get_affiliate_id());
+        if ($status !== 'active') return;
+    }
+
     // #21 - Skip Shepherd assets for returning visitors who completed the tour
     if (apply_filters('microdos_skip_shepherd_assets', false)) {
         return;
