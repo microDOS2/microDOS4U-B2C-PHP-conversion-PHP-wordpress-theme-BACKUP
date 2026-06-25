@@ -454,21 +454,52 @@ add_action('wp_head', function() {
 
 /**
  * P5 #32b: Set One-Time Purchase as default toggle on product pages
+ * Approach 1: PHP filter for WCSATT plugin (scheme ID '0' = one-time)
  */
-add_filter('wcsatt_default_subscription_scheme', function($default_scheme, $schemes, $product) {
-    // Return the one-time (non-subscription) scheme as default
-    foreach ($schemes as $scheme) {
-        if ($scheme->is_synced() === false && empty($scheme->get_period())) {
-            return $scheme;
-        }
-    }
-    return $default_scheme;
-}, 10, 3);
-
-add_filter('wcsatt_force_subscription', function($force, $product) {
-    // Never force subscription — always allow one-time
-    return false;
+add_filter('wcsatt_default_subscription_scheme_id', function($scheme_id, $product) {
+    return '0'; // '0' = one-time purchase, non-zero = subscription
 }, 10, 2);
+
+/**
+ * P5 #32c: JavaScript fallback — force One-Time toggle selection
+ * Runs on product pages to ensure One-Time is selected by default
+ */
+add_action('wp_footer', function() {
+    if (!is_product()) return;
+    ?>
+    <script>
+    (function() {
+        // Wait for WCSATT to initialize
+        function setOneTimeDefault() {
+            // Method 1: Radio buttons (WCSATT standard)
+            var radios = document.querySelectorAll('input[type="radio"][name*="subscription"], input[type="radio"][name*="scheme"]');
+            for (var i = 0; i < radios.length; i++) {
+                var label = radios[i].closest('label, .wcsatt-options-prompt-label, .subscription-option');
+                var labelText = label ? label.textContent.toLowerCase() : '';
+                // Select One-Time / Non-subscription option
+                if (labelText.indexOf('one-time') !== -1 || labelText.indexOf('one time') !== -1 || radios[i].value === '0') {
+                    radios[i].checked = true;
+                    radios[i].dispatchEvent(new Event('change', { bubbles: true }));
+                    return true;
+                }
+            }
+            // Method 2: Toggle switch
+            var toggle = document.querySelector('.wcsatt-options-prompt-label[for*="0"], .one-time-label, .subscription-option:first-child input');
+            if (toggle) {
+                toggle.click();
+                return true;
+            }
+            return false;
+        }
+        // Try immediately and after delay
+        if (!setOneTimeDefault()) {
+            setTimeout(setOneTimeDefault, 500);
+            setTimeout(setOneTimeDefault, 1500);
+        }
+    })();
+    </script>
+    <?php
+}, 100);
 
 // ============================================
 // AFFILIATE ROLE & ACCESS CONTROL
