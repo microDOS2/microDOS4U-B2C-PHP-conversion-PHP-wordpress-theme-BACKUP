@@ -1309,6 +1309,14 @@ function microdos_create_affiliate_from_form($entry, $form) {
     update_user_meta($user_id, 'billing_city', sanitize_text_field($city));
     update_user_meta($user_id, 'billing_state', sanitize_text_field($state));
     update_user_meta($user_id, 'billing_postcode', sanitize_text_field($zip));
+    update_user_meta($user_id, 'billing_country', 'US');
+
+    // Phone from form field ID 20 (created by microdos setup)
+    $phone = rgar($entry, '20');
+    if (!empty($phone)) {
+        update_user_meta($user_id, 'billing_phone', sanitize_text_field($phone));
+    }
+
     update_user_meta($user_id, 'microdos_w9_status', 'complete');
 
     // Send notification email — wrapped to prevent crashes from corrupting AJAX response
