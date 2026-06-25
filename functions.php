@@ -288,6 +288,130 @@ add_action('wp_head', function() {
     }
 }, 6);
 
+/**
+ * P5 #30: Schema markup (JSON-LD) for Google rich results
+ * Adds Organization, Product, FAQ, and Breadcrumb schemas.
+ * Product descriptions explicitly state "For research purposes only."
+ */
+add_action('wp_head', function() {
+    $schemas = array();
+
+    // 1. Organization schema (all pages)
+    $schemas[] = array(
+        '@context'    => 'https://schema.org',
+        '@type'       => 'Organization',
+        'name'        => 'microDOS(2)',
+        'url'         => home_url('/'),
+        'logo'        => get_site_icon_url(),
+        'description' => 'Premium research compound subscriptions. Science-backed quality, secure monthly delivery.',
+        'sameAs'      => array(), // Add social URLs here if available
+    );
+
+    // 2. Product schema (product pages)
+    if (is_product()) {
+        $product = wc_get_product(get_the_ID());
+        if ($product) {
+            $schemas[] = array(
+                '@context'    => 'https://schema.org',
+                '@type'       => 'Product',
+                'name'        => $product->get_name(),
+                'description' => 'For research purposes only. Not for human consumption. ' . wp_trim_words($product->get_description(), 25),
+                'brand'       => array(
+                    '@type' => 'Brand',
+                    'name'  => 'microDOS(2)',
+                ),
+                'offers'      => array(
+                    '@type'         => 'Offer',
+                    'url'           => get_permalink(),
+                    'price'         => $product->get_price(),
+                    'priceCurrency' => 'USD',
+                    'availability'  => $product->is_in_stock() ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
+                    'priceValidUntil' => date('Y-12-31'),
+                ),
+            );
+        }
+    }
+
+    // 3. FAQ schema (FAQ pages or affiliate area with FAQ section)
+    if (is_page('affiliate-area') || is_page('faq')) {
+        $schemas[] = array(
+            '@context'   => 'https://schema.org',
+            '@type'      => 'FAQPage',
+            'mainEntity' => array(
+                array(
+                    '@type'          => 'Question',
+                    'name'           => 'How do I get paid?',
+                    'acceptedAnswer'   => array(
+                        '@type' => 'Answer',
+                        'text'  => 'Commissions are paid monthly via PayPal or bank transfer once you reach the $50 minimum payout threshold.',
+                    ),
+                ),
+                array(
+                    '@type'          => 'Question',
+                    'name'           => 'How long does the referral cookie last?',
+                    'acceptedAnswer'   => array(
+                        '@type' => 'Answer',
+                        'text'  => 'When someone clicks your referral link, a 45-day cookie is placed on their browser. If they purchase within 45 days, you get the commission.',
+                    ),
+                ),
+                array(
+                    '@type'          => 'Question',
+                    'name'           => 'What are recurring commissions?',
+                    'acceptedAnswer'   => array(
+                        '@type' => 'Answer',
+                        'text'  => 'For subscription products, you earn a commission not just on the initial sale but on every monthly renewal for up to 24 months.',
+                    ),
+                ),
+            ),
+        );
+    }
+
+    // 4. Breadcrumb schema (all pages except homepage)
+    if (!is_front_page()) {
+        $breadcrumbs = array(
+            array(
+                '@type'    => 'ListItem',
+                'position' => 1,
+                'name'     => 'Home',
+                'item'     => home_url('/'),
+            ),
+        );
+
+        if (is_page()) {
+            $breadcrumbs[] = array(
+                '@type'    => 'ListItem',
+                'position' => 2,
+                'name'     => get_the_title(),
+                'item'     => get_permalink(),
+            );
+        } elseif (is_product()) {
+            $breadcrumbs[] = array(
+                '@type'    => 'ListItem',
+                'position' => 2,
+                'name'     => 'Shop',
+                'item'     => get_permalink(get_option('woocommerce_shop_page_id')),
+            );
+            $breadcrumbs[] = array(
+                '@type'    => 'ListItem',
+                'position' => 3,
+                'name'     => get_the_title(),
+                'item'     => get_permalink(),
+            );
+        }
+
+        $schemas[] = array(
+            '@context'      => 'https://schema.org',
+            '@type'         => 'BreadcrumbList',
+            'itemListElement' => $breadcrumbs,
+        );
+    }
+
+    // Output all schemas as JSON-LD
+    foreach ($schemas as $schema) {
+        echo '<script type="application/ld+json">' . wp_json_encode($schema, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) . '</script>' . "\n";
+    }
+}, 7);
+
 // ============================================
 // AFFILIATE ROLE & ACCESS CONTROL
 // ============================================
