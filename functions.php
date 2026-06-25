@@ -1300,11 +1300,6 @@ function microdos_create_affiliate_from_form($entry, $form) {
         'ip_address'         => sanitize_text_field($_SERVER['REMOTE_ADDR'] ?? ''),
     ));
 
-    // Store username for confirmation message
-    if (function_exists('gform_update_meta')) {
-        gform_update_meta($entry['id'], 'microdos_username', $username, $form['id']);
-    }
-
     // FIX: Copy W-9 data to WooCommerce billing address
     update_user_meta($user_id, 'billing_company', sanitize_text_field($business));
     update_user_meta($user_id, 'billing_address_1', sanitize_text_field($address));
@@ -1338,14 +1333,12 @@ add_filter('gform_confirmation', function($confirmation, $form, $entry, $ajax) {
     if ($form['id'] != 2) {
         return $confirmation;
     }
-    $username = '';
-    if (function_exists('gform_get_meta')) {
-        $username = gform_get_meta($entry['id'], 'microdos_username');
-    }
+    // Get username from form entry (field ID 4) — works immediately, no DB lookup needed
+    $username = rgar($entry, '4');
     if (empty($username)) {
+        // Fallback: derive from email prefix
         $email = rgar($entry, '2');
-        $user = get_user_by('email', $email);
-        $username = $user ? $user->user_login : '';
+        $username = sanitize_user(current(explode('@', $email)), true);
     }
     $username_line = $username ? '<p style="color:#9ca3af;margin-bottom:8px;">Your login username: <strong style="color:#44f80c;">' . esc_html($username) . '</strong></p>' : '';
     return '<div style="text-align:center;padding:48px 24px;background:linear-gradient(135deg,rgba(68,248,12,0.1),rgba(154,2,208,0.1));border:1px solid #44f80c40;border-radius:12px;margin:20px 0;">
