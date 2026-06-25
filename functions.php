@@ -1319,12 +1319,16 @@ function microdos_create_affiliate_from_form($entry, $form) {
 
 /**
  * Redirect to affiliate area with success flag after form submission.
- * Gravity Forms handles the redirect — browser processes auth properly.
+ * Uses Gravity Forms native redirect confirmation (not wp_redirect).
  */
 add_filter('gform_confirmation_2', function($confirmation, $form, $entry) {
     $affiliate_area = get_permalink(get_page_by_path('affiliate-area')) ?: home_url('/affiliate-area/');
-    wp_redirect($affiliate_area . (strpos($affiliate_area, '?') !== false ? '&' : '?') . 'registered=1');
-    exit;
+    $sep = (strpos($affiliate_area, '?') !== false) ? '&' : '?';
+    return array(
+        'type'     => 'redirect',
+        'url'      => $affiliate_area . $sep . 'registered=1',
+        'queryString' => '',
+    );
 }, 10, 3);
 
 function microdos_send_affiliate_pending_email($user_id, $email, $first_name, $last_name) {
