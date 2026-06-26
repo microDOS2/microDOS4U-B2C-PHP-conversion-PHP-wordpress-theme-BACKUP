@@ -20,6 +20,44 @@ jQuery(document).ready(function($) {
         });
     });
 
+    // Safe auto-update cart quantities on change
+    (function() {
+        // Guard: Only run on cart page
+        if (!$('body').hasClass('woocommerce-cart')) return;
+
+        var $cartForm = $('form.woocommerce-cart-form');
+        var $updateButton = $cartForm.find('button[name="update_cart"]');
+        var isUpdating = false;
+
+        // Guard: Exit if cart form or update button missing
+        if (!$cartForm.length || !$updateButton.length) return;
+
+        $cartForm.on('change', '.qty', function() {
+            // Guard: Prevent re-entrant calls
+            if (isUpdating) return;
+
+            var $input = $(this);
+            var quantity = parseFloat($input.val());
+            var inputName = $input.attr('name') || '';
+
+            // Guard 1: Quantity must be > 0 (never interfere with remove)
+            if (!quantity || quantity <= 0) return;
+
+            // Guard 2: Verify this is a real cart quantity input
+            if (!inputName.match(/^cart\[.*\]\[qty\]$/)) return;
+
+            // Guard 3: Don't trigger if update button is disabled
+            if ($updateButton.is(':disabled')) return;
+
+            // Safe: Trigger update
+            isUpdating = true;
+            $updateButton.trigger('click');
+
+            // Re-enable after short delay
+            setTimeout(function() { isUpdating = false; }, 500);
+        });
+    })();
+
     // Quick add to cart on product cards
     $('.pricing-card .btn-primary').on('click', function(e) {
         const href = $(this).attr('href');
