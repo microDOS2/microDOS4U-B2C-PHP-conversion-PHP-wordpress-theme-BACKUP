@@ -96,6 +96,10 @@
                 if (response.success) {
                     window._wcCartData = null;
                     loadCart();
+                    // Reload page if cart is now empty and we're on the cart page
+                    if (response.data && response.data.count === 0 && window.location.pathname.indexOf('cart') > -1) {
+                        window.location.reload();
+                    }
                 }
             }
         });
@@ -257,3 +261,4 @@ try { localStorage.removeItem('microdos_cart'); } catch(e) {}
     console.log('[Cart Bridge] WooCommerce cart sync active');
 
 })();
+
