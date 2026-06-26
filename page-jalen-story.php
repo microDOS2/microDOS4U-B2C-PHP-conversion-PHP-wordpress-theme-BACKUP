@@ -162,7 +162,7 @@ get_header();
                 <div class="md:col-span-7 p-6 md:p-8 flex flex-col justify-center order-2 md:order-1">
                     <h3 class="text-2xl font-bold mb-3 text-gray-800"> The Game is His</h3>
                     <p class="text-base leading-relaxed mb-4">
-                        Microdosing with <span style="color:#000000">microDOS(2)</span> hadn't been a magic pill. It had been a key, unlocking the potential that was within him all along. It had quieted the noise, allowing him to hear his own instincts, to trust his own talent. He was more than just a better player; he was a more whole person, in control of his mind, his body, and his destiny. The game was his again.
+                        Microdosing with <span style="color:#000000">microDOS(2)</span> hadn't been a magic tablet. It had been a key, unlocking the potential that was within him all along. It had quieted the noise, allowing him to hear his own instincts, to trust his own talent. He was more than just a better player; he was a more whole person, in control of his mind, his body, and his destiny. The game was his again.
                     </p>
                 </div>
                 <div class="md:col-span-5 p-6 flex items-center justify-center order-1 md:order-2">
@@ -185,3 +185,4 @@ get_header();
 </div>
 
 <?php get_footer(); ?>
+
