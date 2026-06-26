@@ -3570,24 +3570,6 @@ add_filter('woocommerce_cart_item_quantity', function($product_quantity, $cart_i
 }, 10, 3);
 
 /**
- * Force browser to never cache cart/checkout pages — prevents stale nonces
- * Belt-and-suspenders: HTTP headers + meta tag
- */
-add_action('send_headers', function() {
-    if (is_cart() || is_checkout()) {
-        header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
-        header('Pragma: no-cache');
-        header('Expires: Thu, 01 Jan 1970 00:00:00 GMT');
-    }
-});
-add_action('wp_head', function() {
-    if (is_cart() || is_checkout()) {
-        echo '<meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate">' . "\n";
-        echo '<meta http-equiv="Pragma" content="no-cache">' . "\n";
-    }
-}, 1);
-
-/**
  * #14 AUTO-INJECTION: Replace hardcoded commission rate on Getting Started page
  * Automatically finds and replaces "20%", "earn 20", etc. with the live rate from AffiliateWP
  * Targets: /getting-started/ page
