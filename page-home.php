@@ -108,7 +108,7 @@ if (function_exists('wc_get_product_id_by_sku')) {
                     <svg class="w-8 h-8 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                 </div>
                 <h3 class="text-xl font-semibold text-white mb-2">Precision Dose</h3>
-                <p class="text-slate-400">Each 2mg scored pill ensures a consistent, reliable microdose every time.</p>
+                <p class="text-slate-400">Each 2mg scored tablet ensures a consistent, reliable microdose every time.</p>
             </div>
             <div class="text-center p-6 card-bg rounded-xl border border-slate-800">
                 <div class="inline-flex feature-icon mb-4">
@@ -132,7 +132,7 @@ if (function_exists('wc_get_product_id_by_sku')) {
             </div>
             <div>
                 <p class="text-slate-400 font-semibold uppercase tracking-wider text-sm">Form</p>
-                <p class="text-lg font-bold text-white">Scored, Non-Chewable Pill</p>
+                <p class="text-lg font-bold text-white">Scored, Non-Chewable Tablet</p>
             </div>
             <div>
                 <p class="text-slate-400 font-semibold uppercase tracking-wider text-sm">Shipping</p>
@@ -174,7 +174,7 @@ if (function_exists('wc_get_product_id_by_sku')) {
                 <div>
                     <div class="w-20 h-20 mx-auto bg-slate-800 border-4 border-slate-700 rounded-full flex items-center justify-center text-3xl font-bold text-sky-400 mb-6 shadow-inner" style="background-color: #150f24 !important;">3</div>
                     <h3 class="text-xl font-bold text-white mb-3">Experience Clarity</h3>
-                    <p class="text-slate-400 leading-relaxed">Take one pill for one consistent microdose.</p>
+                    <p class="text-slate-400 leading-relaxed">Take one tablet for one consistent microdose.</p>
                 </div>
             </div>
         </div>
@@ -198,7 +198,7 @@ if (function_exists('wc_get_product_id_by_sku')) {
                     <span class="text-slate-400">/ one-time</span>
                 </div>
                 <ul class="space-y-3 text-slate-300 text-left mb-8">
-                    <li class="flex items-center"><svg class="w-5 h-5 mr-2 text-green-400" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"></path></svg>2 Pills</li>
+                    <li class="flex items-center"><svg class="w-5 h-5 mr-2 text-green-400" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"></path></svg>2 Tablets</li>
                     <li class="flex items-center"><svg class="w-5 h-5 mr-2 text-green-400" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"></path></svg>Free Shipping</li>
                 </ul>
                 <div class="mt-auto">
@@ -238,8 +238,8 @@ if (function_exists('wc_get_product_id_by_sku')) {
                         <!-- Protocol 10 -->
                         <?php if (!empty($woo_products['protocol_10'])) : ?>
                         <form class="cart p-4 rounded-lg border border-sky-500/20" style="background-color: #1a1329 !important;" action="<?php echo esc_url(wc_get_cart_url()); ?>" method="post" enctype="multipart/form-data">
-                            <p class="font-bold text-white">Explorer Box <span class="text-xs text-slate-400 font-normal ml-1">(10 Pills)</span></p>
-                            <p class="mb-3"><span class="text-2xl font-bold text-white">$47.56</span> <span class="text-slate-400 text-sm">/ mo ($4.76/pill)</span></p>
+                            <p class="font-bold text-white">Explorer Box <span class="text-xs text-slate-400 font-normal ml-1">(10 Tablets)</span></p>
+                            <p class="mb-3"><span class="text-2xl font-bold text-white">$47.56</span> <span class="text-slate-400 text-sm">/ mo ($4.76/tablet)</span></p>
                             <div class="flex items-center gap-2">
                                 <button type="button" class="quantity-btn" onclick="adjustQuantity('protocol_10', -1)">-</button>
                                 <input type="number" name="quantity" id="qty-protocol_10" class="quantity-input" value="1" min="1" readonly>
@@ -252,8 +252,8 @@ if (function_exists('wc_get_product_id_by_sku')) {
                         <?php if (!empty($woo_products['protocol_30'])) : ?>
                         <form class="cart p-4 rounded-lg border border-sky-500/20 relative overflow-hidden" style="background-color: #1a1329 !important;" action="<?php echo esc_url(wc_get_cart_url()); ?>" method="post" enctype="multipart/form-data">
                             <div class="absolute top-0 right-0 bg-sky-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-bl">RECOMMENDED</div>
-                            <p class="font-bold text-white">Optimizer Box <span class="text-xs text-slate-400 font-normal ml-1">(30 Pills)</span></p>
-                            <p class="mb-3"><span class="text-2xl font-bold text-white">$128.31</span> <span class="text-slate-400 text-sm">/ mo ($4.28/pill)</span></p>
+                            <p class="font-bold text-white">Optimizer Box <span class="text-xs text-slate-400 font-normal ml-1">(30 Tablets)</span></p>
+                            <p class="mb-3"><span class="text-2xl font-bold text-white">$128.31</span> <span class="text-slate-400 text-sm">/ mo ($4.28/tablet)</span></p>
                             <div class="flex items-center gap-2">
                                 <button type="button" class="quantity-btn" onclick="adjustQuantity('protocol_30', -1)">-</button>
                                 <input type="number" name="quantity" id="qty-protocol_30" class="quantity-input" value="1" min="1" readonly>
@@ -265,8 +265,8 @@ if (function_exists('wc_get_product_id_by_sku')) {
                         <!-- Protocol 60 -->
                         <?php if (!empty($woo_products['protocol_60'])) : ?>
                         <form class="cart p-4 rounded-lg border border-sky-500/20" style="background-color: #1a1329 !important;" action="<?php echo esc_url(wc_get_cart_url()); ?>" method="post" enctype="multipart/form-data">
-                            <p class="font-bold text-white">Master Box <span class="text-xs text-slate-400 font-normal ml-1">(60 Pills)</span></p>
-                            <p class="mb-3"><span class="text-2xl font-bold text-white">$217.56</span> <span class="text-slate-400 text-sm">/ mo ($3.63/pill)</span></p>
+                            <p class="font-bold text-white">Master Box <span class="text-xs text-slate-400 font-normal ml-1">(60 Tablets)</span></p>
+                            <p class="mb-3"><span class="text-2xl font-bold text-white">$217.56</span> <span class="text-slate-400 text-sm">/ mo ($3.63/tablet)</span></p>
                             <div class="flex items-center gap-2">
                                 <button type="button" class="quantity-btn" onclick="adjustQuantity('protocol_60', -1)">-</button>
                                 <input type="number" name="quantity" id="qty-protocol_60" class="quantity-input" value="1" min="1" readonly>
@@ -287,8 +287,8 @@ if (function_exists('wc_get_product_id_by_sku')) {
                         <!-- One-Time 10 -->
                         <?php if (!empty($woo_products['onetime_10'])) : ?>
                         <form class="cart p-4 rounded-lg border border-sky-500/20" style="background-color: #1a1329 !important;" action="<?php echo esc_url(wc_get_cart_url()); ?>" method="post" enctype="multipart/form-data">
-                            <p class="font-bold text-white">10 Pills <span class="text-xs text-slate-400 font-normal ml-1">(One-Time)</span></p>
-                            <p class="mb-3"><span class="text-2xl font-bold text-white">$55.95</span> <span class="text-slate-400 text-sm">($5.60/pill)</span></p>
+                            <p class="font-bold text-white">10 Tablets <span class="text-xs text-slate-400 font-normal ml-1">(One-Time)</span></p>
+                            <p class="mb-3"><span class="text-2xl font-bold text-white">$55.95</span> <span class="text-slate-400 text-sm">($5.60/tablet)</span></p>
                             <div class="flex items-center gap-2">
                                 <button type="button" class="quantity-btn" onclick="adjustQuantity('onetime_10', -1)">-</button>
                                 <input type="number" name="quantity" id="qty-onetime_10" class="quantity-input" value="1" min="1" readonly>
@@ -301,8 +301,8 @@ if (function_exists('wc_get_product_id_by_sku')) {
                         <?php if (!empty($woo_products['onetime_30'])) : ?>
                         <form class="cart p-4 rounded-lg border border-sky-500/20 relative overflow-hidden" style="background-color: #1a1329 !important;" action="<?php echo esc_url(wc_get_cart_url()); ?>" method="post" enctype="multipart/form-data">
                             <div class="absolute top-0 right-0 bg-sky-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-bl">POPULAR</div>
-                            <p class="font-bold text-white">30 Pills <span class="text-xs text-slate-400 font-normal ml-1">(One-Time)</span></p>
-                            <p class="mb-3"><span class="text-2xl font-bold text-white">$150.95</span> <span class="text-slate-400 text-sm">($5.03/pill)</span></p>
+                            <p class="font-bold text-white">30 Tablets <span class="text-xs text-slate-400 font-normal ml-1">(One-Time)</span></p>
+                            <p class="mb-3"><span class="text-2xl font-bold text-white">$150.95</span> <span class="text-slate-400 text-sm">($5.03/tablet)</span></p>
                             <div class="flex items-center gap-2">
                                 <button type="button" class="quantity-btn" onclick="adjustQuantity('onetime_30', -1)">-</button>
                                 <input type="number" name="quantity" id="qty-onetime_30" class="quantity-input" value="1" min="1" readonly>
@@ -314,8 +314,8 @@ if (function_exists('wc_get_product_id_by_sku')) {
                         <!-- One-Time 60 -->
                         <?php if (!empty($woo_products['onetime_60'])) : ?>
                         <form class="cart p-4 rounded-lg border border-sky-500/20" style="background-color: #1a1329 !important;" action="<?php echo esc_url(wc_get_cart_url()); ?>" method="post" enctype="multipart/form-data">
-                            <p class="font-bold text-white">60 Pills <span class="text-xs text-slate-400 font-normal ml-1">(One-Time)</span></p>
-                            <p class="mb-3"><span class="text-2xl font-bold text-white">$255.95</span> <span class="text-slate-400 text-sm">($4.27/pill)</span></p>
+                            <p class="font-bold text-white">60 Tablets <span class="text-xs text-slate-400 font-normal ml-1">(One-Time)</span></p>
+                            <p class="mb-3"><span class="text-2xl font-bold text-white">$255.95</span> <span class="text-slate-400 text-sm">($4.27/tablet)</span></p>
                             <div class="flex items-center gap-2">
                                 <button type="button" class="quantity-btn" onclick="adjustQuantity('onetime_60', -1)">-</button>
                                 <input type="number" name="quantity" id="qty-onetime_60" class="quantity-input" value="1" min="1" readonly>
@@ -368,3 +368,4 @@ if (function_exists('wc_get_product_id_by_sku')) {
 <?php
 get_footer();
 ?>
+
