@@ -3570,6 +3570,32 @@ add_filter('woocommerce_cart_item_quantity', function($product_quantity, $cart_i
 }, 10, 3);
 
 /**
+ * Force fresh cart page after cart actions — bypasses all caching layers
+ * Detects WooCommerce success/notice messages (WooCommerce redirects to clean URL after remove)
+ */
+add_action('wp_footer', function() {
+    if (!is_cart()) return;
+    $notices = wc_get_notices();
+    if (!empty($notices['success']) || !empty($notices['notice'])) {
+        wc_clear_notices();
+        ?>
+        <script>
+        (function() {
+            var key = 'microdos_cart_refresh_' + Math.floor(Date.now() / 10000);
+            if (!sessionStorage.getItem(key)) {
+                sessionStorage.setItem(key, '1');
+                setTimeout(function() {
+                    var sep = location.search.indexOf('?') === -1 ? '?' : '&';
+                    location.href = location.pathname + location.search + sep + 'ts=' + Date.now();
+                }, 500);
+            }
+        })();
+        </script>
+        <?php
+    }
+});
+
+/**
  * #14 AUTO-INJECTION: Replace hardcoded commission rate on Getting Started page
  * Automatically finds and replaces "20%", "earn 20", etc. with the live rate from AffiliateWP
  * Targets: /getting-started/ page
