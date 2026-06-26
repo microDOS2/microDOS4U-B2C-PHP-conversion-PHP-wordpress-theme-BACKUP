@@ -78,8 +78,7 @@
                 <div>
                     <h4 class="font-semibold text-white mb-4">Legal</h4>
                     <ul class="space-y-2 text-slate-400">
-                        <li><a href="<?php echo esc_url(home_url('/legal-disclaimer')); ?>" class="hover:text-white">Privacy Policy</a></li>
-                        <li><a href="<?php echo esc_url(home_url('/legal-disclaimer')); ?>" class="hover:text-white">Terms of Service</a></li>
+                        <li><a href="<?php echo esc_url(home_url('/legal-disclaimer')); ?>" class="hover:text-white">Legal Information</a></li>
                     </ul>
                 </div>
             </div>
@@ -102,3 +101,4 @@
 <?php wp_footer(); ?>
 </body>
 </html>
+
