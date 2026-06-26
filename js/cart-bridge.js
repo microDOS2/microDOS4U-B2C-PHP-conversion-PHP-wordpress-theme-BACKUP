@@ -259,8 +259,8 @@
 try { localStorage.removeItem('microdos_cart'); } catch(e) {}
 
     // === AJAX Cart Page Removal (Fix B + C) ===
-    // Intercepts remove links on cart page, uses AJAX instead of page reload
-    // Then triggers fragment refresh for fresh nonces on remaining items
+    // 1. Intercepts remove links, uses AJAX for smooth removal (no page reload during fade)
+    // 2. After fade completes, reloads page with cache-busting timestamp for fresh nonces
     (function() {
         // Only run on cart page
         if (!document.querySelector('.woocommerce-cart-form')) return;
@@ -283,20 +283,13 @@ try { localStorage.removeItem('microdos_cart'); } catch(e) {}
                     cart_item_key: cartItemKey
                 },
                 success: function() {
-                    // Remove the row visually
+                    // Fade out the row for smooth UX
                     $row.fadeOut(300, function() {
-                        $row.remove();
-
-                        // Check if cart is now empty
-                        var remaining = jQuery('.woocommerce-cart-form tr.cart_item').length;
-                        if (remaining === 0) {
-                            // Reload to show empty cart state
-                            window.location.reload();
-                            return;
-                        }
-
-                        // Trigger WooCommerce fragment refresh to get fresh nonces (Fix C)
-                        jQuery(document.body).trigger('wc_fragment_refresh');
+                        // Reload page with cache-busting timestamp to get fresh nonces
+                        // This is the most reliable way to ensure all remaining items
+                        // have valid nonces, bypassing any server-side caching
+                        var sep = location.search.indexOf('?') === -1 ? '?' : '&';
+                        location.href = location.pathname + location.search + sep + 'ts=' + Date.now();
                     });
                 },
                 error: function() {
@@ -305,12 +298,6 @@ try { localStorage.removeItem('microdos_cart'); } catch(e) {}
                     window.location.href = $link.attr('href');
                 }
             });
-        });
-
-        // Listen for fragment refresh to update nonce values in remaining links
-        jQuery(document.body).on('wc_fragments_refreshed', function() {
-            // Fragments have been refreshed — remaining remove links now have fresh nonces
-            console.log('[Cart Bridge] Cart fragments refreshed with new nonces');
         });
     })();
 
