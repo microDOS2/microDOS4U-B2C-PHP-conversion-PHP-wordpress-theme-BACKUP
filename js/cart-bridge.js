@@ -258,6 +258,62 @@
     // Migrate: Clear old localStorage cart to prevent flash of stale data
 try { localStorage.removeItem('microdos_cart'); } catch(e) {}
 
+    // === AJAX Cart Page Removal (Fix B + C) ===
+    // Intercepts remove links on cart page, uses AJAX instead of page reload
+    // Then triggers fragment refresh for fresh nonces on remaining items
+    (function() {
+        // Only run on cart page
+        if (!document.querySelector('.woocommerce-cart-form')) return;
+
+        jQuery(document).on('click', '.woocommerce-cart-form .remove', function(e) {
+            e.preventDefault();
+            var $link = jQuery(this);
+            var cartItemKey = $link.data('cart_item_key');
+            var $row = $link.closest('tr.cart_item');
+
+            if (!cartItemKey || $link.hasClass('removing')) return;
+            $link.addClass('removing').css('opacity', '0.5');
+
+            // Use WooCommerce's built-in cart AJAX endpoint
+            jQuery.ajax({
+                url: wc_add_to_cart_params ? wc_add_to_cart_params.wc_ajax_url.replace('%%endpoint%%', 'remove_from_cart') : '/wp-admin/admin-ajax.php',
+                type: 'POST',
+                data: {
+                    action: 'woocommerce_remove_from_cart',
+                    cart_item_key: cartItemKey
+                },
+                success: function() {
+                    // Remove the row visually
+                    $row.fadeOut(300, function() {
+                        $row.remove();
+
+                        // Check if cart is now empty
+                        var remaining = jQuery('.woocommerce-cart-form tr.cart_item').length;
+                        if (remaining === 0) {
+                            // Reload to show empty cart state
+                            window.location.reload();
+                            return;
+                        }
+
+                        // Trigger WooCommerce fragment refresh to get fresh nonces (Fix C)
+                        jQuery(document.body).trigger('wc_fragment_refresh');
+                    });
+                },
+                error: function() {
+                    $link.removeClass('removing').css('opacity', '1');
+                    // Fallback: try normal link navigation
+                    window.location.href = $link.attr('href');
+                }
+            });
+        });
+
+        // Listen for fragment refresh to update nonce values in remaining links
+        jQuery(document.body).on('wc_fragments_refreshed', function() {
+            // Fragments have been refreshed — remaining remove links now have fresh nonces
+            console.log('[Cart Bridge] Cart fragments refreshed with new nonces');
+        });
+    })();
+
     console.log('[Cart Bridge] WooCommerce cart sync active');
 
 })();
