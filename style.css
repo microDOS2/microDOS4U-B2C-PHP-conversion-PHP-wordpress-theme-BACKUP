@@ -1569,6 +1569,14 @@ input::placeholder, textarea::placeholder {
   right: -6px;
 }
 
+.cart-icon-active {
+  color: #44f80c !important;
+}
+
+.cart-icon-active:hover {
+  color: #3de00b !important;
+}
+
 /* --- WooCommerce Widgets --- */
 .woocommerce .widget_price_filter .price_slider_wrapper {
   background: var(--bg-card);
@@ -3748,3 +3756,4 @@ body .gform_wrapper .gfield .ginput_container_name label {
     margin-bottom: 0.35rem;
 }
 /* Build: 20260515-125953 */
+
