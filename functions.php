@@ -1800,7 +1800,7 @@ add_filter('gform_confirmation', function($confirmation, $form, $entry, $ajax) {
     ' . $username_line . '
     <p style="color:#9ca3af;margin-bottom:8px;">Your application is <strong style="color:#ffaa00;">pending review</strong>.</p>
     <p style="color:#9ca3af;margin-bottom:16px;">You will receive an email once your account is approved (usually within 24-48 hours).</p>
-    <p style="color:#64748b;font-size:13px;">If you have questions, contact us at <a href="mailto:lynn@microdos4u.com" style="color:#44f80c;">lynn@microdos4u.com</a></p>
+    <p style="color:#64748b;font-size:13px;">If you have questions, contact us at <a href="mailto:Info@microdos4u.com" style="color:#44f80c;">Info@microdos4u.com</a></p>
 </div>';
 }, 10, 4);
 
@@ -3556,6 +3556,20 @@ add_filter('woocommerce_return_to_shop_redirect', function() {
 });
 
 /**
+ * Auto-update cart quantities on change — adds inline onchange to quantity inputs
+ * WooCommerce filter approach — no JavaScript events, no interference with remove buttons
+ */
+add_filter('woocommerce_cart_item_quantity', function($product_quantity, $cart_item_key, $cart_item) {
+    if (!is_cart()) return $product_quantity;
+    $product_quantity = str_replace(
+        '<input ',
+        '<input onchange="this.form.querySelector(\'button[name=update_cart]\').click();" ',
+        $product_quantity
+    );
+    return $product_quantity;
+}, 10, 3);
+
+/**
  * #14 AUTO-INJECTION: Replace hardcoded commission rate on Getting Started page
  * Automatically finds and replaces "20%", "earn 20", etc. with the live rate from AffiliateWP
  * Targets: /getting-started/ page
@@ -3973,7 +3987,7 @@ add_action('init', function() {
     <p style="color:#e2e8f0;margin-bottom:8px;font-size:15px;">Thank you for applying to the microDOS(2) Affiliate Program!</p>
     <p style="color:#9ca3af;margin-bottom:8px;">Your application is <strong style="color:#ffaa00;">pending review</strong>.</p>
     <p style="color:#9ca3af;margin-bottom:16px;">You will receive an email once your account is approved (usually within 24-48 hours).</p>
-    <p style="color:#64748b;font-size:13px;">If you have questions, contact us at <a href="mailto:lynn@microdos4u.com" style="color:#44f80c;">lynn@microdos4u.com</a></p>
+    <p style="color:#64748b;font-size:13px;">If you have questions, contact us at <a href="mailto:Info@microdos4u.com" style="color:#44f80c;">Info@microdos4u.com</a></p>
 </div>',
         'url'         => '',
         'pageId'      => '',
