@@ -300,7 +300,7 @@ function microdos_estimated_weight($order) {
     foreach ($order->get_items() as $item) {
         $name = strtolower($item->get_name());
         $qty  = $item->get_quantity();
-        if (strpos($name, 'pill') !== false || strpos($name, 'bottle') !== false) {
+        if (strpos($name, 'tablet') !== false || strpos($name, 'bottle') !== false) {
             $bottles += $qty;
         }
         if (strpos($name, 'trial') !== false || strpos($name, 'card') !== false || strpos($name, 'starter') !== false) {
@@ -674,7 +674,7 @@ body{background:#0a0514;color:#e2e8f0;font-family:-apple-system,BlinkMacSystemFo
                         <td class="cell-items">
                             <?php foreach ($order->get_items() as $item) :
                                 $iname = strtolower($item->get_name());
-                                $is_bottle = strpos($iname, 'pill') !== false || strpos($iname, 'bottle') !== false;
+                                $is_bottle = strpos($iname, 'tablet') !== false || strpos($iname, 'bottle') !== false;
                                 $is_card   = strpos($iname, 'trial') !== false || strpos($iname, 'card') !== false || strpos($iname, 'starter') !== false;
                             ?>
                                 <?php if ($is_bottle) : ?>
@@ -915,3 +915,4 @@ document.addEventListener('keydown', function(e) {
 <?php wp_footer(); ?>
 </body>
 </html>
+
