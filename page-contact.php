@@ -26,7 +26,7 @@ get_header();
                             </div>
                             <div>
                                 <p class="text-white font-semibold">Email Us</p>
-                                <a href="mailto:microDOS4U@gmail.com" class="text-slate-400 hover:text-sky-400 transition-colors">microDOS4U@gmail.com</a>
+                                <a href="mailto:Info@microdos4u.com" class="text-slate-400 hover:text-sky-400 transition-colors">Info@microdos4u.com</a>
                             </div>
                         </div>
                         <div class="flex items-start space-x-4">
