@@ -12,7 +12,7 @@ if (!defined('ABSPATH')) {
 
 // Theme version
 if (!defined('MICRODOS_VERSION')) {
-    define('MICRODOS_VERSION', '1.3.15');
+    define('MICRODOS_VERSION', '1.3.16');
 }
 
 // ============================================
