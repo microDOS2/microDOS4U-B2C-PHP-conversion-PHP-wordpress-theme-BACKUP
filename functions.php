@@ -3570,29 +3570,22 @@ add_filter('woocommerce_cart_item_quantity', function($product_quantity, $cart_i
 }, 10, 3);
 
 /**
- * Force fresh cart page after cart actions — bypasses all caching layers
- * Detects WooCommerce success/notice messages (WooCommerce redirects to clean URL after remove)
+ * Force fresh cart page when cached content is stale
+ * Compares cart table items to header cart count — self-healing approach
  */
 add_action('wp_footer', function() {
     if (!is_cart()) return;
-    $notices = wc_get_notices();
-    if (!empty($notices['success']) || !empty($notices['notice'])) {
-        wc_clear_notices();
-        ?>
-        <script>
-        (function() {
-            var key = 'microdos_cart_refresh_' + Math.floor(Date.now() / 10000);
-            if (!sessionStorage.getItem(key)) {
-                sessionStorage.setItem(key, '1');
-                setTimeout(function() {
-                    var sep = location.search.indexOf('?') === -1 ? '?' : '&';
-                    location.href = location.pathname + location.search + sep + 'ts=' + Date.now();
-                }, 500);
-            }
-        })();
-        </script>
-        <?php
-    }
+    ?>
+    <script>
+    jQuery(function($) {
+        var cartItems = $('.woocommerce-cart-form tbody tr.cart_item, .woocommerce-cart-form .cart_item').length;
+        var headerCount = parseInt($('.cart-count').first().text()) || 0;
+        if (cartItems > 0 && cartItems !== headerCount && location.search.indexOf('ts=') === -1) {
+            location.href = location.pathname + '?ts=' + Date.now();
+        }
+    });
+    </script>
+    <?php
 });
 
 /**
