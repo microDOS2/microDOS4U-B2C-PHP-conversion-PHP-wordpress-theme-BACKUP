@@ -20,11 +20,6 @@ jQuery(document).ready(function($) {
         });
     });
 
-    // Auto-update cart quantities on change
-    $(document).on('change', '.woocommerce-cart-form input.qty', function() {
-        $('[name="update_cart"]').trigger('click');
-    });
-
     // Quick add to cart on product cards
     $('.pricing-card .btn-primary').on('click', function(e) {
         const href = $(this).attr('href');
