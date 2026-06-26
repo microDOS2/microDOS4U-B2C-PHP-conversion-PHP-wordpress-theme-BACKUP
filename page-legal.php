@@ -88,7 +88,7 @@ get_header();
                 </ul>
 
                 <h4 style="color:#fff;font-weight:700;margin:16px 0 8px;">7. Contact Us</h4>
-                <p style="color:#94a3b8;line-height:1.7;">For privacy questions or data requests:<br><a href="mailto:support@microdos2.com" style="color:#38bdf8;">support@microdos2.com</a></p>
+                <p style="color:#94a3b8;line-height:1.7;">For privacy questions or data requests:<br><a href="mailto:Info@microdos4u.com" style="color:#38bdf8;">Info@microdos4u.com</a></p>
             </div>
         </div>
     </section>
@@ -98,7 +98,7 @@ get_header();
         <div class="container" style="max-width:1100px;margin:auto;padding:0 24px;">
             <h2 style="color:#fff;font-weight:800;font-size:28px;margin-bottom:8px;border-bottom:1px solid #1a1329;padding-bottom:8px;">Terms and Conditions</h2>
             <p style="color:#64748b;font-size:13px;margin-bottom:8px;">Effective Date: May 7, 2026</p>
-            <p style="color:#64748b;font-size:13px;margin-bottom:16px;">Company: Unique Pharming | Website: www.microDOS4U.com | Email: <a href="mailto:Support@microDOS2.com" style="color:#38bdf8;">Support@microDOS2.com</a></p>
+            <p style="color:#64748b;font-size:13px;margin-bottom:16px;">Company: Unique Pharming | Website: www.microDOS4U.com | Email: <a href="mailto:Info@microdos4u.com" style="color:#38bdf8;">Info@microdos4u.com</a></p>
 
             <div style="background:#9a02d0;border:2px solid #ff66c4;border-radius:12px;padding:20px;margin-bottom:24px;text-align:center;">
                 <p style="color:#fff;font-size:18px;font-weight:800;margin:0;">You must be at least 21 years old to access this website or purchase any product.</p>
@@ -268,7 +268,7 @@ get_header();
                     <li>Delay caused by the shipping carrier.</li>
                     <li>Package seizure, restriction, or investigation caused by purchaser conduct or jurisdictional limitations.</li>
                 </ul>
-                <p style="color:#94a3b8;line-height:1.7;">If a product arrives visibly damaged or if there is a fulfillment error, you must contact <a href="mailto:Support@microDOS2.com" style="color:#38bdf8;">Support@microDOS2.com</a> promptly with your order number, photographs, packaging details, and a written description of the issue. Unique Pharming may, in its sole discretion, determine whether any replacement, credit, or other resolution is appropriate.</p>
+                <p style="color:#94a3b8;line-height:1.7;">If a product arrives visibly damaged or if there is a fulfillment error, you must contact <a href="mailto:Info@microdos4u.com" style="color:#38bdf8;">Info@microdos4u.com</a> promptly with your order number, photographs, packaging details, and a written description of the issue. Unique Pharming may, in its sole discretion, determine whether any replacement, credit, or other resolution is appropriate.</p>
             </div>
 
             <div style="background:#150f24;border:1px solid #1a1329;border-radius:12px;padding:24px;margin-bottom:24px;">
@@ -434,7 +434,7 @@ get_header();
                 <p style="color:#94a3b8;line-height:1.7;margin-bottom:12px;">If you have questions about these Terms and Conditions, contact Unique Pharming at:</p>
                 <p style="color:#94a3b8;line-height:1.7;margin-bottom:8px;"><strong style="color:#fff;">Unique Pharming</strong></p>
                 <p style="color:#94a3b8;line-height:1.7;margin-bottom:8px;">Website: <a href="https://www.microDOS4U.com" style="color:#38bdf8;">www.microDOS4U.com</a></p>
-                <p style="color:#94a3b8;line-height:1.7;">Email: <a href="mailto:Support@microDOS2.com" style="color:#38bdf8;">Support@microDOS2.com</a></p>
+                <p style="color:#94a3b8;line-height:1.7;">Email: <a href="mailto:Info@microdos4u.com" style="color:#38bdf8;">Info@microdos4u.com</a></p>
             </div>
         </div>
     </section><?php
