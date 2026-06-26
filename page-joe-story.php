@@ -117,12 +117,12 @@ get_header();
             <!-- Section 6: A Calculated Move -->
             <section class="flex flex-col md:flex-row-reverse items-center gap-8 bg-white p-8 rounded-lg shadow-lg fade-in-section">
                 <div class="md:w-1/2">
-                    <img src="/images/stories/joe/pic-6.png" alt="A hand holding a small pill" class="rounded-lg shadow-xl w-full">
+                    <img src="/images/stories/joe/pic-6.png" alt="A hand holding a small tablet" class="rounded-lg shadow-xl w-full">
                 </div>
                 <div class="md:w-1/2">
                     <h2 class="text-2xl font-bold mb-4 text-gray-900">A Calculated Move</h2>
                     <p class="text-gray-700 leading-relaxed">
-                        In his kitchen, with the morning sun trying to break through the blinds, he opened the box. Inside was a container that looked more like it belonged in a high-tech lab than a head shop. He tapped one small, scored pill into his palm. It was unassuming, precise. This wasn't a leap of faith into the unknown; it felt like a calculated step toward clarity.
+                        In his kitchen, with the morning sun trying to break through the blinds, he opened the box. Inside was a container that looked more like it belonged in a high-tech lab than a head shop. He tapped one small, scored tablet into his palm. It was unassuming, precise. This wasn't a leap of faith into the unknown; it felt like a calculated step toward clarity.
                     </p>
                 </div>
             </section>
@@ -135,7 +135,7 @@ get_header();
                 <div class="md:w-1/2">
                     <h2 class="text-2xl font-bold mb-4 text-gray-900">The Wait - A Quiet Beginning</h2>
                     <p class="text-gray-700 leading-relaxed">
-                        He swallowed the pill with a sip of water and sat back at his desk, expecting a thunderclap that never came. There was no jolt, no sudden rush. He simply sat, watching the blinking cursor, feeling... normal. He picked up his stylus, the familiar weight a comfort in his hand, and hovered it over the screen.
+                        He swallowed the tablet with a sip of water and sat back at his desk, expecting a thunderclap that never came. There was no jolt, no sudden rush. He simply sat, watching the blinking cursor, feeling... normal. He picked up his stylus, the familiar weight a comfort in his hand, and hovered it over the screen.
                     </p>
                 </div>
             </section>
@@ -204,3 +204,4 @@ get_header();
 </div>
 
 <?php get_footer(); ?>
+
