@@ -4733,3 +4733,61 @@ add_action('woocommerce_thankyou', function($order_id) {
     // Auto-login the new customer (optional — creates seamless experience)
     wc_set_customer_auth_cookie($customer_id);
 }, 20);
+
+/**
+ * FORCE SUBSCRIPTION ACTIVATION: Activate subscriptions when payment is completed.
+ * WooCommerce Subscriptions should auto-activate when order hits 'processing', 
+ * but some gateways (Authorize.Net) don't trigger the status transition properly.
+ * This hook ensures subscriptions activate immediately after successful payment.
+ */
+add_action('woocommerce_payment_complete', function($order_id) {
+    if (!function_exists('wcs_get_subscriptions_for_order')) {
+        return; // WooCommerce Subscriptions not active
+    }
+
+    $order = wc_get_order($order_id);
+    if (!$order) return;
+
+    // Get all subscriptions linked to this order
+    $subscriptions = wcs_get_subscriptions_for_order($order_id);
+
+    foreach ($subscriptions as $subscription) {
+        // Only activate if currently pending or on-hold
+        if ($subscription->has_status('pending') || $subscription->has_status('on-hold')) {
+            $subscription->update_status('active', 'Subscription activated after payment.');
+            $subscription->save();
+        }
+    }
+});
+
+// Also trigger on order status change to processing (belt and suspenders)
+add_action('woocommerce_order_status_processing', function($order_id) {
+    if (!function_exists('wcs_get_subscriptions_for_order')) {
+        return;
+    }
+
+    $subscriptions = wcs_get_subscriptions_for_order($order_id);
+
+    foreach ($subscriptions as $subscription) {
+        if ($subscription->has_status('pending') || $subscription->has_status('on-hold')) {
+            $subscription->update_status('active', 'Subscription activated after order processing.');
+            $subscription->save();
+        }
+    }
+});
+
+// And on order status change to completed
+add_action('woocommerce_order_status_completed', function($order_id) {
+    if (!function_exists('wcs_get_subscriptions_for_order')) {
+        return;
+    }
+
+    $subscriptions = wcs_get_subscriptions_for_order($order_id);
+
+    foreach ($subscriptions as $subscription) {
+        if ($subscription->has_status('pending') || $subscription->has_status('on-hold')) {
+            $subscription->update_status('active', 'Subscription activated after order completion.');
+            $subscription->save();
+        }
+    }
+});
