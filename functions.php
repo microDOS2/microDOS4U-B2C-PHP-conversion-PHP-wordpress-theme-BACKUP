@@ -4576,3 +4576,44 @@ add_filter('woocommerce_update_cart_validation', function($passed, $cart_item_ke
     }
     return $passed;
 }, 10, 4);
+
+/**
+ * Server-side credit card validation using Luhn algorithm
+ * Validates card number during WooCommerce checkout process
+ */
+add_action('woocommerce_checkout_process', function() {
+    $card_number = isset($_POST['authorizenet_card_number']) ? sanitize_text_field($_POST['authorizenet_card_number']) : '';
+
+    if ($card_number) {
+        $card_number = preg_replace('/\s/', '', $card_number);
+
+        // Check length
+        if (strlen($card_number) < 13 || strlen($card_number) > 19) {
+            wc_add_notice('Please enter a valid credit card number (13-19 digits).', 'error');
+            return;
+        }
+
+        // Check all digits
+        if (!ctype_digit($card_number)) {
+            wc_add_notice('Credit card number must contain only digits.', 'error');
+            return;
+        }
+
+        // Luhn algorithm
+        $sum = 0;
+        $isEven = false;
+        for ($i = strlen($card_number) - 1; $i >= 0; $i--) {
+            $digit = intval($card_number[$i]);
+            if ($isEven) {
+                $digit *= 2;
+                if ($digit > 9) $digit -= 9;
+            }
+            $sum += $digit;
+            $isEven = !$isEven;
+        }
+
+        if ($sum % 10 !== 0) {
+            wc_add_notice('Please enter a valid credit card number.', 'error');
+        }
+    }
+});
