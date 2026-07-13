@@ -4544,11 +4544,11 @@ function microdos_export_1099_csv() {
 }
 
 /**
- * Set default checkout state to empty instead of Nevada
+ * Set default checkout state to empty — uses high-priority filter to override WooCommerce defaults
  */
 add_filter('default_checkout_billing_state', function($state) {
     return '';
-});
+}, 999);
 add_filter('default_checkout_shipping_state', function($state) {
     return '';
-});
+}, 999);
