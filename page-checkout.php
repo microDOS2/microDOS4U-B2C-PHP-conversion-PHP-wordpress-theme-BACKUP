@@ -24,6 +24,55 @@ get_header();
 </section>
 
 <script>
+// Credit card validation — Luhn algorithm + HTML5 pattern
+jQuery(function($) {
+    $(document.body).on('updated_checkout', function() {
+        var $cardInput = $('input[name*="card"], input[id*="card"], input[name*="authorize"], input[name*="cim"]').filter(function() {
+            var type = $(this).attr('type') || '';
+            return type === 'text' || type === 'tel';
+        }).first();
+
+        if ($cardInput.length && !$cardInput.data('validation-added')) {
+            $cardInput.attr({
+                'pattern': '[0-9]{13,19}',
+                'maxlength': '19',
+                'inputmode': 'numeric',
+                'title': 'Please enter a valid 13-19 digit credit card number'
+            });
+            $cardInput.data('validation-added', '1');
+
+            $cardInput.on('blur', function() {
+                var cardNum = $(this).val().replace(/\s/g, '');
+                if (cardNum && !isValidLuhn(cardNum)) {
+                    $(this).addClass('woocommerce-invalid');
+                    $(this).siblings('.card-validation-error').remove();
+                    $(this).after('<span class="card-validation-error" style="color: #e2401c; font-size: 0.85em; display: block; margin-top: 4px;">Please enter a valid credit card number.</span>');
+                } else {
+                    $(this).removeClass('woocommerce-invalid');
+                    $(this).siblings('.card-validation-error').remove();
+                }
+            });
+
+            $cardInput.on('focus', function() {
+                $(this).removeClass('woocommerce-invalid');
+                $(this).siblings('.card-validation-error').remove();
+            });
+        }
+    });
+
+    function isValidLuhn(cardNumber) {
+        if (!cardNumber || cardNumber.length < 13 || cardNumber.length > 19) return false;
+        if (!/^\d+$/.test(cardNumber)) return false;
+        var sum = 0, isEven = false;
+        for (var i = cardNumber.length - 1; i >= 0; i--) {
+            var digit = parseInt(cardNumber.charAt(i), 10);
+            if (isEven) { digit *= 2; if (digit > 9) digit -= 9; }
+            sum += digit; isEven = !isEven;
+        }
+        return (sum % 10) === 0;
+    }
+});
+
 // Fix duplicate order review table on checkout using MutationObserver
 (function() {
     function removeDuplicates() {
