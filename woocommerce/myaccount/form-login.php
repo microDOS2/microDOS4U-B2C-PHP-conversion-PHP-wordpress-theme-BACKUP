@@ -27,6 +27,8 @@ $login_url = wc_get_page_permalink('myaccount');
             <form class="woocommerce-form woocommerce-form-login login" method="post">
                 <?php do_action('woocommerce_login_form_start'); ?>
 
+                <?php wc_print_notices(); ?>
+
                 <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide mb-4">
                     <label for="username" class="text-slate-300 text-sm">
                         <?php esc_html_e('Username or email address', 'microdos4u'); ?>&nbsp;<span class="required" style="color: #ff4444;">*</span>
