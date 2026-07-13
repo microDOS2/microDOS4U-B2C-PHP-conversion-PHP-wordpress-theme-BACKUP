@@ -4723,26 +4723,88 @@ add_action('woocommerce_thankyou', function($order_id) {
 }, 20);
 
 /**
- * FORCE SUBSCRIPTION ACTIVATION: Uses official WooCommerce Subscriptions API.
- * The wcs_activate_subscriptions_for_order() function is the correct way to
- * activate subscriptions after payment. This handles all the internal logic
- * including status changes, date calculations, and email notifications.
+ * FORCE SUBSCRIPTION ACTIVATION — Corrected Approach
+ * 
+ * The problem: WooCommerce Subscriptions creates subscriptions in "pending" status.
+ * They should auto-activate when order reaches "processing", but Authorize.Net test
+ * mode doesn't always trigger the status transition properly.
+ * 
+ * Solution: Use subscription-specific hooks that fire when payment completes.
  */
-add_action('woocommerce_order_status_changed', function($order_id, $old_status, $new_status) {
-    // Only activate when order moves to processing or completed
-    if ($new_status !== 'processing' && $new_status !== 'completed') {
-        return;
-    }
 
-    // Use the official WooCommerce Subscriptions API function
-    if (function_exists('wcs_activate_subscriptions_for_order')) {
-        wcs_activate_subscriptions_for_order($order_id);
+// Hook 1: When subscription payment is complete (most reliable)
+add_action('woocommerce_subscription_payment_complete', function($subscription) {
+    // Activate if still pending
+    if ($subscription->has_status('pending')) {
+        $subscription->update_status('active', 'Auto-activated after payment completion.');
+        $subscription->save();
+    }
+});
+
+// Hook 2: When subscription status changes to active — ensure Subscriber role
+add_action('woocommerce_subscription_status_active', function($subscription) {
+    $user_id = $subscription->get_user_id();
+    if (!$user_id) return;
+
+    $user = new WP_User($user_id);
+
+    // Add 'subscriber' role (keep existing 'customer' role too)
+    if (!in_array('subscriber', (array) $user->roles)) {
+        $user->add_role('subscriber');
+    }
+});
+
+// Hook 3: When subscriptions are created for an order — force immediate activation
+add_action('subscriptions_created_for_order', function($order) {
+    if (!function_exists('wcs_get_subscriptions_for_order')) return;
+
+    $subscriptions = wcs_get_subscriptions_for_order($order->get_id());
+
+    foreach ($subscriptions as $subscription) {
+        // If order is processing or completed, activate immediately
+        if ($order->has_status('processing') || $order->has_status('completed')) {
+            if ($subscription->has_status('pending')) {
+                $subscription->update_status('active', 'Auto-activated: order already processing.');
+                $subscription->save();
+            }
+        }
+    }
+});
+
+// Hook 4: When order status changes — check and activate subscriptions
+add_action('woocommerce_order_status_changed', function($order_id, $old_status, $new_status) {
+    if ($new_status !== 'processing' && $new_status !== 'completed') return;
+    if (!function_exists('wcs_get_subscriptions_for_order')) return;
+
+    $order = wc_get_order($order_id);
+    if (!$order) return;
+
+    $subscriptions = wcs_get_subscriptions_for_order($order_id);
+
+    foreach ($subscriptions as $subscription) {
+        if ($subscription->has_status('pending')) {
+            $subscription->update_status('active', 'Auto-activated after order status: ' . $new_status);
+            $subscription->save();
+        }
     }
 }, 10, 3);
 
-// Backup: Also hook into payment complete (fires when gateway confirms payment)
-add_action('woocommerce_payment_complete', function($order_id) {
-    if (function_exists('wcs_activate_subscriptions_for_order')) {
-        wcs_activate_subscriptions_for_order($order_id);
+// Hook 5: Force Subscriber role on account creation when subscription exists
+add_action('woocommerce_thankyou', function($order_id) {
+    $order = wc_get_order($order_id);
+    if (!$order) return;
+
+    $user_id = $order->get_customer_id();
+    if (!$user_id) return;
+
+    $user = new WP_User($user_id);
+
+    // If user has a subscription, ensure they have subscriber role
+    if (function_exists('wcs_get_users_subscriptions')) {
+        $user_subs = wcs_get_users_subscriptions($user_id);
+        if (!empty($user_subs) && !in_array('subscriber', (array) $user->roles)) {
+            $user->add_role('subscriber');
+        }
     }
-});
+}, 30);
+
