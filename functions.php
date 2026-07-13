@@ -4542,3 +4542,13 @@ function microdos_export_1099_csv() {
     fclose($output);
     exit;
 }
+
+/**
+ * Set default checkout state to empty instead of Nevada
+ */
+add_filter('default_checkout_billing_state', function($state) {
+    return '';
+});
+add_filter('default_checkout_shipping_state', function($state) {
+    return '';
+});
