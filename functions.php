@@ -4617,3 +4617,119 @@ add_action('woocommerce_checkout_process', function() {
         }
     }
 });
+
+/**
+ * FORCE ACCOUNT CREATION: Accounts are only created after successful purchase.
+ * 
+ * 1. Hide the "Create an account" checkbox from checkout — creation is automatic.
+ * 2. After payment succeeds (order status = processing/completed), auto-create customer.
+ * 3. WooCommerce Subscriptions automatically assigns "Subscriber" role for subscriptions.
+ */
+
+// Hide "Create an account" checkbox and password fields from checkout
+add_filter('woocommerce_checkout_fields', function($fields) {
+    // Remove account fields so account creation is invisible to the customer
+    if (isset($fields['account'])) {
+        unset($fields['account']);
+    }
+    return $fields;
+});
+
+// Also remove the "Create an account" checkbox that WooCommerce adds
+add_filter('woocommerce_create_account_default_checked', '__return_false');
+
+/**
+ * Auto-create customer account after successful payment.
+ * Only runs when order status is processing or completed (payment succeeded).
+ */
+add_action('woocommerce_thankyou', function($order_id) {
+    // Only run if user is NOT logged in (guest checkout)
+    if (is_user_logged_in()) {
+        return;
+    }
+
+    $order = wc_get_order($order_id);
+    if (!$order) return;
+
+    // Only create account for successful payments
+    $status = $order->get_status();
+    if ($status !== 'processing' && $status !== 'completed') {
+        return;
+    }
+
+    $email = $order->get_billing_email();
+    if (empty($email)) return;
+
+    // Check if user already exists
+    if (email_exists($email) || username_exists($email)) {
+        // Link existing user to this order
+        $existing_user = get_user_by('email', $email);
+        if ($existing_user) {
+            $order->set_customer_id($existing_user->ID);
+            $order->save();
+        }
+        return;
+    }
+
+    // Generate username from email (before @ symbol)
+    $username = sanitize_user(current(explode('@', $email)), true);
+
+    // Ensure username is unique
+    $original_username = $username;
+    $suffix = 1;
+    while (username_exists($username)) {
+        $username = $original_username . $suffix;
+        $suffix++;
+    }
+
+    // Generate a secure random password
+    $password = wp_generate_password(16, true, true);
+
+    // Create the customer account
+    $customer_id = wc_create_new_customer($email, $username, $password, array(
+        'first_name' => $order->get_billing_first_name(),
+        'last_name'  => $order->get_billing_last_name(),
+    ));
+
+    if (is_wp_error($customer_id)) {
+        // Log error for debugging
+        error_log('microDOS account creation failed: ' . $customer_id->get_error_message());
+        return;
+    }
+
+    // Update customer billing/shipping from order
+    $customer = new WC_Customer($customer_id);
+    $customer->set_billing_first_name($order->get_billing_first_name());
+    $customer->set_billing_last_name($order->get_billing_last_name());
+    $customer->set_billing_company($order->get_billing_company());
+    $customer->set_billing_address_1($order->get_billing_address_1());
+    $customer->set_billing_address_2($order->get_billing_address_2());
+    $customer->set_billing_city($order->get_billing_city());
+    $customer->set_billing_state($order->get_billing_state());
+    $customer->set_billing_postcode($order->get_billing_postcode());
+    $customer->set_billing_country($order->get_billing_country());
+    $customer->set_billing_phone($order->get_billing_phone());
+    $customer->set_billing_email($email);
+
+    // Copy billing to shipping
+    $customer->set_shipping_first_name($order->get_shipping_first_name() ?: $order->get_billing_first_name());
+    $customer->set_shipping_last_name($order->get_shipping_last_name() ?: $order->get_billing_last_name());
+    $customer->set_shipping_address_1($order->get_shipping_address_1() ?: $order->get_billing_address_1());
+    $customer->set_shipping_address_2($order->get_shipping_address_2() ?: $order->get_billing_address_2());
+    $customer->set_shipping_city($order->get_shipping_city() ?: $order->get_billing_city());
+    $customer->set_shipping_state($order->get_shipping_state() ?: $order->get_billing_state());
+    $customer->set_shipping_postcode($order->get_shipping_postcode() ?: $order->get_billing_postcode());
+    $customer->set_shipping_country($order->get_shipping_country() ?: $order->get_billing_country());
+
+    $customer->save();
+
+    // Link order to the new customer
+    $order->set_customer_id($customer_id);
+    $order->save();
+
+    // Send password setup email to customer
+    wp_new_user_notification($customer_id, null, 'user');
+
+    // Auto-login the new customer (optional — creates seamless experience)
+    wc_set_customer_auth_cookie($customer_id);
+}, 20);
