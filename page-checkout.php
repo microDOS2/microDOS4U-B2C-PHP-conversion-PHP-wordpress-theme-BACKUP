@@ -70,5 +70,24 @@ get_header();
 })();
 </script>
 
+<script>
+// Clear default state selection — ensures no state is pre-selected
+jQuery(function($) {
+    $(document.body).on('updated_checkout', function() {
+        var $stateSelect = $('select#billing_state');
+        if ($stateSelect.length && $stateSelect.val()) {
+            // Only clear if it's the initial load (not user-selected)
+            if (!$stateSelect.data('user-changed')) {
+                $stateSelect.val('').trigger('change');
+            }
+        }
+    });
+    // Also mark when user manually changes the state
+    $(document).on('change', 'select#billing_state', function() {
+        $(this).data('user-changed', true);
+    });
+});
+</script>
+
 <?php
 get_footer();
