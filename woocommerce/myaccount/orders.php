@@ -12,7 +12,7 @@ if (!defined('ABSPATH')) {
 $orders = wc_get_orders([
     'customer_id' => get_current_user_id(),
     'limit' => -1,
-    'status' => ['wc-processing', 'wc-completed', 'wc-on-hold', 'wc-pending']
+    'status' => ['processing', 'completed', 'on-hold', 'pending']
 ]);
 ?>
 
