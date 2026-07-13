@@ -4552,3 +4552,19 @@ add_filter('default_checkout_billing_state', function($state) {
 add_filter('default_checkout_shipping_state', function($state) {
     return '';
 }, 999);
+
+/**
+ * Limit maximum product quantity in cart to 10
+ */
+add_filter('woocommerce_quantity_input_args', function($args, $product) {
+    $args['max_value'] = 10;
+    return $args;
+}, 10, 2);
+
+add_filter('woocommerce_add_to_cart_validation', function($passed, $product_id, $quantity) {
+    if ($quantity > 10) {
+        wc_add_notice('Maximum quantity is 10 per product.', 'error');
+        return false;
+    }
+    return $passed;
+}, 10, 3);
