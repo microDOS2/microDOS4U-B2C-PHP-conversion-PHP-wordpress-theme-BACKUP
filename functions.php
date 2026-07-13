@@ -4626,18 +4626,6 @@ add_action('woocommerce_checkout_process', function() {
  * 3. WooCommerce Subscriptions automatically assigns "Subscriber" role for subscriptions.
  */
 
-// Hide "Create an account" checkbox and password fields from checkout
-add_filter('woocommerce_checkout_fields', function($fields) {
-    // Remove account fields so account creation is invisible to the customer
-    if (isset($fields['account'])) {
-        unset($fields['account']);
-    }
-    return $fields;
-});
-
-// Also remove the "Create an account" checkbox that WooCommerce adds
-add_filter('woocommerce_create_account_default_checked', '__return_false');
-
 /**
  * Auto-create customer account after successful payment.
  * Only runs when order status is processing or completed (payment succeeded).
