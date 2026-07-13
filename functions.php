@@ -4723,59 +4723,26 @@ add_action('woocommerce_thankyou', function($order_id) {
 }, 20);
 
 /**
- * FORCE SUBSCRIPTION ACTIVATION: Activate subscriptions when payment is completed.
- * WooCommerce Subscriptions should auto-activate when order hits 'processing', 
- * but some gateways (Authorize.Net) don't trigger the status transition properly.
- * This hook ensures subscriptions activate immediately after successful payment.
+ * FORCE SUBSCRIPTION ACTIVATION: Uses official WooCommerce Subscriptions API.
+ * The wcs_activate_subscriptions_for_order() function is the correct way to
+ * activate subscriptions after payment. This handles all the internal logic
+ * including status changes, date calculations, and email notifications.
  */
+add_action('woocommerce_order_status_changed', function($order_id, $old_status, $new_status) {
+    // Only activate when order moves to processing or completed
+    if ($new_status !== 'processing' && $new_status !== 'completed') {
+        return;
+    }
+
+    // Use the official WooCommerce Subscriptions API function
+    if (function_exists('wcs_activate_subscriptions_for_order')) {
+        wcs_activate_subscriptions_for_order($order_id);
+    }
+}, 10, 3);
+
+// Backup: Also hook into payment complete (fires when gateway confirms payment)
 add_action('woocommerce_payment_complete', function($order_id) {
-    if (!function_exists('wcs_get_subscriptions_for_order')) {
-        return; // WooCommerce Subscriptions not active
-    }
-
-    $order = wc_get_order($order_id);
-    if (!$order) return;
-
-    // Get all subscriptions linked to this order
-    $subscriptions = wcs_get_subscriptions_for_order($order_id);
-
-    foreach ($subscriptions as $subscription) {
-        // Only activate if currently pending or on-hold
-        if ($subscription->has_status('pending') || $subscription->has_status('on-hold')) {
-            $subscription->update_status('active', 'Subscription activated after payment.');
-            $subscription->save();
-        }
-    }
-});
-
-// Also trigger on order status change to processing (belt and suspenders)
-add_action('woocommerce_order_status_processing', function($order_id) {
-    if (!function_exists('wcs_get_subscriptions_for_order')) {
-        return;
-    }
-
-    $subscriptions = wcs_get_subscriptions_for_order($order_id);
-
-    foreach ($subscriptions as $subscription) {
-        if ($subscription->has_status('pending') || $subscription->has_status('on-hold')) {
-            $subscription->update_status('active', 'Subscription activated after order processing.');
-            $subscription->save();
-        }
-    }
-});
-
-// And on order status change to completed
-add_action('woocommerce_order_status_completed', function($order_id) {
-    if (!function_exists('wcs_get_subscriptions_for_order')) {
-        return;
-    }
-
-    $subscriptions = wcs_get_subscriptions_for_order($order_id);
-
-    foreach ($subscriptions as $subscription) {
-        if ($subscription->has_status('pending') || $subscription->has_status('on-hold')) {
-            $subscription->update_status('active', 'Subscription activated after order completion.');
-            $subscription->save();
-        }
+    if (function_exists('wcs_activate_subscriptions_for_order')) {
+        wcs_activate_subscriptions_for_order($order_id);
     }
 });
