@@ -4568,3 +4568,11 @@ add_filter('woocommerce_add_to_cart_validation', function($passed, $product_id, 
     }
     return $passed;
 }, 10, 3);
+
+add_filter('woocommerce_update_cart_validation', function($passed, $cart_item_key, $values, $quantity) {
+    if ($quantity > 10) {
+        wc_add_notice('Maximum quantity is 10 per product.', 'error');
+        return false;
+    }
+    return $passed;
+}, 10, 4);
